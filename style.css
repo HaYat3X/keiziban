@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+/* Google fontのインポート */
+@import url('https://fonts.googleapis.com/css2?family=Kalam&family=M+PLUS+Rounded+1c:wght@500;700&family=Macondo&family=Mochiy+Pop+One&family=Noto+Sans+JP:wght@500;900&family=Poppins:ital,wght@1,300&family=Smooch&display=swap');
+
+/* デフォルトの空白をなくす */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #E6E6E6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* カードエリアの設定 */
+.card {
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    width: 500px;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    background-color: white;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.card .content {
+    position: absolute;
+    padding: 20px;
+    transform: translateY(200px);
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.card:hover .content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+h2 {
+    font-size: 60px;
+    margin-bottom: 60px;
+    color: black;
+}
+
+.card .content .s {
+    margin-top: 10px;
+    font-size: 1.8rem;
+    color: black;
+    margin-bottom: 40px;
+}
+
+.card .content a {
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    background-color: #4C8DCB;
+    padding: 10px 15px;
+    margin: 0 20px;
+    border-radius: 10px;
+}
+
+.card .content a:hover {
+    background-color: #EF810F;
+    cursor: pointer;
+}
