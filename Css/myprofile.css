@@ -1,0 +1,133 @@
+ @import url("https://use.typekit.net/rpu8qqz.css");
+
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: 'Noto Sans JP', sans-serif;
+ }
+
+ body {
+     min-height: 100vh;
+     background-color: #E6E6E6;
+ }
+
+
+ .header {
+     display: flex;
+     padding: 20px 20px;
+     margin-bottom: 50px;
+     background-color: white;
+     border-radius: 10px;
+ }
+
+ .header-nav {
+     display: flex;
+ }
+
+ .header-nav h1 {
+     font-family: reross-quadratic, sans-serif;
+     font-size: 60px;
+     font-weight: 900;
+     margin-left: 10px;
+     color: #EF810F;
+ }
+
+
+ .header ul {
+     display: flex;
+     margin-left: 215px;
+ }
+
+ .header li {
+     list-style: none;
+     padding-top: 25px;
+     padding-bottom: 20px;
+     padding-left: 70px;
+     font-size: 20px;
+     font-weight: 600;
+ }
+
+ .header a {
+     color: #4C8DCB;
+     text-decoration: none;
+ }
+
+ .header a:hover {
+     color: #EF810F;
+     text-decoration: underline;
+
+ }
+
+
+
+
+
+
+
+
+ .card {
+     width: 700px;
+     margin: auto;
+     margin-bottom: 50px;
+ }
+
+ .content {
+     background-color: white;
+     text-align: center;
+     border-radius: 10px;
+ }
+
+ .content img {
+     width: 150px;
+     height: 150px;
+     border-radius: 50%;
+     margin: 30px 0;
+ }
+
+ .content .user_box {
+     margin: 0 auto 30px;
+ }
+
+ .content label {
+     font-size: 25px;
+     font-weight: 600;
+ }
+
+ .content p {
+     font-size: 20px;
+     font-weight: 300;
+ }
+
+
+
+
+ .user_box-a {
+     padding-bottom: 30px;
+ }
+
+ .content a {
+     font-size: 20px;
+     text-decoration: none;
+     padding: 10px 15px;
+     background-color: #4C8DCB;
+     color: white;
+     border-radius: 10px;
+ }
+
+
+ .content a:hover {
+     background-color: #EF810F;
+     cursor: pointer;
+ }
+
+
+
+
+ footer {
+     text-align: center;
+     background-color: white;
+     margin-top: 50px;
+     border-radius: 10px;
+     padding: 20px 0;
+ }

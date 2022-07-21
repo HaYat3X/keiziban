@@ -1,0 +1,210 @@
+ @import url("https://use.typekit.net/rpu8qqz.css");
+
+ * {
+     margin: 0;
+     padding: 0
+ }
+
+ body {
+     background-color: #E6E6E6;
+     width: 1400px;
+     margin: auto;
+ }
+
+ .header {
+     display: flex;
+     padding: 20px 20px;
+     margin-bottom: 50px;
+     background-color: white;
+     border-radius: 10px;
+ }
+
+ .header-nav {
+     display: flex;
+ }
+
+ .header-nav h1 {
+     font-family: reross-quadratic, sans-serif;
+     font-size: 60px;
+     font-weight: 900;
+     margin-left: 10px;
+     color: #EF810F;
+ }
+
+
+ .header ul {
+     display: flex;
+     margin-left: 215px;
+ }
+
+ .header li {
+     list-style: none;
+     padding-top: 25px;
+     padding-bottom: 20px;
+     padding-left: 70px;
+     font-size: 20px;
+     font-weight: 600;
+ }
+
+ .header a {
+     color: #4C8DCB;
+     text-decoration: none;
+ }
+
+ .header a:hover {
+     color: #EF810F;
+     text-decoration: underline;
+
+ }
+
+
+
+ .content {
+     display: flex;
+ }
+
+ .edit {
+     width: 1000px;
+     margin: auto;
+ }
+
+
+ .edit textarea {
+     resize: none;
+     border: none;
+     border-radius: 10px;
+     font-size: 30px;
+     width: 700px;
+     height: 300px;
+     margin-bottom: 20px;
+ }
+
+ .edit .text {
+     text-align: center;
+ }
+
+ .edit .btn {
+     margin-left: 130px;
+ }
+
+ .edit button {
+     font-size: 25px;
+     padding: 10px 15px;
+     color: white;
+     background-color: #4C8DCB;
+     border-radius: 10px;
+     border: none;
+ }
+
+ .edit button:hover {
+     background-color: #EF810F;
+     cursor: pointer;
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ .side-contents {
+     width: 400px;
+     padding: 20px 20px;
+     border-left: 1px solid darkgray;
+ }
+
+
+ .search {
+     padding-bottom: 10px;
+ }
+
+ .search input {
+     width: 220px;
+     height: 35px;
+     border: white;
+ }
+
+ .search button {
+     width: 35px;
+     height: 35px;
+     color: white;
+     background-color: #4C8DCB;
+     border: none;
+     border-radius: 5px;
+ }
+
+ .search button:hover {
+     background-color: #EF810F;
+     cursor: pointer;
+ }
+
+
+ .calendar {
+     margin-bottom: 10px;
+ }
+
+ .calendar iframe {
+     width: 400px;
+     height: 350px;
+     border-radius: 10px;
+ }
+
+ .site-content {
+     margin-bottom: 20px;
+ }
+
+ .site {
+     display: flex;
+ }
+
+ .site img {
+     margin: 2px 5px;
+     width: 190px;
+     height: 120px;
+     border-radius: 10px;
+     background-color: white;
+ }
+
+ .site a:hover {
+     opacity: 0.3;
+     transition-duration: 0.3s;
+ }
+
+ .btn_arrow a {
+     color: white;
+     text-decoration: none;
+     padding: 15px 20px;
+     background-color: #4C8DCB;
+     border-radius: 10px;
+ }
+
+ .btn_arrow a:hover {
+     background-color: #EF810F;
+     padding: 20px 25px;
+ }
+
+
+
+ footer {
+     text-align: center;
+     background-color: white;
+     margin-top: 50px;
+     border-radius: 10px;
+     padding: 20px 0;
+ }

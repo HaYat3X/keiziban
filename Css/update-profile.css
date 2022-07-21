@@ -1,0 +1,141 @@
+ @import url("https://use.typekit.net/rpu8qqz.css");
+
+ * {
+     margin: 0;
+     padding: 0;
+
+     font-family: 'Noto Sans JP', sans-serif;
+ }
+
+ body {
+     min-height: 100vh;
+     background-color: #E6E6E6;
+ }
+
+
+ .header {
+     display: flex;
+     padding: 20px 20px;
+     margin-bottom: 50px;
+     background-color: white;
+     border-radius: 10px;
+ }
+
+ .header-nav {
+     display: flex;
+ }
+
+ .header-nav h1 {
+     font-family: reross-quadratic, sans-serif;
+     font-size: 60px;
+     font-weight: 900;
+     margin-left: 10px;
+     color: #EF810F;
+ }
+
+
+ .header ul {
+     display: flex;
+     margin-left: 215px;
+ }
+
+ .header li {
+     list-style: none;
+     padding-top: 25px;
+     padding-bottom: 20px;
+     padding-left: 70px;
+     font-size: 20px;
+     font-weight: 600;
+ }
+
+ .header a {
+     color: #4C8DCB;
+     text-decoration: none;
+ }
+
+ .header a:hover {
+     color: #EF810F;
+     text-decoration: underline;
+
+ }
+
+
+ .content {
+     width: 900px;
+     margin: auto;
+     background-color: white;
+     border-radius: 10px;
+     text-align: center;
+ }
+
+ .content .user_box {
+     padding: 50px 0;
+ }
+
+ .content .user_box label {
+     font-size: 25px;
+
+ }
+
+ .content .user_box input {
+     width: 300px;
+     height: 50px;
+     border-radius: 10px;
+     border: 0.5px solid black;
+     font-size: 20px;
+ }
+
+ .content .koube {
+     display: flex;
+ }
+
+ .content .status {
+     width: 320px;
+     margin: auto;
+     border: 1px solid darkgrey;
+     border-radius: 10px;
+     margin-bottom: 50px;
+ }
+
+ .content .status label {
+     font-size: 25px;
+ }
+
+ .content .status input {
+     transform: scale(1.5);
+     margin: 10px 0;
+ }
+
+ .content .course {
+     width: 320px;
+     margin: auto;
+     border: 1px solid darkgrey;
+     border-radius: 10px;
+ }
+
+ .content .course label {
+     font-size: 25px;
+ }
+
+ .content .course input {
+     transform: scale(1.5);
+     margin: 15px 0px;
+ }
+
+
+
+
+
+
+
+
+
+
+
+ footer {
+     text-align: center;
+     background-color: white;
+     margin-top: 50px;
+     border-radius: 10px;
+     padding: 20px 0;
+ }

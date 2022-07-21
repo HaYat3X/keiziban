@@ -1,0 +1,180 @@
+@import url("https://use.typekit.net/rpu8qqz.css");
+
+* {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    background-color: #E6E6E6;
+    width: 1400px;
+    margin: auto;
+}
+
+.header {
+    display: flex;
+    padding: 20px 20px;
+    margin-bottom: 50px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.header-nav {
+    display: flex;
+}
+
+.header-nav h1 {
+    font-family: reross-quadratic, sans-serif;
+    font-size: 60px;
+    font-weight: 900;
+    margin-left: 10px;
+    color: #EF810F;
+}
+
+
+.header ul {
+    display: flex;
+    margin-left: 215px;
+}
+
+.header li {
+    list-style: none;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    padding-left: 70px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.header a {
+    color: #4C8DCB;
+    text-decoration: none;
+}
+
+.header a:hover {
+    color: #EF810F;
+    text-decoration: underline;
+
+}
+
+
+
+
+
+
+
+
+
+
+.content {
+    width: 1000px;
+    margin: 20px auto;
+    padding: 50px 100px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+
+
+.content .user-box {
+    margin: 30px 100px;
+
+}
+
+.content .user-box label {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.content .user-box input {
+    width: 300px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.content .user-check {
+    margin: 30px 100px;
+}
+
+.content .user-check .tag {
+    margin-left: 146px;
+}
+
+
+
+.content .user-check label {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.content .user-check input {
+    transform: scale(1.5);
+    margin-left: 20px;
+}
+
+.only {
+    color: #EF810F;
+}
+
+.user-check p {
+    width: 560px;
+    background-color: white;
+    padding: 5px 30px;
+    border-radius: 10px;
+}
+
+
+.content .user-text {
+    margin: 30px 100px;
+}
+
+.content .user-text label {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.user-text textarea {
+    resize: none;
+    width: 800px;
+    height: 100px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.window button {
+    font-size: 20px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: #4C8DCB;
+    color: white;
+}
+
+.window button:hover {
+    background-color: #EF810F;
+    cursor: pointer;
+}
