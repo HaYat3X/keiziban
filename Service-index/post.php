@@ -16,10 +16,51 @@ if (isset($_SESSION['id'])) {
     exit();
 }
 
-//---------------------------------------------------------------------------------------------------------------------------
-
 // functionの呼びだし
 $db = dbconnection();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+    $field = filter_input(INPUT_POST, 'field', FILTER_SANITIZE_STRING);
+    $course = filter_input(INPUT_POST, 'course', FILTER_SANITIZE_STRING);
+
+    $day = filter_input(INPUT_POST, 'day', FILTER_SANITIZE_STRING);
+
+
+    $Expectation = filter_input(INPUT_POST, 'Expectation', FILTER_SANITIZE_STRING);
+
+    $Understanding = filter_input(INPUT_POST, 'Understanding', FILTER_SANITIZE_STRING);
+
+    $Communication = filter_input(INPUT_POST, 'Communication', FILTER_SANITIZE_STRING);
+    $good = filter_input(INPUT_POST, 'good', FILTER_SANITIZE_STRING);
+    $bad = filter_input(INPUT_POST, 'bad', FILTER_SANITIZE_STRING);
+
+    $trouble = filter_input(INPUT_POST, 'trouble', FILTER_SANITIZE_STRING);
+    $Comprehensive = filter_input(INPUT_POST, 'Comprehensive', FILTER_SANITIZE_STRING);
+
+    $link = filter_input(INPUT_POST, 'link', FILTER_SANITIZE_STRING);
+
+
+
+
+    $stmt = $db->prepare('INSERT INTO keizi (message, field, course, days, Expectation, Understanding, Communication, good, bad, trouble, Comprehensive, 
+    link, member_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    if (!$stmt) {
+        die($db->error);
+    }
+
+    $stmt->bind_param('ssssssssssssi', $message, $field, $course, $day, $Expectation, $Understanding, $Communication, $good, $bad, $trouble, $Comprehensive, $link, $id);
+    $success = $stmt->execute();
+    if (!$success) {
+        die($db->error);
+    }
+
+    // データベースの重複登録を防ぐ　POSTの内容を消す
+    header('Location: home.php');
+}
+//---------------------------------------------------------------------------------------------------------------------------
+
+
 ?>
 
 <!DOCTYPE html>
@@ -74,69 +115,70 @@ $db = dbconnection();
 
             </div>
 
-
             <div class="user-box">
                 <label>参加したカリキュラム、コース</label>
                 <input type="text" name="course" required>
             </div>
 
+
+
             <div class="user-check">
                 <label>参加した日数</label>
-                <input type="radio" name="field" required value="1日"> 1日
-                <input type="radio" name="field" value="2日〜5日程度"> 2日〜5日程度
-                <input type="radio" name="field" value="1週間程度"> 1週間程度
-                <input type="radio" name="field" value="2週間程度"> 2週間程度
-                <input type="radio" name="field" value="1ヶ月程度"> 1ヶ月程度
-                <input class="tag" type="radio" name="field" value="1ヶ月以上"> 1ヶ月以上
+                <input type="radio" name="day" required value="1日"> 1日
+                <input type="radio" name="day" value="2日〜5日程度"> 2日〜5日程度
+                <input type="radio" name="day" value="1週間程度"> 1週間程度
+                <input type="radio" name="day" value="2週間程度"> 2週間程度
+                <input type="radio" name="day" value="1ヶ月程度"> 1ヶ月程度
+                <input class="tag" type="radio" name="day" value="1ヶ月以上"> 1ヶ月以上
             </div>
 
             <div class="user-check">
                 <label class="only">※各項目を5段階で評価してください</label>
                 <br>
                 <p>
-                    1、満足している
-                    2、どちらかといえば満足している
+                    1、満足していない
+                    2、どちらかといえば満足していない
                     3、どちらともいえない
                     <br>
-                    4、どちらかといえば満足していない
-                    5、満足していない
+                    4、どちらかといえば満足している
+                    5、満足している
                 </p>
             </div>
 
             <div class="user-check">
-                <label>体験内容は期待通りでしたか？</label>
-                <input type="radio" name="Expectation" required value="満足している"> 1
-                <input type="radio" name="Expectation" value="どちらかといえば満足している"> 2
+                <label>体験内容は満足できる内容でしたか？</label>
+                <input type="radio" name="Expectation" required value="満足していない"> 1
+                <input type="radio" name="Expectation" value="どちらかといえば満足していない"> 2
                 <input type="radio" name="Expectation" value="どちらともいえない"> 3
-                <input type="radio" name="Expectation" value="どちらかといえば満足していない"> 4
-                <input type="radio" name="Expectation" value="満足していない"> 5
+                <input type="radio" name="Expectation" value="どちらかといえば満足している"> 4
+                <input type="radio" name="Expectation" value="満足している"> 5
             </div>
 
             <div class="user-check">
                 <label>業種や職種、企業について理解できましたか？</label>
-                <input type="radio" name="Expectation" required value="満足している"> 1
-                <input type="radio" name="Expectation" value="どちらかといえば満足している"> 2
-                <input type="radio" name="Expectation" value="どちらともいえない"> 3
-                <input type="radio" name="Expectation" value="どちらかといえば満足していない"> 4
-                <input type="radio" name="Expectation" value="満足していない"> 5
+                <input type="radio" name="Understanding" required value="満足していない"> 1
+                <input type="radio" name="Understanding" value="どちらかといえば満足していない"> 2
+                <input type="radio" name="Understanding" value="どちらともいえない"> 3
+                <input type="radio" name="Understanding" value="どちらかといえば満足している"> 4
+                <input type="radio" name="Understanding" value="満足している"> 5
             </div>
 
-            <div class="user-check">
+            <!-- <div class="user-check">
                 <label>社員とのコミュニケーションはどうでしたか？</label>
                 <input type="radio" name="Communication" required value="満足している"> 1
                 <input type="radio" name="Communication" value="どちらかといえば満足している"> 2
                 <input type="radio" name="Communication" value="どちらともいえない"> 3
                 <input type="radio" name="Communication" value="どちらかといえば満足していない"> 4
                 <input type="radio" name="Communication" value="満足していない"> 5
-            </div>
+            </div> -->
 
             <div class="user-check">
                 <label>社員、講師のサポートはどうでしたか？</label>
-                <input type="radio" name="Communication" required value="満足している"> 1
-                <input type="radio" name="Communication" value="どちらかといえば満足している"> 2
+                <input type="radio" name="Communication" required value="満足していない"> 1
+                <input type="radio" name="Communication" value="どちらかといえば満足していない"> 2
                 <input type="radio" name="Communication" value="どちらともいえない"> 3
-                <input type="radio" name="Communication" value="どちらかといえば満足していない"> 4
-                <input type="radio" name="Communication" value="満足していない"> 5
+                <input type="radio" name="Communication" value="どちらかといえば満足している"> 4
+                <input type="radio" name="Communication" value="満足している"> 5
             </div>
 
             <div class="user-text">
@@ -146,27 +188,27 @@ $db = dbconnection();
 
             <div class="user-text">
                 <label>インターンシップの良くなかった所、期待はずれだった所があれば教えてください</label>
-                <textarea name="bad" required></textarea>
+                <textarea name="bad" placeholder="空白でも投稿できます"></textarea>
             </div>
 
             <div class="user-text">
                 <label>インターンシップの困った所、よく分からなかった所があれば教えてください</label>
-                <textarea name="trouble" required></textarea>
+                <textarea name="trouble" placeholder="空白でも投稿できます"></textarea>
             </div>
 
             <div class="user-check">
                 <label>今回参加した企業のインターンシップを総合的に判断してください</label>
                 <br>
-                <input type="radio" name="Communication" required value="満足している"> 1
-                <input type="radio" name="Communication" value="どちらかといえば満足している"> 2
-                <input type="radio" name="Communication" value="どちらともいえない"> 3
-                <input type="radio" name="Communication" value="どちらかといえば満足していない"> 4
-                <input type="radio" name="Communication" value="満足していない"> 5
+                <input type="radio" name="Comprehensive" required value="満足していない"> 1
+                <input type="radio" name="Comprehensive" value="どちらかといえば満足していない"> 2
+                <input type="radio" name="Comprehensive" value="どちらともいえない"> 3
+                <input type="radio" name="Comprehensive" value="どちらかといえば満足している"> 4
+                <input type="radio" name="Comprehensive" value="満足している"> 5
             </div>
 
             <div class="user-text">
                 <label>応募したページのリンクを貼り付けてください</label>
-                <textarea name="trouble" required></textarea>
+                <textarea required name="link"></textarea>
             </div>
 
 

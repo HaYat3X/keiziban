@@ -52,5 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die($db->error);
     }
 
-    header('Location: ../Home-index/home.php');
+    // header('Location: ../Home-index/home.php');
+    header('Location: ../Home-index/myprofile.php?id=' . $id);
 }

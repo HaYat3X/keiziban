@@ -24,32 +24,6 @@ $db = dbconnection();
 
 
 
-// メッセージの投稿
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
-    $field = filter_input(INPUT_POST, 'field', FILTER_SANITIZE_STRING);
-    $course = filter_input(INPUT_POST, 'course', FILTER_SANITIZE_STRING);
-    $Expectation = filter_input(INPUT_POST, 'Expectation', FILTER_SANITIZE_STRING);
-    $Communication = filter_input(INPUT_POST, 'Communication', FILTER_SANITIZE_STRING);
-    $good = filter_input(INPUT_POST, 'good', FILTER_SANITIZE_STRING);
-    $bad = filter_input(INPUT_POST, 'bad', FILTER_SANITIZE_STRING);
-
-    $stmt = $db->prepare('INSERT INTO keizi (message, field, course, Expectation, Communication, good, bad, member_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-    if (!$stmt) {
-        die($db->error);
-    }
-
-    $stmt->bind_param('sssssssi', $message, $field, $course, $Expectation, $Communication, $good, $bad, $id);
-    $success = $stmt->execute();
-    if (!$success) {
-        die($db->error);
-    }
-
-    // データベースの重複登録を防ぐ　POSTの内容を消す
-    header('Location: home.php');
-}
-?>
-<?php
 /* 最大ページ数を求める */
 $counts = $db->query('select count(*) as cnt from keizi');
 $count = $counts->fetch_assoc();
@@ -58,7 +32,7 @@ $max_page = floor(($count['cnt'] + 1) / 5 + 1);
 //--------------------------------------------------------------------------------------------------------------------------
 
 // データの呼び出し
-$stmt = $db->prepare('select p.id, p.member_id, p.message, p.field, p.course, p.Expectation, p.Communication, p.good, p.bad, p.created, m.name, m.picture, m.status, m.course, m.School_year from keizi p, members m where m.id=p.member_id order by id desc limit ?, 5');
+$stmt = $db->prepare('select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, m.name, m.picture, m.status, m.course, m.School_year from keizi p, members m where m.id=p.member_id order by id desc limit ?, 5');
 
 // 最大ページ数を求める
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
@@ -68,7 +42,7 @@ $stmt->bind_param('i', $start);
 $success = $stmt->execute();
 
 //　結果を変数におく
-$stmt->bind_result($id, $member_id, $message, $field, $course1, $Expectation, $Communication, $good, $bad, $created, $name, $picture, $status, $course, $School_year);
+$stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Understanding, $Expectation, $Communication, $good, $bad, $trouble, $Comprehensive, $link, $created, $name, $picture, $status, $course, $School_year);
 
 
 ?>
@@ -176,41 +150,62 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $Expectation, $C
                         </p>
 
                         <p class="newline">
-                            <label>体験内容の満足度：<?php echo htmlspecialchars($Expectation); ?></label>
+                            <label>参加した日数：<?php echo htmlspecialchars($days); ?></label>
                         </p>
 
                         <p class="newline">
-                            <label>社員とのコミュニーケーション：<?php echo htmlspecialchars($Communication); ?></label>
+                            <label>体験内容についての満足度：<?php echo htmlspecialchars($Expectation); ?></label>
                         </p>
 
                         <p class="newline">
-                            <label>良かった所：<?php echo htmlspecialchars($good); ?></label>
+                            <label>企業理解についての満足度：<?php echo htmlspecialchars($Understanding); ?></label>
+                        </p>
+
+
+
+                        <p class="newline">
+                            <label>良かった所、印象に残った所、参考になった所：<?php echo htmlspecialchars($good); ?></label>
+                        </p>
+
+
+                        <p class="newline">
+                            <label>総合的な満足度：<?php echo htmlspecialchars($Comprehensive); ?></label>
                         </p>
 
                         <p class="end">
-                            <label>良くなかった所：<?php echo htmlspecialchars($bad); ?></label>
+                            <?php
+                            $link;
+                            $pattern = '/((?:https?|ftp):\/\/[-_.!~*\'()a-zA-Z0-9;\/?:@&=+$,%#]+)/';
+                            $replace = '<a href="$1">$1</a>';
+                            $link = preg_replace($pattern, $replace, $link);
+                            ?>
+                            <label>応募したページのリンク：<?php echo $link; ?></label>
                         </p>
 
-                        <!-- 投稿時間の表示 -->
-                        <p>
+
+
+                        <div class="time">
+
+
+
                             <small><?php echo htmlspecialchars($created); ?></small>
-                        </p>
-
-                        <p>
                             <!-- 自分の投稿であれば削除できる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
-                                [<a href="../Delete_community/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: red;">削除</a>]
+                                <a href="../Delete-home-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: red;"><i class="fa-solid fa-trash"></i></a>
                             <?php endif; ?>
 
                             <!-- 自分の投稿であれば編集ができる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
-                                [<a href="../Update_community/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: blue;">編集</a>]
+                                <a href="../Update-home-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: blue;"><i class="fa-solid fa-pen-to-square"></i></a>
                             <?php endif; ?>
 
 
-                            [<a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: green;">返信</a>]
+                            <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: green;"><i class="fa-solid fa-reply"></i></a>
 
-                        </p>
+
+
+                        </div>
+
 
                     </li>
 
