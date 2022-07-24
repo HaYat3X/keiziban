@@ -5,7 +5,7 @@ $db = new mysqli('localhost', 'root', 'root', 'user_db');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ユーザーの入力値を変数に代入
-    $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+    $update_id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
     $message = filter_input(INPUT_POST, 'memo', FILTER_SANITIZE_STRING);
 
 
@@ -39,12 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die($db->error);
         }
 
-        $stmt->bind_param('ssi', $message, $filename, $id);
+        $stmt->bind_param('ssi', $message, $filename, $update_id);
         $success = $stmt->execute();
         if (!$success) {
             die($db->error);
         }
 
-        header('Location: ../Home-index/home.php?id=' . $id);
+        header('Location: ../Home-index/home.php');
     }
 }

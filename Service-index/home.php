@@ -191,12 +191,12 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Understa
                             <small><?php echo htmlspecialchars($created); ?></small>
                             <!-- 自分の投稿であれば削除できる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
-                                <a href="../Delete-home-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: red;"><i class="fa-solid fa-trash"></i></a>
+                                <a href="../Delete-Service-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: red;"><i class="fa-solid fa-trash"></i></a>
                             <?php endif; ?>
 
                             <!-- 自分の投稿であれば編集ができる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
-                                <a href="../Update-home-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: blue;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="../Update-Service-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: blue;"><i class="fa-solid fa-pen-to-square"></i></a>
                             <?php endif; ?>
 
 

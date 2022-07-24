@@ -5,7 +5,7 @@ $stmt = $db->prepare('select * from posts where id=?');
 if (!$stmt) {
     die($db->error);
 }
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$update_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $stmt->bind_param('i', $id);
 $stmt->execute();
 
@@ -49,7 +49,7 @@ $result = $stmt->fetch();
         <div class="edit">
             <form action="../Update-home-index/update_do.php" method="post" enctype="multipart/form-data">
                 <div class="text">
-                    <input type="hidden" name="id" value="<?php echo $id; ?>">
+                    <input type="hidden" name="id" value="<?php echo $update_id; ?>">
                     <textarea name="memo" placeholder=" 編集内容を記述してください"><?php echo htmlspecialchars($message); ?></textarea>
                     <div>
                         <input type="file" name="image" size="30" value="">
