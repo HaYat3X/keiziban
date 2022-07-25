@@ -8,80 +8,44 @@
     <link rel="stylesheet" href="style.css">
     <!-- ファビコンの読み込み -->
     <link rel="icon" href="./img/名称未設定-3.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <!-- タイトルの指定 -->
     <title>「就活は学生が主体となる時代」/ Real intentioN</title>
-    <!-- ↓iPhone用にURLバーを表示しない設定を追加↓ -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Hello PWA</title>
-    <link rel="manifest" href="manifest.webmanifest" />
-    <!-- ↓iPhone用にアイコン設定を追加↓ -->
-    <link rel="apple-touch-icon" href="images/icons-192.png" />
-    <!-- ↓iPhone用にスプラッシュ画面の設定を追加↓ -->
-    <link rel="apple-touch-startup-image" href="images/launch-640x1136.png"
-        media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
-    <link rel="apple-touch-startup-image" href="images/launch-750x1334.png"
-        media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
-    <link rel="apple-touch-startup-image" href="images/launch-1080x1920.png"
-        media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
-    <link rel="apple-touch-startup-image" href="images/launch-1125x2436.png"
-        media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
-    <link rel="apple-touch-startup-image" href="images/launch-828x1792.png"
-        media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
-    <link rel="apple-touch-startup-image" href="images/launch-1242x2688.png"
-        media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
-    <link rel="apple-touch-startup-image" href="images/launch-1170x2532.png"
-        media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
-    <link rel="apple-touch-startup-image" href="images/launch-1284x2778.png"
-        media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+
+
 </head>
 
 <body>
-    <div class="card">
-        <div class="content">
-            <h2>Hey</h2>
-            <img src="./img/名称未設定-3.png" width="80" height="80" alt="">
-            <h3 class="s">ようこそ<br>Real intentioNへ</h3>
 
-            <a href="./Login-index/login.php">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                ログイン
-            </a>
+    <div class="header">
+        <img src="./img/名称未設定-3.png" alt="">
+        <h1>Real intentioN</h1>
+    </div>
+
+    <div class="content">
+        <div class="msg">
+            <h1>
+                Welcome!<br>
+                Real intentioN
+            </h1>
+
+            <a href="./Register-index/welcome.php">アカウント作成</a>
+            <a href="./Login-index/login.php">ログイン</a>
+        </div>
 
 
-            <a href="./Register-index/welcome.php">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                アカウント作成
-            </a>
+        <div class="img">
+            <img src="./img/iOS の画像.jpg" alt="">
         </div>
     </div>
 
-    <!-- JSの読みこみ -->
-    <script src="./vanilla-tilt.js"></script>
-    <script type="text/javascript">
-        VanillaTilt.init(document.querySelector(".card"), {
-            max: 25,
-            speed: 400,
-            glare: true,
-            "max-glare": 1,
-        });
-    </script>
-
-    <script>
-        window.addEventListener('load', () => {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker
-                    .register('sw.js')
-                    .then(registration => console.log('registered', registration))
-                    .catch(error => console.log('error', error));
-            }
-        });
-    </script>
+    <div class="footer">
+        <div class="SNS">
+            <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
+            <a href="https://twitter.com/hayate_KIC"><i class="fa-brands fa-twitter"></i>hayate_KIC</a>
+        </div>
+        <p>2022-08/01 Hayate-studio</p>
+    </div>
 </body>
 
 </html>
