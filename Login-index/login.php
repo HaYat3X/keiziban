@@ -1,4 +1,7 @@
 <?php
+// ここでやっていること
+// DB用いたログイン認証
+
 // function読み込み
 require('../db.php');
 
@@ -75,26 +78,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- タイトル　Log in　で指定 -->
     <title>Real intentioNにログイン / Real intentioN</title>
     <!-- ファビコンの読み込み -->
-    <link rel="icon" href="../img/名称未設定-3.png">
+    <link rel="icon" href="../img/favicon.png">
 </head>
 
 <body>
-    <div class="card">
-        <div class="content">
-            <h2>ログイン</h2>
+    <div class="header">
+        <img src="../img/favicon.png" alt="">
+        <h1>Real intentioN</h1>
+    </div>
+
+
+
+    <div class="content">
+        <div class="msg">
+            <h1>
+                Login<br>
+                Real intentioN
+            </h1>
+
+            <div class="guidance">
+                <a href="../Register-index/welcome.php">会員登録はこちら&gt;&gt;</a>
+            </div>
+
+            <div class="guidance2">
+                <a href="../Password-Reset-index/certification.php">パスワードを忘れた方はこちら&gt;&gt;</a>
+            </div>
+        </div>
+
+        <div class="Login">
             <form action="" method="post">
 
                 <!-- メールアドレスのテェック -->
                 <div class="user-box">
                     <label>Email</label>
+                    <br>
                     <input type="email" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($email); ?>" required>
-
-
                 </div>
 
                 <!-- パスワードのテェック -->
                 <div class="user-box">
                     <label>Password</label>
+                    <br>
                     <input type="password" name="password" size="35" maxlength="255" value="<?php echo htmlspecialchars($password); ?>" required>
 
 
@@ -107,20 +131,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- ログインボタンの装飾 -->
                 <button>
-
                     ログイン
                 </button>
 
             </form>
-
-            <div class="guidance">
-                <a href="../Register-index/welcome.php">会員登録はこちら&gt;&gt;</a>
-            </div>
-
-            <div class="guidance2">
-                <a href="../Password-Reset-index/certification.php">パスワードを忘れた方はこちら&gt;&gt;</a>
-            </div>
         </div>
+    </div>
+
+
+
+    <!-- <div>
+        <h2>ログイン</h2>
+        <form action="" method="post"> -->
+
+    <!-- メールアドレスのテェック -->
+    <!-- <div class="user-box">
+                <label>Email</label>
+                <input type="email" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($email); ?>" required>
+
+
+            </div> -->
+
+    <!-- パスワードのテェック -->
+    <!-- <div class="user-box">
+                <label>Password</label>
+                <input type="password" name="password" size="35" maxlength="255" value="<?php echo htmlspecialchars($password); ?>" required> -->
+
+
+
+    <!-- ログイン不成立のバリデーション -->
+    <!-- <?php if (isset($error['login']) && $error['login'] === 'failed') : ?>
+                    <p class="error">*ログインに失敗しました。正しくご記入ください。</p>
+                <?php endif; ?>
+            </div> -->
+
+    <!-- ログインボタンの装飾 -->
+    <!-- <button>
+
+                ログイン
+            </button>
+
+        </form>
+
+        <div class="guidance">
+            <a href="../Register-index/welcome.php">会員登録はこちら&gt;&gt;</a>
+        </div>
+
+        <div class="guidance2">
+            <a href="../Password-Reset-index/certification.php">パスワードを忘れた方はこちら&gt;&gt;</a>
+        </div>
+    </div> -->
+
+    <div class="footer">
+        <div class="SNS">
+            <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
+            <a href="https://twitter.com/hayate_KIC"><i class="fa-brands fa-twitter"></i>hayate_KIC</a>
+        </div>
+
+        <p>2022-08/01 Hayate-studio</p>
     </div>
 </body>
 
