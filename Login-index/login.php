@@ -79,6 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Real intentioNにログイン / Real intentioN</title>
     <!-- ファビコンの読み込み -->
     <link rel="icon" href="../img/favicon.png">
+    <!-- font-awesomeのインポート -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 
 <body>

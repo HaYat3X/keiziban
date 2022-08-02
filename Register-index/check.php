@@ -68,102 +68,135 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../Css/check.css">
     <title>登録内容確認 / Real intentioN</title>
     <link rel="icon" href="../img/名称未設定-3.png">
+    <!-- font-awesomeのインポート -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 
 <body>
-    <main>
-        <div class="card">
-            <div class="content">
 
-                <!---------------------------------------------------------------------------------------------------------->
-
-
-
-                <!---------------------------------------------------------------------------------------------------------->
-
-                <!-- タイトル文字 -->
-                <h2>登録内容を確認する</h2>
-                <form action="" method="post">
-
-                    <div class="user-box">
+    <div class="header">
+        <img src="../img/favicon.png" alt="">
+        <h1>Real intentioN</h1>
+    </div>
 
 
-
-                        <p>
-                            <?php echo htmlspecialchars($form['nickname']); ?>
-                        </p>
-                    </div>
-
-                    <div class="user-box">
-
-
-                        <p>
-                            <?php echo htmlspecialchars($form['birth']); ?>
-                        </p>
-                    </div>
+    <div class="content">
+        <div class="msg">
+            <h1>
+                Check<br>
+                Real intentioN
+            </h1>
 
 
-                    <div class="user-box">
-
-
-                        <p>
-                            <?php echo htmlspecialchars($form['email']); ?>
-                        </p>
-                    </div>
+            <a href="welcome.php?action=Tofix">書き直す&gt;&gt;</a>
 
 
 
-
-                    <div class="user-box">
-
-
-                        <p>
-                            <?php echo htmlspecialchars($form['tel']); ?>
-                        </p>
-                    </div>
-
-
-                    <div class="user-box">
-
-
-
-                        <p>
-                            <?php echo htmlspecialchars($form['password']); ?>
-                        </p>
-                    </div>
-
-
-                    <div class="user-box">
-
-
-                        <p>
-                            <?php if ($form['image']) : ?>
-                                <img src="../member_picture/<?php echo htmlspecialchars($form['image']); ?>" height="80" width="80">
-                            <?php endif; ?>
-
-                            <?php if (!$form['image']) : ?>
-                                <img src="../img/default.png" height="80" width="80">
-                            <?php endif; ?>
-                        </p>
-                    </div>
-
-
-                    <!------------------------------------------------------------------------------------------------------>
-
-
-
-                    <button>
-
-                        登録する
-                    </button>
-                </form>
-                <!--書き直しができるように値(Tofix)を設定しておく-->
-                <div class="guidance">
-                    <a href="welcome.php?action=Tofix">書き直す&gt;&gt;</a>
-                </div>
-            </div>
         </div>
-    </main>
+
+        <div class="Check">
+            <form action="" method="post">
+                <ul class="progressbar">
+                    <li class="complete">ご入力</li>
+                    <li class="active">ご確認</li>
+                    <li>完了</li>
+                </ul>
+
+                <div class="user-box">
+
+
+
+                    <p>
+                        <?php echo htmlspecialchars($form['nickname']); ?>
+                    </p>
+                </div>
+
+                <div class="user-box">
+
+
+                    <p>
+                        <?php echo htmlspecialchars($form['birth']); ?>
+                    </p>
+                </div>
+
+
+                <div class="user-box">
+
+
+                    <p>
+                        <?php echo htmlspecialchars($form['email']); ?>
+                    </p>
+                </div>
+
+
+
+
+                <div class="user-box">
+
+
+                    <p>
+                        <?php echo htmlspecialchars($form['tel']); ?>
+                    </p>
+                </div>
+
+
+                <div class="user-box">
+
+
+
+                    <p>
+                        <?php echo htmlspecialchars($form['password']); ?>
+                    </p>
+                </div>
+
+
+                <div class="user-box">
+
+
+                    <p>
+                        <?php if ($form['image']) : ?>
+                            <img src="../member_picture/<?php echo htmlspecialchars($form['image']); ?>" height="80" width="80">
+                        <?php endif; ?>
+
+                        <?php if (!$form['image']) : ?>
+                            <img src="../img/default.png" height="80" width="80">
+                        <?php endif; ?>
+                    </p>
+                </div>
+
+
+                <!------------------------------------------------------------------------------------------------------>
+
+
+
+                <button>
+
+                    登録する
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+
+
+
+
+    <div class="footer">
+        <div class="SNS">
+            <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
+            <a href="https://twitter.com/hayate_KIC"><i class="fa-brands fa-twitter"></i>hayate_KIC</a>
+        </div>
+
+        <p>2022-08/01 Hayate-studio</p>
+    </div>
+
+
+
+
+
+
+
 </body>
 
 </html>

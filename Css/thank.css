@@ -14,6 +14,13 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+
+
+
+
+
+
+
 .header {
     border-radius: 10px;
     background-color: white;
@@ -47,54 +54,34 @@ body {
     margin-bottom: 30px;
 }
 
-.content .Register form{
-    padding: 100px 50px 40px;
+.content .Check form{
+    padding: 100px 50px 0;
 }
 
-.content .Register{
+.content .Check{
     width: 500px;
     background-color: white;
     border-radius: 20px;
     margin: 50px 0;
+    height: 490px;
 }
 
-.content .Register .user-box{
-    margin-top: 30px;
-}
-
-.content .Register .user-box input{
-    font-size: 18px;
-    width: 400px;
-    height: 40px;
-    border: 2px solid #4C8DCB;
-    border-radius: 5px;
-}
-
-.content .Register .error{
-    color: red;
-    font-size: 14px;
-    font-weight: 900;
-    margin-top: 10px;
-}
-
-.content .Register button{
-    margin-top: 20px;
+.content .Check p{
     font-size: 20px;
-    padding: 10px 20px;
-    background-color: #4C8DCB;
-    color: white;
-    text-decoration: none;
-    border-radius: 10px;
-    border: none;
+    margin-top: 20px;
+    margin-left: 30px;
 }
 
-.content .Register button:hover{
-    background-color: #EF810F;
-    cursor: pointer;
+.Check .countdown{
+    font-size: 20px;
+    margin-left: 30px;
+    color: #4C8DCB;
+    margin-top: 40px;
 }
+
 
 .content .msg {
-    margin: 320px 90px;
+    margin: 180px 90px 0;
 }
 
 .footer {
@@ -179,4 +166,3 @@ body {
 .progressbar li.complete:after {
     background-color: #0070BD;
 }
-

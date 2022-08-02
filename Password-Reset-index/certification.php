@@ -69,9 +69,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- ファビコンの読み込み -->
     <link rel="icon" href="../img/名称未設定-3.png">
     <link rel="stylesheet" href="../Css/certification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 
 <body>
+
+
+    <div class="header">
+        <img src="../img/favicon.png" alt="">
+        <h1>Real intentioN</h1>
+    </div>
+
+    <div class="content">
+        <div class="msg">
+            <h1>
+                Reset<br>
+                Real intentioN
+            </h1>
+
+
+
+
+
+
+        </div>
+
+        <div class="Reset">
+            <form action="" method="post">
+
+                <!-- メールアドレスの認証欄 -->
+                <div class="user-box">
+                    <label>Email</label>
+                    <br>
+                    <input required type="email" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($email); ?>">
+
+
+                </div>
+
+                <!-- 携帯電話番号の確認欄 -->
+                <div class="user-box">
+                    <label>Tel</label>
+                    <br>
+                    <input required pattern="\d{11}" type="tel" name="tel" size="35" maxlength="255" value="<?php echo htmlspecialchars($tel); ?>">
+
+
+
+                    <!-- 認証失敗のバリデーション -->
+                    <?php if (isset($error['login']) && $error['login'] === 'failed') : ?>
+                        <p class="error">*認証に失敗しました。正しくご記入ください。</p>
+                    <?php endif; ?>
+                </div>
+
+                <!-- 認証ボタンの装飾 -->
+                <button>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    認証
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="SNS">
+            <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
+            <a href="https://twitter.com/hayate_KIC"><i class="fa-brands fa-twitter"></i>hayate_KIC</a>
+        </div>
+
+        <p>2022-08/01 Hayate-studio</p>
+    </div>
+
     <div class="card">
         <div class="content">
             <h2>パスワードをリセットする</h2>

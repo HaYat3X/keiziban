@@ -148,9 +148,137 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../Css/welcome.css">
     <title>アカウント作成 / Real intentioN</title>
     <link rel="icon" href="../img/名称未設定-3.png">
+    <!-- font-awesomeのインポート -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 
 <body>
+
+    <div class="header">
+        <img src="../img/favicon.png" alt="">
+        <h1>Real intentioN</h1>
+    </div>
+
+
+    <div class="content">
+        <div class="msg">
+            <h1>
+                Register<br>
+                Real intentioN
+            </h1>
+
+
+        </div>
+
+        <div class="Register">
+
+
+
+            <form action="" method="post" enctype="multipart/form-data">
+
+                <ul class="progressbar">
+                    <li class="active">ご入力</li>
+                    <li>ご確認</li>
+                    <li>完了</li>
+                </ul>
+
+                <div class="user-box">
+                    <input required type="text" name="nickname" maxlength="33" placeholder="　ユーザー名　例：User1" value="<?php echo htmlspecialchars($form['nickname']); ?>">
+                </div>
+
+                <div class="user-box">
+
+
+
+                    <input required type="date" name="birth" placeholder="　生年月日　例：2004-02/21" value="<?php echo htmlentities($form['birth']); ?>">
+
+
+                </div>
+
+                <div class="user-box">
+
+
+
+                    <input required type="email" name="email" placeholder="　メールアドレス　例：info@co.jp" maxlength="30" value="<?php echo htmlspecialchars($form['email']); ?>">
+
+
+
+                    <!-- メールアドレスが重複している場合エラーを表示する -->
+                    <?php if (isset($error['email']) && $error['email'] === 'duplicate') : ?>
+                        <h5 class="error">*指定のメールアドレスは既に登録されています。ログインしてください。</h5>
+                    <?php endif; ?>
+                </div>
+
+
+
+                <div class="user-box">
+
+
+
+                    <input required type="tel" name="tel" placeholder="　携帯電話番号　例：012345678910" pattern="\d{11}" value="<?php echo htmlspecialchars($form['tel']); ?>">
+
+
+                    <!-- 携帯電話番号が重複している場合エラーを表示する -->
+                    <?php if (isset($error['tel']) && $error['tel'] === 'duplicate') : ?>
+                        <h5 class="error">*指定の携帯電話番号は既に登録されています。ログインしてください。</h5>
+                    <?php endif; ?>
+                </div>
+
+                <div class="user-box">
+
+
+
+                    <input required type="password" name="password" placeholder="　パスワード　例：••••••" maxlength="200" value="">
+
+
+
+                    <!-- パスワードが6文字以下の場合エラーを表示する -->
+                    <?php if (isset($error['password']) && $error['password'] === 'length') : ?>
+                        <h5 class="error">*パスワードは6文字以上で入力してください!</h5>
+                    <?php endif; ?>
+                </div>
+
+
+                <div class="user-box">
+
+
+
+                    <input type="file" name="image" size="30" value="">
+
+                    <!-- 指定された画像が(JPG)形式でなければエラーを表示する -->
+                    <?php if (isset($error['image']) && $error['image'] === 'type') : ?>
+                        <h5 class="error">*画像はJPG形式またはPNG形式で指定してください!</h5>
+                    <?php endif; ?>
+                </div>
+
+
+
+
+
+                <!------------------------------------------------------------------------------------------------------>
+
+                <!-- 送信ボタン -->
+                <button>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    入力内容を確認する
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="SNS">
+            <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
+            <a href="https://twitter.com/hayate_KIC"><i class="fa-brands fa-twitter"></i>hayate_KIC</a>
+        </div>
+
+        <p>2022-08/01 Hayate-studio</p>
+    </div>
+
     <main>
         <div class="card">
             <div class="content">
