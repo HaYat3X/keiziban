@@ -1,20 +1,26 @@
- @import url("https://use.typekit.net/rpu8qqz.css");
+ /* Googleフォントのインポート */
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Noto+Sans+JP:wght@100&family=Roboto&display=swap');
 
- * {
-     margin: 0;
-     padding: 0
- }
+/* Adobeフォントのインポート */
+@import url("https://use.typekit.net/rpu8qqz.css");
 
- body {
-     background-color: #E6E6E6;
-     width: 1400px;
-     margin: auto;
- }
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #E6E6E6;
+    font-family: 'Roboto', sans-serif;
+    width: 1400px;
+    margin: auto;
+}
+
 
  .header {
      display: flex;
      padding: 20px 20px;
-     margin-bottom: 30px;
+     margin-bottom: 50px;
      background-color: white;
      border-radius: 10px;
  }
@@ -34,12 +40,12 @@
 
  .header ul {
      display: flex;
-     margin-left: 215px;
+     margin-left: 260px;
  }
 
  .header li {
      list-style: none;
-     padding-top: 25px;
+     padding-top: 30px;
      padding-bottom: 20px;
      padding-left: 70px;
      font-size: 20px;
@@ -56,6 +62,12 @@
      text-decoration: underline;
 
  }
+
+
+
+
+
+
 
 
 
@@ -110,7 +122,7 @@
      width: 90vw;
      max-width: 600px;
      padding: 20px;
-     height: 400px;
+     height: 450px;
      background-color: #E6E6E6;
      border-radius: 4px;
      align-items: center;
@@ -123,7 +135,7 @@
      height: 350px;
      font-size: 20px;
      border: none;
-     border-radius: 5px;
+     border-radius: 10px;
  }
 
  .window button {
@@ -133,6 +145,7 @@
      border-radius: 10px;
      background-color: #4C8DCB;
      color: white;
+     margin-top: 20px;
  }
 
  .window button:hover {
@@ -149,10 +162,15 @@
  }
 
  .content {
-     width: 800px;
-     margin: auto;
+     /* width: 800px;
+     margin: auto; */
+     display: flex;
  }
 
+ .main-content{
+     width: 750px;
+     margin: auto;
+ }
 
  .post {
      display: flex;
@@ -178,6 +196,12 @@
      color: black;
  }
 
+
+ .user_number{
+    font-size: 25px;
+    font-weight: 100;
+    color: darkgray;
+ }
 
 
  .koube {
@@ -228,10 +252,107 @@
      background-color: #EF810F;
  }
 
- footer {
-     text-align: center;
-     background-color: white;
-     margin-top: 50px;
-     border-radius: 10px;
-     padding: 20px 0;
+.side-contents {
+     width: 400px;
+     padding: 20px 20px;
+     border-left: 1px solid darkgray;
  }
+
+
+ .search {
+     padding-bottom: 10px;
+ }
+
+ .search input {
+     width: 220px;
+     height: 35px;
+     border: white;
+ }
+
+ .search button {
+     width: 35px;
+     height: 35px;
+     color: white;
+     background-color: #4C8DCB;
+     border: none;
+     border-radius: 5px;
+ }
+
+ .search button:hover {
+     background-color: #EF810F;
+     cursor: pointer;
+ }
+
+
+ .calendar {
+     margin-bottom: 10px;
+ }
+
+ .calendar iframe {
+     width: 400px;
+     height: 350px;
+     border-radius: 10px;
+ }
+
+ .site-content {
+     margin-bottom: 20px;
+ }
+
+ .site {
+     display: flex;
+ }
+
+ .site img {
+     margin: 2px 5px;
+     width: 190px;
+     height: 120px;
+     border-radius: 10px;
+     background-color: white;
+ }
+
+ .site a:hover {
+     opacity: 0.3;
+     transition-duration: 0.3s;
+ }
+
+ .btn_arrow a {
+     color: white;
+     text-decoration: none;
+     padding: 15px 20px;
+     background-color: #4C8DCB;
+     border-radius: 10px;
+ }
+
+ .btn_arrow a:hover {
+     background-color: #EF810F;
+ }
+
+ .footer {
+    background-color: white;
+    width: 1400px;
+    margin: 50px auto 0;
+    height: 100px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.footer .SNS {
+    padding-top: 15px;
+}
+
+.footer a {
+    font-size: 25px;
+    padding: 0 40px;
+    color: #4C8DCB;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #EF810F;
+}
+
+.footer p {
+    padding-top: 15px;
+    background-color: white;
+    border-radius: 10px;
+}

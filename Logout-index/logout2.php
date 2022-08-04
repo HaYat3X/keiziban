@@ -2,7 +2,8 @@
 session_start();
 
 unset($_SESSION['id']);
-unset($_SESSION['name']);
+unset($_SESSION['user_id']);
+unset($_SESSION['user_name']);
 
-header('Location: login.php');
+header('Location: ../Login-index/login.php');
 exit();

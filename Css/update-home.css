@@ -1,15 +1,21 @@
- @import url("https://use.typekit.net/rpu8qqz.css");
+ /* Googleフォントのインポート */
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Noto+Sans+JP:wght@100&family=Roboto&display=swap');
 
- * {
-     margin: 0;
-     padding: 0
- }
+/* Adobeフォントのインポート */
+@import url("https://use.typekit.net/rpu8qqz.css");
 
- body {
-     background-color: #E6E6E6;
-     width: 1400px;
-     margin: auto;
- }
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #E6E6E6;
+    font-family: 'Roboto', sans-serif;
+    width: 1400px;
+    margin: auto;
+}
+
 
  .header {
      display: flex;
@@ -34,12 +40,12 @@
 
  .header ul {
      display: flex;
-     margin-left: 215px;
+     margin-left: 260px;
  }
 
  .header li {
      list-style: none;
-     padding-top: 25px;
+     padding-top: 30px;
      padding-bottom: 20px;
      padding-left: 70px;
      font-size: 20px;
@@ -56,6 +62,9 @@
      text-decoration: underline;
 
  }
+
+
+
 
 
 
@@ -103,7 +112,35 @@
 
 
 
+ .footer {
+    background-color: white;
+    width: 1400px;
+    margin: 50px auto 0;
+    height: 100px;
+    border-radius: 10px;
+    text-align: center;
+}
 
+.footer .SNS {
+    padding-top: 15px;
+}
+
+.footer a {
+    font-size: 25px;
+    padding: 0 40px;
+    color: #4C8DCB;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #EF810F;
+}
+
+.footer p {
+    padding-top: 15px;
+    background-color: white;
+    border-radius: 10px;
+}
 
 
 

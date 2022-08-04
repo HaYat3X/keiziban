@@ -147,7 +147,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $name, $picture, $
 
     <div class="header">
         <div class="header-nav">
-            <img src="../img/名称未設定-3.png" alt="" width="80" height="80">
+            <img src="../img/favicon.png" alt="" width="80" height="80">
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
@@ -235,7 +235,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $name, $picture, $
                         <p>
                             <!-- ユーザー情報の表示 -->
                             <span class="user_name"><?php echo htmlspecialchars($name); ?></span>
-                            <span><?php echo ('@user' . $member_id); ?></span>
+                            <span class="user_number"><?php echo ('@user' . $member_id); ?></span>
 
                         </p>
 
@@ -269,7 +269,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $name, $picture, $
 
 
 
-                            <small><?php echo htmlspecialchars($created); ?></small>
+                            <small class="post_time"><?php echo htmlspecialchars($created); ?></small>
                             <!-- 自分の投稿であれば削除できる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
                                 <a href="../Delete-home-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: red;"><i class="fa-solid fa-trash"></i></a>
@@ -330,18 +330,18 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $name, $picture, $
 
             <div class="site-content">
                 <div class="site">
-                    <a href="#"><img src="../img/ダウンロード.png" alt=""></a>
-                    <a href="#"><img src="../img/log_main.png" alt=""></a>
+                    <a href="https://job.career-tasu.jp/2024/top/"><img src="../img/ダウンロード.png" alt=""></a>
+                    <a href="https://job.mynavi.jp/24/pc/toppage/displayTopPage/index"><img src="../img/ogp.jpeg" alt=""></a>
                 </div>
 
                 <div class="site">
-                    <a href="#"><img src="../img/ダウンロード.png" alt=""></a>
-                    <a href="#"><img src="../img/log_main.png" alt=""></a>
+                    <a href="https://job.rikunabi.com/2024/?isc=r21rcnz02954"><img src="../img/ダウンロードのコピー.png" alt=""></a>
+                    <a href="https://www.wantedly.com/"><img src="../img/2328bac9-3f7c-4510-a392-8b112f5e22ad.jpeg" alt=""></a>
                 </div>
             </div>
 
             <div class="btn_arrow">
-                <a href="../Login/logout1.php">ログアウト</a>
+                <a href="../Logout-index/logout2.php">ログアウト</a>
             </div>
         </div>
     </div>
@@ -350,10 +350,13 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $name, $picture, $
 
     <!---------------------------------------------------------------------------------------------------------------------->
 
-    <!-- フッターエリア -->
-    <footer>
-        サイト管理者　竹田　颯<br>
-        ご意見、ご要望をお待ちしています。
-    </footer>
+    <div class="footer">
+        <div class="SNS">
+            <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
+            <a href="https://twitter.com/hayate_KIC"><i class="fa-brands fa-twitter"></i>hayate_KIC</a>
+        </div>
+
+        <p>2022-08/01 Hayate-studio</p>
+    </div>
 
 </html>
