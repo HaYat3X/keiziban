@@ -20,7 +20,7 @@ $update_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $stmt->bind_param('i', $update_id);
 $stmt->execute();
 
-$stmt->bind_result($id, $message, $member_id, $img, $created, $modifile);
+$stmt->bind_result($id, $message, $member_id, $img, $created, $modifile, $iine);
 $result = $stmt->fetch();
 
 ?>

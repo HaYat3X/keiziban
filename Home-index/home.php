@@ -85,7 +85,7 @@ $max_page = floor(($count['cnt'] + 1) / 5 + 1);
 //--------------------------------------------------------------------------------------------------------------------------
 
 // データの呼び出し
-$stmt = $db->prepare('select p.id, p.member_id, p.message, p.picture, p.created, m.name, m.picture, m.status, m.course, m.School_year from posts p, members m where m.id=p.member_id order by id desc limit ?, 5');
+$stmt = $db->prepare('select p.id, p.member_id, p.message, p.picture, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year from posts p, members m where m.id=p.member_id order by id desc limit ?, 5');
 
 // 最大ページ数を求める
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
@@ -97,7 +97,7 @@ $stmt->bind_param('i', $start);
 $stmt->execute();
 
 //　結果を変数におく
-$stmt->bind_result($id, $member_id, $message, $img, $created, $name, $picture, $status, $course, $School_year);
+$stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $picture, $status, $course, $School_year);
 
 
 
@@ -154,7 +154,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $name, $picture, $
         </div>
 
         <ul>
-            <li><a href="../Home-index/home.php"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
             <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
             <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
             <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
@@ -211,7 +211,12 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $name, $picture, $
             while ($stmt->fetch()) :
             ?>
 
+
+
+
+
                 <div class="post">
+
 
                     <div class="picture">
                         <!-- 写真の表示 -->
@@ -272,19 +277,21 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $name, $picture, $
                             <small class="post_time"><?php echo htmlspecialchars($created); ?></small>
                             <!-- 自分の投稿であれば削除できる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
-                                <a href="../Delete-home-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: red;"><i class="fa-solid fa-trash"></i></a>
+                                <a href="../Delete-home-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #696969;"><i class="fa-solid fa-trash"></i></a>
                             <?php endif; ?>
 
                             <!-- 自分の投稿であれば編集ができる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
-                                <a href="../Update-home-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: blue;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="../Update-home-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #4C8DCB;"><i class="fa-solid fa-pen-to-square"></i></a>
                             <?php endif; ?>
 
 
-                            <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: green;"><i class="fa-solid fa-reply"></i></a>
+                            <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
 
 
 
+
+                            <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
                         </div>
                     </li>
 
@@ -312,12 +319,21 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $name, $picture, $
         <!------------------------------------------------------------------------------------------------------------------>
 
         <div class="side-contents">
+
+
+
+
+
+
+
             <div class="search">
                 <form method="post" action="search.php" class="search">
                     <input type="text" size="25" placeholder="　　メッセージを検索" name="search_name" required>
                     <button><i class="fa fa-search"></i></button>
                 </form>
             </div>
+
+
 
 
 
