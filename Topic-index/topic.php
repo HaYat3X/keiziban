@@ -140,6 +140,23 @@ $db = dbconnection();
 
 
                             <small class="post_time"><?php echo htmlspecialchars($created); ?></small>
+                            <!-- 自分の投稿であれば削除できる -->
+                            <?php if ($_SESSION['user_id'] === $member_id) : ?>
+                                <a href="../Delete-home-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #696969;"><i class="fa-solid fa-trash"></i></a>
+                            <?php endif; ?>
+
+                            <!-- 自分の投稿であれば編集ができる -->
+                            <?php if ($_SESSION['user_id'] === $member_id) : ?>
+                                <a href="../Update-home-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #4C8DCB;"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <?php endif; ?>
+
+
+                            <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
+
+
+
+
+                            <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
 
                         </div>
                     </li>
@@ -165,13 +182,6 @@ $db = dbconnection();
 
 
 
-
-            <div class="search">
-                <form method="post" action="search.php" class="search">
-                    <input type="text" size="25" placeholder="　　メッセージを検索" name="search_name" required>
-                    <button><i class="fa fa-search"></i></button>
-                </form>
-            </div>
 
 
 

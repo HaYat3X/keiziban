@@ -215,12 +215,7 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
         </div>
 
         <div class="side-contents">
-            <div class="search">
-                <form method="post" action="search.php" class="search">
-                    <input type="text" size="25" placeholder="　　メッセージを検索" name="search_name" required>
-                    <button><i class="fa fa-search"></i></button>
-                </form>
-            </div>
+
 
 
 

@@ -1,16 +1,20 @@
- @import url("https://use.typekit.net/rpu8qqz.css");
+ /* Googleフォントのインポート */
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Noto+Sans+JP:wght@100&family=Roboto&display=swap');
 
- * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-     font-family: 'Noto Sans JP', sans-serif;
- }
+/* Adobeフォントのインポート */
+@import url("https://use.typekit.net/rpu8qqz.css");
 
- body {
-     min-height: 100vh;
-     background-color: #E6E6E6;
- }
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #E6E6E6;
+    font-family: 'Roboto', sans-serif;
+    width: 1400px;
+    margin: auto;
+}
 
 
  .header {
@@ -36,12 +40,12 @@
 
  .header ul {
      display: flex;
-     margin-left: 215px;
+     margin-left: 260px;
  }
 
  .header li {
      list-style: none;
-     padding-top: 25px;
+     padding-top: 30px;
      padding-bottom: 20px;
      padding-left: 70px;
      font-size: 20px;
@@ -60,74 +64,185 @@
  }
 
 
-
-
-
-
-
-
- .card {
-     width: 700px;
-     margin: auto;
-     margin-bottom: 50px;
+ .container {
+     display: flex;
  }
 
- .content {
-     background-color: white;
-     text-align: center;
-     border-radius: 10px;
+ .main-contents {
+     width: 1000px;
+     margin: 0 auto;
  }
 
- .content img {
-     width: 150px;
-     height: 150px;
-     border-radius: 50%;
-     margin: 30px 0;
+ .profile{
+    background-color: white;
+    width: 600px;
+    margin: auto;
+    border-radius: 10px;
+    text-align: center;
+    padding: 35px 0;
  }
 
- .content .user_box {
-     margin: 0 auto 30px;
- }
-
- .content label {
-     font-size: 25px;
-     font-weight: 600;
- }
-
- .content p {
-     font-size: 20px;
-     font-weight: 300;
+ .img img{
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
  }
 
 
+.user_box{
+    margin-top: 40px;
+}
+
+.user_box label{
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.user_box p{
+    margin-top: 5px;
+    font-size: 20px;
+    font-weight: 900;
+    word-break: break-all;
+    white-space: pre-line;
+}
+
+.user_box-a a{
+    font-size: 20px;
+    background-color: #4C8DCB;
+    color: white;
+    padding: 15px 25px;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.user_box-a a:hover{
+    background-color: #EF810F;
+}
 
 
- .user_box-a {
-     padding-bottom: 30px;
+.user_box-last{
+    margin-bottom: 50px;
+    margin-top: 40px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ .side-contents {
+     width: 400px;
+     padding: 20px 20px;
+     border-left: 1px solid darkgray;
  }
 
- .content a {
-     font-size: 20px;
-     text-decoration: none;
-     padding: 10px 15px;
-     background-color: #4C8DCB;
+
+ .search {
+     padding-bottom: 10px;
+ }
+
+ .search input {
+     width: 220px;
+     height: 35px;
+     border: white;
+ }
+
+ .search button {
+     width: 35px;
+     height: 35px;
      color: white;
-     border-radius: 10px;
+     background-color: #4C8DCB;
+     border: none;
+     border-radius: 5px;
  }
 
-
- .content a:hover {
+ .search button:hover {
      background-color: #EF810F;
      cursor: pointer;
  }
 
 
-
-
- footer {
-     text-align: center;
-     background-color: white;
-     margin-top: 50px;
-     border-radius: 10px;
-     padding: 20px 0;
+ .calendar {
+     margin-bottom: 10px;
  }
+
+ .calendar iframe {
+     width: 400px;
+     height: 350px;
+     border-radius: 10px;
+ }
+
+ .site-content {
+     margin-bottom: 20px;
+ }
+
+ .site {
+     display: flex;
+ }
+
+ .site img {
+     margin: 2px 5px;
+     width: 190px;
+     height: 120px;
+     border-radius: 10px;
+     background-color: white;
+ }
+
+ .site a:hover {
+     opacity: 0.3;
+     transition-duration: 0.3s;
+ }
+
+ .btn_arrow a {
+     color: white;
+     text-decoration: none;
+     padding: 15px 20px;
+     background-color: #4C8DCB;
+     border-radius: 10px;
+ }
+
+ .btn_arrow a:hover {
+     background-color: #EF810F;
+ }
+
+ .footer {
+    background-color: white;
+    width: 1400px;
+    margin: 50px auto 0;
+    height: 100px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.footer .SNS {
+    padding-top: 15px;
+}
+
+.footer a {
+    font-size: 25px;
+    padding: 0 40px;
+    color: #4C8DCB;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #EF810F;
+}
+
+.footer p {
+    padding-top: 15px;
+    background-color: white;
+    border-radius: 10px;
+}

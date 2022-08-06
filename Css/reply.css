@@ -169,7 +169,7 @@ body {
 
  .main-content{
      width: 750px;
-     margin: auto;
+     margin: 0 auto;
  }
 
  .post {

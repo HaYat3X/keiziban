@@ -1,16 +1,20 @@
- @import url("https://use.typekit.net/rpu8qqz.css");
+ /* Googleフォントのインポート */
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Noto+Sans+JP:wght@100&family=Roboto&display=swap');
 
- * {
-     margin: 0;
-     padding: 0;
+/* Adobeフォントのインポート */
+@import url("https://use.typekit.net/rpu8qqz.css");
 
-     font-family: 'Noto Sans JP', sans-serif;
- }
+* {
+    margin: 0;
+    padding: 0;
+}
 
- body {
-     min-height: 100vh;
-     background-color: #E6E6E6;
- }
+body {
+    background-color: #E6E6E6;
+    font-family: 'Roboto', sans-serif;
+    width: 1400px;
+    margin: auto;
+}
 
 
  .header {
@@ -36,12 +40,12 @@
 
  .header ul {
      display: flex;
-     margin-left: 215px;
+     margin-left: 260px;
  }
 
  .header li {
      list-style: none;
-     padding-top: 25px;
+     padding-top: 30px;
      padding-bottom: 20px;
      padding-left: 70px;
      font-size: 20px;
@@ -60,82 +64,245 @@
  }
 
 
- .content {
-     width: 900px;
-     margin: auto;
-     background-color: white;
-     border-radius: 10px;
-     text-align: center;
- }
 
- .content .user_box {
-     padding: 50px 0;
- }
 
- .content .user_box label {
-     font-size: 25px;
 
- }
 
- .content .user_box input {
-     width: 300px;
-     height: 50px;
-     border-radius: 10px;
-     border: 0.5px solid black;
-     font-size: 20px;
- }
 
- .content .koube {
+
+
+
+
+
+
+
+ 
+ .container {
      display: flex;
  }
 
- .content .status {
-     width: 320px;
-     margin: auto;
-     border: 1px solid darkgrey;
+ .main-contents {
+     width: 1000px;
+     margin: 0 auto;
+ }
+
+.edit{
+    background-color: white;
+    width: 800px;
+    margin: auto;
+    border-radius: 10px;
+    text-align: center;
+    padding: 50px 0;
+}
+
+.user_box{
+    margin-top: 40px;
+}
+ 
+.user_box label{
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.user_box input{
+    margin-top: 5px;
+    font-size: 20px;
+    width: 400px;
+    height: 40px;
+    border: 2px solid #4C8DCB;
+    border-radius: 5px;
+}
+
+.status{
+    margin-top: 40px;
+    font-size: 20px;
+}
+
+.status label{
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.status input{
+    margin-top: 5px;
+    transform: scale(1.5);
+}
+
+.course{
+    margin-top: 40px;
+    font-size: 20px;
+}
+
+.course label{
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.course input{
+    margin-top: 5px;
+    transform: scale(1.5);
+}
+
+
+.number{
+    margin-top: 40px;
+    font-size: 20px;
+}
+
+.number label{
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.number input{
+    margin-top: 5px;
+    transform: scale(1.5);
+}
+
+.Introduction{
+    margin-top: 40px;
+    font-size: 20px;
+}
+
+.Introduction label{
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.Introduction textarea{
+    resize: none;
+    margin-top: 5px;
+    font-size: 20px;
+    width: 550px;
+    height: 200px;
+    border: 2px solid #4C8DCB;
+    border-radius: 5px;
+
+}
+
+.edit button{
+    font-size: 20px;
+    background-color: #4C8DCB;
+    color: white;
+    padding: 15px 25px;
+    text-decoration: none;
+    border-radius: 10px;
+    border: none;
+    margin-top: 40px;
+}
+
+
+
+.edit button:hover{
+    background-color: #EF810F;
+    cursor: pointer;
+}
+
+
+
+
+
+ .side-contents {
+     width: 400px;
+     padding: 20px 20px;
+     border-left: 1px solid darkgray;
+ }
+
+
+ .search {
+     padding-bottom: 10px;
+ }
+
+ .search input {
+     width: 220px;
+     height: 35px;
+     border: white;
+ }
+
+ .search button {
+     width: 35px;
+     height: 35px;
+     color: white;
+     background-color: #4C8DCB;
+     border: none;
+     border-radius: 5px;
+ }
+
+ .search button:hover {
+     background-color: #EF810F;
+     cursor: pointer;
+ }
+
+
+ .calendar {
+     margin-bottom: 10px;
+ }
+
+ .calendar iframe {
+     width: 400px;
+     height: 350px;
      border-radius: 10px;
-     margin-bottom: 50px;
  }
 
- .content .status label {
-     font-size: 25px;
+ .site-content {
+     margin-bottom: 20px;
  }
 
- .content .status input {
-     transform: scale(1.5);
-     margin: 10px 0;
+ .site {
+     display: flex;
  }
 
- .content .course {
-     width: 320px;
-     margin: auto;
-     border: 1px solid darkgrey;
+ .site img {
+     margin: 2px 5px;
+     width: 190px;
+     height: 120px;
      border-radius: 10px;
- }
-
- .content .course label {
-     font-size: 25px;
- }
-
- .content .course input {
-     transform: scale(1.5);
-     margin: 15px 0px;
- }
-
-
-
-
-
-
-
-
-
-
-
- footer {
-     text-align: center;
      background-color: white;
-     margin-top: 50px;
-     border-radius: 10px;
-     padding: 20px 0;
  }
+
+ .site a:hover {
+     opacity: 0.3;
+     transition-duration: 0.3s;
+ }
+
+ .btn_arrow a {
+     color: white;
+     text-decoration: none;
+     padding: 15px 20px;
+     background-color: #4C8DCB;
+     border-radius: 10px;
+ }
+
+ .btn_arrow a:hover {
+     background-color: #EF810F;
+ }
+
+ .footer {
+    background-color: white;
+    width: 1400px;
+    margin: 50px auto 0;
+    height: 100px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.footer .SNS {
+    padding-top: 15px;
+}
+
+.footer a {
+    font-size: 25px;
+    padding: 0 40px;
+    color: #4C8DCB;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #EF810F;
+}
+
+.footer p {
+    padding-top: 15px;
+    background-color: white;
+    border-radius: 10px;
+}

@@ -156,7 +156,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
         <ul>
             <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
             <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
+            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a></li>
             <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
 
         </ul>

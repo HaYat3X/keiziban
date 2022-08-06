@@ -1,20 +1,31 @@
 <?php
-try {
-    //DBに接続
-    $dsn = 'mysql:dbname=user_db; host=localhost';
-    $username = 'root';
-    $password = 'root';
-    $pdo = new PDO($dsn, $username, $password);
+session_start();
 
-    //SQL文を実行して、結果を$stmtに代入する。
-    $stmt = $pdo->prepare(" SELECT * FROM posts WHERE message LIKE '%" . $_POST["search_name"] . "%' order by id desc");
-    //実行する
-    $stmt->execute();
-} catch (PDOException $e) {
-    echo "接続エラー:" . $e->getMessage() . "\n";
+// requireでfunctionを呼び込む
+require('../db.php');
+$db = dbconnection();
+
+//--------------------------------------------------------------------------------------------------------------------------
+
+// ログインしている場合
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['user_id'];
+    $name = $_SESSION['user_name'];
+} else {
+    // ログインしていない場合index.phpを経由して、ログインページへ戻す
+    header('Location: ../Home-index/index.php');
     exit();
 }
 ?>
+<!-- where m.id=p.member_id order by iine desc limit 3 -->
+
+
+<?php
+$stmt1 = $db->prepare("SELECT p.id, p.member_id, p.message, p.picture, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from posts p, members m where message LIKE  '%" . $_POST["search_name"] . "%' order by p.id desc");
+$stmt1->execute();
+$stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $picture, $status, $course, $School_year, $member_id2);
+?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -33,20 +44,21 @@ try {
 
     <div class="header">
         <div class="header-nav">
-            <img src="../img/名称未設定-3.png" alt="" width="80" height="80">
+            <img src="../img/favicon.png" alt="" width="80" height="80">
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Home-index/home.php"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
             <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="#"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
+            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
             <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
 
         </ul>
     </div>
+
     <!--　ヘッダーエリア　-->
 
 
@@ -55,35 +67,101 @@ try {
     </div>
 
 
+    <div class="container">
+        <div class="main-contents">
+            <?php
+            while ($stmt1->fetch()) :
+            ?>
+
+                <?php if ($member_id === $member_id2) : ?>
 
 
 
-    <!-- ここでPHPのforeachを使って結果をループさせる -->
+
+                    <div class="post">
 
 
-    <?php foreach ($stmt as $row) : ?>
+                        <div class="picture">
+                            <!-- 写真の表示 -->
+                            <?php if ($picture) : ?>
+
+                                <a href="./myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
+                                    <img src="../member_picture/<?php echo htmlspecialchars($picture); ?>" alt="" width="100" height="100">
+                                </a>
+                            <?php endif; ?>
+
+                            <!-- ユーザーが写真を登録していない場合はデフォルトの画像を表示 -->
+                            <?php if (!$picture) : ?>
+                                <a href="./myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
+                                    <img src="../img/default.png" alt="" width="100" height="100">
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                        <li>
 
 
-        <div class="result">
+                            <p>
+                                <!-- ユーザー情報の表示 -->
+                                <span class="user_name"><?php echo htmlspecialchars($name); ?></span>
+                                <span class="user_number"><?php echo ('@user' . $member_id); ?></span>
 
 
-            <h3>
-                <a href="./myprofile.php?id=<?php echo htmlspecialchars($row[2]); ?>">
-                    <?php echo '@user' . $row[2]; ?>
-                </a>
-            </h3>
-            <h3>
-                <?php echo $row[1]; ?>
-            </h3>
-            <div class="img">
-                <?php if ($row[3]) : ?>
-                    <img src="../picture/<?php echo htmlspecialchars($row[3]); ?>" alt="">
+                            </p>
+
+                            <p class="koube">
+                                <span class="a"><?php echo $status; ?></span>
+                                <span class="b"><?php echo $course; ?></span>
+                                <span class="c"><?php echo $School_year; ?></span>
+                            </p>
+
+                            <!-- メッセージの表示 -->
+                            <div class="newline">
+                                <?php
+                                $message;
+                                $pattern = '/((?:https?|ftp):\/\/[-_.!~*\'()a-zA-Z0-9;\/?:@&=+$,%#]+)/';
+                                $replace = '<a href="$1">$1</a>';
+                                $message = preg_replace($pattern, $replace, $message);
+                                ?>
+                                <?php echo ($message); ?>
+
+                                <p class="img">
+                                    <?php if ($img) : ?>
+                                        <img src="../picture/<?php echo htmlspecialchars($img); ?>" alt="">
+                                    <?php endif; ?>
+                                </p>
+                            </div>
+
+
+
+                            <!-- 投稿時間の表示 -->
+                            <div class="time">
+
+
+
+                                <small class="post_time"><?php echo htmlspecialchars($created); ?></small>
+                                <!-- 自分の投稿であれば削除できる -->
+                                <?php if ($_SESSION['user_id'] === $member_id) : ?>
+                                    <a href="../Delete-home-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #696969;"><i class="fa-solid fa-trash"></i></a>
+                                <?php endif; ?>
+
+                                <!-- 自分の投稿であれば編集ができる -->
+                                <?php if ($_SESSION['user_id'] === $member_id) : ?>
+                                    <a href="../Update-home-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #4C8DCB;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <?php endif; ?>
+
+
+                                <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
+
+
+
+
+                                <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
+                            </div>
+                        </li>
+
+                    </div>
                 <?php endif; ?>
-            </div>
-
-            <small>
-                <?php echo $row[4]; ?>
-            </small>
+            <?php endwhile; ?>
 
         </div>
 
@@ -92,15 +170,56 @@ try {
 
 
 
-    <?php endforeach; ?>
+        <div class="side-contents">
 
 
 
-    <!-- フッターエリア -->
-    <footer>
-        サイト管理者　竹田　颯<br>
-        ご意見、ご要望をお待ちしています。
-    </footer>
+
+
+
+
+
+
+
+
+
+            <!-- カレンダーの表示 -->
+            <div class="calendar">
+                <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+
+            <div class="site-content">
+                <div class="site">
+                    <a href="https://job.career-tasu.jp/2024/top/"><img src="../img/ダウンロード.png" alt=""></a>
+                    <a href="https://job.mynavi.jp/24/pc/toppage/displayTopPage/index"><img src="../img/ogp.jpeg" alt=""></a>
+                </div>
+
+                <div class="site">
+                    <a href="https://job.rikunabi.com/2024/?isc=r21rcnz02954"><img src="../img/ダウンロードのコピー.png" alt=""></a>
+                    <a href="https://www.wantedly.com/"><img src="../img/2328bac9-3f7c-4510-a392-8b112f5e22ad.jpeg" alt=""></a>
+                </div>
+            </div>
+
+            <div class="btn_arrow">
+                <a href="../Logout-index/logout2.php">ログアウト</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!---------------------------------------------------------------------------------------------------------------------->
+
+    <div class="footer">
+        <div class="SNS">
+            <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
+            <a href="https://twitter.com/hayate_KIC"><i class="fa-brands fa-twitter"></i>hayate_KIC</a>
+        </div>
+
+        <p>2022-08/01 Hayate-studio</p>
+    </div>
+
 </body>
 
 </html>
