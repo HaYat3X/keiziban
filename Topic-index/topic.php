@@ -167,51 +167,161 @@ $db = dbconnection();
 
 
             <h2>Service Topics</h2>
+            <?php
+            $stmt2 = $db->prepare('select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year from keizi p, members m where m.id=p.member_id order by iine desc limit 3');
+
+            $stmt2->execute();
+
+            //　結果を変数におく
+            $stmt2->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $iine, $name, $picture, $status, $course, $School_year);
+
+            ?>
+
+            <?php
+            while ($stmt2->fetch()) :
+            ?>
+                <div class="post2">
+
+                    <!-- 写真の表示 -->
+                    <?php if ($picture) : ?>
+
+                        <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
+                            <img src="../member_picture/<?php echo htmlspecialchars($picture); ?>" alt="" width="100" height="100">
+                        </a>
+                    <?php endif; ?>
+
+                    <!-- ユーザーが写真を登録していない場合はデフォルトの画像を表示 -->
+                    <?php if (!$picture) : ?>
+                        <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
+                            <img src="../img/default.png" alt="" width="100" height="100">
+                        </a>
+                    <?php endif; ?>
+
+
+                    <li>
+
+                        <p>
+                            <!-- ユーザー情報の表示 -->
+                            <span class="user_name2"><?php echo htmlspecialchars($name); ?></span>
+                            <span class="user_number2"><?php echo ('@user' . $member_id); ?></span>
+                        </p>
+
+                        <p class="koube2">
+                            <span class="a"><?php echo $status; ?></span>
+                            <span class="b"><?php echo $course; ?></span>
+                            <span class="c"><?php echo $School_year; ?></span>
+                        </p>
+
+
+                        <!-- メッセージの表示 -->
+                        <p class="start2">
+                            <label>企業名：</label><span><?php echo htmlspecialchars($message); ?></span>
+
+                        </p>
+
+                        <p class="newline2">
+                            <label>参加した分野：</label><span><?php echo htmlspecialchars($field); ?></span>
+                        </p>
+
+                        <p class="newline2">
+                            <label>参加したカリキュラム：</label><span><?php echo htmlspecialchars($course1); ?></span>
+                        </p>
+
+                        <p class="newline2">
+                            <label>参加した日数：</label><span><?php echo htmlspecialchars($days); ?></span>
+                        </p>
+
+                        <p class="newline2">
+                            <label>体験内容について：</label><span><?php echo htmlspecialchars($Expectation); ?></span>
+                        </p>
+
+                        <p class="newline2">
+                            <label>企業、業界理解について：</label><span><?php echo htmlspecialchars($Understanding); ?></span>
+                        </p>
+
+                        <p class="newline2">
+                            <label>社員サポートについて：</label><span><?php echo htmlspecialchars($Communication); ?></span>
+                        </p>
+
+                        <p class="newline2">
+                            <label>職場の雰囲気について：</label><span><?php echo htmlspecialchars($Atmosphere); ?></span>
+                        </p>
+
+                        <p class="newline2">
+                            <label>総合的な満足度：</label><span><?php echo htmlspecialchars($Comprehensive); ?></span>
+                        </p>
+
+
+
+                        <p class="newline2">
+                            <label>良かった所、印象に残った所：</label>
+                            <br>
+                            <span><?php echo htmlspecialchars($good); ?></span>
+                        </p>
+
+
+
+
+                        <p class="end2">
+                            <?php
+                            $link;
+                            $pattern = '/((?:https?|ftp):\/\/[-_.!~*\'()a-zA-Z0-9;\/?:@&=+$,%#]+)/';
+                            $replace = '<a href="$1">$1</a>';
+                            $link = preg_replace($pattern, $replace, $link);
+                            ?>
+                            <label>応募したページのリンク：</label><span><?php echo $link; ?></span>
+                        </p>
+
+
+
+                        <div class="time2">
+
+
+
+                            <small><?php echo htmlspecialchars($created); ?></small>
+                            <!-- 自分の投稿であれば削除できる -->
+                            <?php if ($_SESSION['user_id'] === $member_id) : ?>
+                                <a href="../Delete-Service-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color:  #696969;"><i class="fa-solid fa-trash"></i></a>
+                            <?php endif; ?>
+
+                            <!-- 自分の投稿であれば編集ができる -->
+                            <?php if ($_SESSION['user_id'] === $member_id) : ?>
+                                <a href="../Update-Service-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #4C8DCB;;"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <?php endif; ?>
+
+
+                            <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
+
+                            <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
+
+
+                        </div>
+
+
+
+
+                    </li>
+
+                </div>
+            <?php endwhile; ?>
+
+
+
+            <!-------------------------------------------------------------------------------------------------------------->
+
 
         </div>
 
 
 
-
-
-
-        <div class="side-contents">
-
-
-
-
-
-
-
-
-
-
-
-
-            <!-- カレンダーの表示 -->
-            <div class="calendar">
-                <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
-            </div>
-
-
-            <div class="site-content">
-                <div class="site">
-                    <a href="https://job.career-tasu.jp/2024/top/"><img src="../img/ダウンロード.png" alt=""></a>
-                    <a href="https://job.mynavi.jp/24/pc/toppage/displayTopPage/index"><img src="../img/ogp.jpeg" alt=""></a>
-                </div>
-
-                <div class="site">
-                    <a href="https://job.rikunabi.com/2024/?isc=r21rcnz02954"><img src="../img/ダウンロードのコピー.png" alt=""></a>
-                    <a href="https://www.wantedly.com/"><img src="../img/2328bac9-3f7c-4510-a392-8b112f5e22ad.jpeg" alt=""></a>
-                </div>
-            </div>
-
-            <div class="btn_arrow">
-                <a href="../Logout-index/logout2.php">ログアウト</a>
-            </div>
-        </div>
     </div>
-    </div>
+
+
+
+
+
+
+
 
 
 

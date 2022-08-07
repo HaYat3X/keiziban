@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Css/login.css">
+    <link rel="stylesheet" href="../Css/hayate1.css">
     <!-- タイトル　Log in　で指定 -->
     <title>Real intentioNにログイン / Real intentioN</title>
     <!-- ファビコンの読み込み -->
@@ -86,6 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- メールアドレスのテェック -->
                 <div class="user-box">
                     <label>Email</label>
+                    <br>
                     <input type="email" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($email); ?>" required>
 
 
@@ -94,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- パスワードのテェック -->
                 <div class="user-box">
                     <label>Password</label>
+                    <br>
                     <input type="password" name="password" size="35" maxlength="255" value="<?php echo htmlspecialchars($password); ?>" required>
 
 
@@ -112,13 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             </form>
 
-            <div class="guidance">
-                <a href="../Register/welcome.php">会員登録はこちら&gt;&gt;</a>
-            </div>
 
-            <div class="guidance2">
-                <a href="../password_reset/password.php">パスワードを忘れた方はこちら&gt;&gt;</a>
-            </div>
         </div>
     </div>
 </body>

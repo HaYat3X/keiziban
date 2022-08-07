@@ -32,7 +32,7 @@ $max_page = floor(($count['cnt'] + 1) / 5 + 1);
 //--------------------------------------------------------------------------------------------------------------------------
 
 // データの呼び出し
-$stmt = $db->prepare('select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, m.name, m.picture, m.status, m.course, m.School_year from keizi p, members m where m.id=p.member_id order by id desc limit ?, 5');
+$stmt = $db->prepare('select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year from keizi p, members m where m.id=p.member_id order by id desc limit ?, 5');
 
 // 最大ページ数を求める
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
@@ -42,7 +42,7 @@ $stmt->bind_param('i', $start);
 $success = $stmt->execute();
 
 //　結果を変数におく
-$stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $name, $picture, $status, $course, $School_year);
+$stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $iine, $name, $picture, $status, $course, $School_year);
 
 
 ?>
@@ -215,6 +215,7 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
 
                             <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
 
+                            <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
 
 
                         </div>
@@ -249,7 +250,7 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
         <div class="side-contents">
             <div class="search">
                 <form method="post" action="search.php" class="search">
-                    <input type="text" size="25" placeholder="　　メッセージを検索" name="search_name" required>
+                    <input type="text" size="25" placeholder="　　キーワードで検索" name="search_service" required>
                     <button><i class="fa fa-search"></i></button>
                 </form>
             </div>

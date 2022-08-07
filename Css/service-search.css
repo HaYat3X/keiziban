@@ -157,15 +157,16 @@ body {
      font-size: 40px;
  }
 
+ 
 
  .main-contents {
      width: 1300px;
-     margin: auto;
+     margin: 0 auto;
  }
 
 
 
- .post {
+.post {
      display: flex;
      list-style: none;
      background-color: white;
@@ -175,14 +176,12 @@ body {
      padding-left: 50px;
  }
 
-
-
- .post .picture img {
+ .post img {
      border-radius: 50%;
      padding: 10px 20px;
  }
 
- .post .picture img:hover {
+ .post img:hover {
      opacity: 0.5;
  }
 
@@ -191,13 +190,6 @@ body {
      font-weight: 900;
      color: black;
  }
-
- .user_number{
-    font-size: 25px;
-    font-weight: 100;
-    color: darkgray;
- }
-
 
 
 
@@ -209,109 +201,25 @@ body {
  }
 
  .newline {
-     word-break: break-all;
-     white-space: pre-line;
-     font-size: 20px;
-     font-weight: 700;
- }
-
- .post .newline .img img {
-     width: 600px;
-     height: 350px;
-     border-radius: 20px;
- }
-
-
-
- .time a {
-     font-size: 25px;
-     margin-left: 50px;
- }
-
-.iine{
-    font-size: 25px;
-    font-weight: 700;
-    margin-left: 5px;
-}
-
- .btn1 {
-     margin-left: 430px;
- }
-
- .btn1 a {
-     font-size: 20px;
-     background-color: #4C8DCB;
-     color: white;
-     padding: 10px 20px;
-     border-radius: 5px;
-     text-decoration: none;
- }
-
- .btn1 a:hover {
-     background-color: #EF810F;
- }
-
-
-
-
-
-
-
-
- .post2 {
-     display: flex;
-     list-style: none;
-     background-color: white;
-     margin: 50px 20px;
-     border-radius: 20px;
-     padding: 20px 20px;
-     padding-left: 50px;
- }
-
- .post2 img {
-     border-radius: 50%;
-     padding: 10px 20px;
- }
-
- .post2 img:hover {
-     opacity: 0.5;
- }
-
- .user_name2 {
-     font-size: 30px;
-     font-weight: 900;
-     color: black;
- }
-
-
-
- .koube2 {
-     font-size: 20px;
-     color: #EF810F;
-     font-weight: 500;
-     margin-top: 10px;
- }
-
- .newline2 {
      margin: 20px 0;
  }
 
- .newline2 label {
+ .newline label {
      font-size: 20px;
      font-weight: 700;
  }
 
- .newline2 span{
+ .newline span{
     font-size: 20px;
     word-wrap: break-word;
     white-space: pre-line;
  }
 
- .start2 {
+ .start {
      margin-top: 20px;
  }
 
- .start2 label {
+ .start label {
      font-size: 20px;
      font-weight: 700;
  }
@@ -322,16 +230,16 @@ body {
     white-space: pre-line;
  }
 
- .end2 {
+ .end {
      margin-bottom: 20px;
  }
 
- .end2 label {
+ .end label {
      font-size: 20px;
      font-weight: 700;
  }
 
- .end2 span{
+ .end span{
     font-size: 20px;
     word-wrap: break-word;
     white-space: pre-line;
@@ -341,10 +249,38 @@ body {
 
 
 
- .time2 a {
+ .time a {
      font-size: 25px;
      margin-left: 50px;
  }
+
+ .iine{
+    font-size: 25px;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+
+
+ .btn1 {
+     margin-left: 430px;
+ }
+
+ .btn1 a {
+     font-size: 20px;
+     background-color: #4C8DCB;
+     color: white;
+     padding: 10px 20px;
+     border-radius: 20px;
+     text-decoration: none;
+ }
+
+ .btn1 a:hover {
+     font-size: 25px;
+     background-color: #EF810F;
+ }
+
+
 
 
 
@@ -466,3 +402,20 @@ body {
     background-color: white;
     border-radius: 10px;
 }
+
+
+.home a{
+    font-size: 25px;
+    background-color: #4C8DCB;
+    color: white;
+    text-decoration: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+.home a:hover{
+    background-color: #EF810F;
+    cursor: pointer;
+}
+

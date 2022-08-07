@@ -9,7 +9,7 @@ $update_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $stmt->bind_param('i', $update_id);
 $stmt->execute();
 
-$stmt->bind_result($id, $message, $field, $course, $days, $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $member_id, $created, $modifile);
+$stmt->bind_result($id, $message, $field, $course, $days, $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $member_id, $created, $modifile, $iine);
 $result = $stmt->fetch();
 ?>
 
