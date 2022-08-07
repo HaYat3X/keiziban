@@ -179,13 +179,14 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
                                 $replace = '<a href="$1">$1</a>';
                                 $r_message = preg_replace($pattern, $replace, $r_message);
                                 ?>
-                                <label><?php echo $r_message; ?></label>
-                                <p class="img">
-                                    <?php if ($img) : ?>
-                                        <img src="../picture/<?php echo htmlspecialchars($img); ?>" alt="">
-                                    <?php endif; ?>
-                                </p>
+                                <p><?php echo $r_message; ?></p>
                             </div>
+
+                            <p class="img">
+                                <?php if ($img) : ?>
+                                    <img src="../picture/<?php echo htmlspecialchars($img); ?>" alt="">
+                                <?php endif; ?>
+                            </p>
 
 
                             <div class="time">

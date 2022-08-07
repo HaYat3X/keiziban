@@ -214,15 +214,15 @@ body {
  .newline {
      word-wrap: break-word;
      white-space: pre-line;
-     font-size: 15px;
-     margin-bottom: 20px;
+     font-size: 20px;
      font-weight: 700;
  }
 
- .newline .img img {
+ .img img {
      width: 500px;
      height: 300px;
      border-radius: 20px;
+     margin-bottom: 20px;
  }
 
 

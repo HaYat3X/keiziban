@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $Understanding = filter_input(INPUT_POST, 'Understanding', FILTER_SANITIZE_STRING);
 
     $Communication = filter_input(INPUT_POST, 'Communication', FILTER_SANITIZE_STRING);
+    $Atmosphere = filter_input(INPUT_POST, 'Atmosphere', FILTER_SANITIZE_STRING);
     $good = filter_input(INPUT_POST, 'good', FILTER_SANITIZE_STRING);
     $bad = filter_input(INPUT_POST, 'bad', FILTER_SANITIZE_STRING);
 
@@ -44,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-    $stmt = $db->prepare('update keizi set message=?, field=?, course=?, days=?, Expectation=?, Understanding=?, Communication=?, good=?, bad=?, trouble=?, Comprehensive=?, link=? where id=?');
+    $stmt = $db->prepare('update keizi set message=?, field=?, course=?, days=?, Expectation=?, Understanding=?, Communication=?, atmosphere=?, good=?, bad=?, trouble=?, Comprehensive=?, link=? where id=?');
     if (!$stmt) {
         die($db->error);
     }
 
-    $stmt->bind_param('ssssssssssssi', $message, $field, $course, $day, $Expectation, $Understanding, $Communication, $good, $bad, $trouble, $Comprehensive, $link, $update_id);
+    $stmt->bind_param('sssssssssssssi', $message, $field, $course, $day, $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $update_id);
     $success = $stmt->execute();
     if (!$success) {
         die($db->error);

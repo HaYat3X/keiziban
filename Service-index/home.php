@@ -32,7 +32,7 @@ $max_page = floor(($count['cnt'] + 1) / 5 + 1);
 //--------------------------------------------------------------------------------------------------------------------------
 
 // データの呼び出し
-$stmt = $db->prepare('select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, m.name, m.picture, m.status, m.course, m.School_year from keizi p, members m where m.id=p.member_id order by id desc limit ?, 5');
+$stmt = $db->prepare('select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, m.name, m.picture, m.status, m.course, m.School_year from keizi p, members m where m.id=p.member_id order by id desc limit ?, 5');
 
 // 最大ページ数を求める
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
@@ -42,7 +42,7 @@ $stmt->bind_param('i', $start);
 $success = $stmt->execute();
 
 //　結果を変数におく
-$stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Understanding, $Expectation, $Communication, $good, $bad, $trouble, $Comprehensive, $link, $created, $name, $picture, $status, $course, $School_year);
+$stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $name, $picture, $status, $course, $School_year);
 
 
 ?>
@@ -66,16 +66,16 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Understa
     <!--　ヘッダーエリア　-->
     <div class="header">
         <div class="header-nav">
-            <img src="../img/名称未設定-3.png" alt="" width="80" height="80">
+            <img src="../img/favicon.png" alt="" width="80" height="80">
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Home-index/home.php"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
             <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
+            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a></li>
             <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
 
         </ul>
@@ -126,7 +126,7 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Understa
                         <p>
                             <!-- ユーザー情報の表示 -->
                             <span class="user_name"><?php echo htmlspecialchars($name); ?></span>
-                            <span><?php echo ('@user' . $member_id); ?></span>
+                            <span class="user_number"><?php echo ('@user' . $member_id); ?></span>
                         </p>
 
                         <p class="koube">
@@ -138,39 +138,52 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Understa
 
                         <!-- メッセージの表示 -->
                         <p class="start">
-                            <label>企業名：<?php echo htmlspecialchars($message); ?></label>
+                            <label>企業名：</label><span><?php echo htmlspecialchars($message); ?></span>
+
                         </p>
 
                         <p class="newline">
-                            <label>参加した分野：<?php echo htmlspecialchars($field); ?></label>
+                            <label>参加した分野：</label><span><?php echo htmlspecialchars($field); ?></span>
                         </p>
 
                         <p class="newline">
-                            <label>参加したカリキュラム：<?php echo htmlspecialchars($course1); ?></label>
+                            <label>参加したカリキュラム：</label><span><?php echo htmlspecialchars($course1); ?></span>
                         </p>
 
                         <p class="newline">
-                            <label>参加した日数：<?php echo htmlspecialchars($days); ?></label>
+                            <label>参加した日数：</label><span><?php echo htmlspecialchars($days); ?></span>
                         </p>
 
                         <p class="newline">
-                            <label>体験内容についての満足度：<?php echo htmlspecialchars($Expectation); ?></label>
+                            <label>体験内容について：</label><span><?php echo htmlspecialchars($Expectation); ?></span>
                         </p>
 
                         <p class="newline">
-                            <label>企業理解についての満足度：<?php echo htmlspecialchars($Understanding); ?></label>
+                            <label>企業、業界理解について：</label><span><?php echo htmlspecialchars($Understanding); ?></span>
+                        </p>
+
+                        <p class="newline">
+                            <label>社員サポートについて：</label><span><?php echo htmlspecialchars($Communication); ?></span>
+                        </p>
+
+                        <p class="newline">
+                            <label>職場の雰囲気について：</label><span><?php echo htmlspecialchars($Atmosphere); ?></span>
+                        </p>
+
+                        <p class="newline">
+                            <label>総合的な満足度：</label><span><?php echo htmlspecialchars($Comprehensive); ?></span>
                         </p>
 
 
 
                         <p class="newline">
-                            <label>良かった所、印象に残った所、参考になった所：<?php echo htmlspecialchars($good); ?></label>
+                            <label>良かった所、印象に残った所：</label>
+                            <br>
+                            <span><?php echo htmlspecialchars($good); ?></span>
                         </p>
 
 
-                        <p class="newline">
-                            <label>総合的な満足度：<?php echo htmlspecialchars($Comprehensive); ?></label>
-                        </p>
+
 
                         <p class="end">
                             <?php
@@ -179,7 +192,7 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Understa
                             $replace = '<a href="$1">$1</a>';
                             $link = preg_replace($pattern, $replace, $link);
                             ?>
-                            <label>応募したページのリンク：<?php echo $link; ?></label>
+                            <label>応募したページのリンク：</label><span><?php echo $link; ?></span>
                         </p>
 
 
@@ -191,20 +204,22 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Understa
                             <small><?php echo htmlspecialchars($created); ?></small>
                             <!-- 自分の投稿であれば削除できる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
-                                <a href="../Delete-Service-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: red;"><i class="fa-solid fa-trash"></i></a>
+                                <a href="../Delete-Service-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color:  #696969;"><i class="fa-solid fa-trash"></i></a>
                             <?php endif; ?>
 
                             <!-- 自分の投稿であれば編集ができる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
-                                <a href="../Update-Service-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: blue;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="../Update-Service-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #4C8DCB;;"><i class="fa-solid fa-pen-to-square"></i></a>
                             <?php endif; ?>
 
 
-                            <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: green;"><i class="fa-solid fa-reply"></i></a>
+                            <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
 
 
 
                         </div>
+
+
 
 
                     </li>

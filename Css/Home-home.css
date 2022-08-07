@@ -217,11 +217,12 @@ body {
      font-weight: 700;
  }
 
- .post .newline .img img {
+ .post .img img {
      width: 600px;
      height: 350px;
      border-radius: 20px;
- }
+     margin-bottom: 20px;
+}
 
 
 

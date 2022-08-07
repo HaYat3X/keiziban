@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ) {
         $type = mime_content_type($image['tmp_name']);
         // 写真の形式がjpegまたはpngでない場合という条件を追加する
-        if ($type !== 'image/jpeg' && $type !== 'image/png') {
+        if ($type !== 'image/jpeg' && $type !== 'image/png' && $type !== 'image/jpg' && $type !== 'image/webp') {
             $error['image'] = 'type';
         }
     }
@@ -188,7 +188,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
 
                             <div class="user-box">
 
-                                <input type="file" name="image" size="30" value="">
+                                <input type="file" name="image" size="30" value="" accept=".jpg, .jpeg, .png, .webp">
 
 
 
@@ -260,12 +260,14 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                             ?>
                             <?php echo ($message); ?>
 
-                            <p class="img">
-                                <?php if ($img) : ?>
-                                    <img src="../picture/<?php echo htmlspecialchars($img); ?>" alt="">
-                                <?php endif; ?>
-                            </p>
+
                         </div>
+
+                        <p class="img">
+                            <?php if ($img) : ?>
+                                <img src="../picture/<?php echo htmlspecialchars($img); ?>" alt="">
+                            <?php endif; ?>
+                        </p>
 
 
 
