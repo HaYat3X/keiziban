@@ -2,14 +2,6 @@
 // セッションスタート
 session_start();
 
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['user_id'];
-    $name = $_SESSION['user_name'];
-} else {
-    // ログインしていない場合index.phpを経由して、ログインページへ戻す
-    header('Location: ../Home-index/index.php');
-    exit();
-}
 
 
 // エラー回避のため配列を初期化
@@ -92,43 +84,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <div class="main-contents">
             <form action="" method="post">
-                <dl>
-
-                    <!------------------------------------------------------------------------------------------------------>
-                    <div class="user-box">
-                        <!-- ニックネームの入力欄 -->
-                        <label>お名前</label>
-                        <br>
-                        <input type="text" name="nickname" maxlength="200" placeholder="山田　太郎" value="<?php echo htmlspecialchars($form['nickname']); ?>" required>
-                    </div>
-
-                    <div class="user-box">
-                        <label>メールアドレス</label>
-                        <br>
-                        <!-- patternで形式を指定 -->
-                        <input type="email" name="email" placeholder="info@co.jp" value="<?php echo htmlspecialchars($form['email']); ?>" required>
-                    </div>
-
-                    <!----------------------------------------------------------------------------------------------------->
-
-                    <!------------------------------------------------------------------------------------------------------>
 
 
+                <!------------------------------------------------------------------------------------------------------>
+                <div class="user-box">
+                    <!-- ニックネームの入力欄 -->
+                    <label>お名前</label>
+                    <br>
+                    <input type="text" name="nickname" maxlength="200" placeholder="山田　太郎" value="<?php echo htmlspecialchars($form['nickname']); ?>" required>
+                </div>
 
-                    <!------------------------------------------------------------------------------------------------------>
-                    <div class="user-box">
-                        <label>お問い合わせ内容</label>
+                <div class="user-box">
+                    <label>メールアドレス</label>
+                    <br>
+                    <!-- patternで形式を指定 -->
+                    <input type="email" name="email" placeholder="info@co.jp" value="<?php echo htmlspecialchars($form['email']); ?>" required>
+                </div>
 
-                        <br>
+                <!----------------------------------------------------------------------------------------------------->
 
-                        <textarea name="message" required></textarea>
+                <!------------------------------------------------------------------------------------------------------>
 
 
-                    </div>
-                    <!------------------------------------------------------------------------------------------------------>
 
-                    <!-- 送信ボタン -->
-                    <button class="btn btn-radius-solid btn--shadow">確認</button>
+                <!------------------------------------------------------------------------------------------------------>
+                <div class="user-box">
+                    <label>お問い合わせ内容</label>
+
+                    <br>
+
+                    <textarea name="message" required></textarea>
+
+
+                </div>
+                <!------------------------------------------------------------------------------------------------------>
+
+                <!-- 送信ボタン -->
+                <button class="btn btn-radius-solid btn--shadow">確認</button>
             </form>
         </div>
 
@@ -166,9 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
-            <div class="btn_arrow">
-                <a href="../Logout-index/logout2.php">ログアウト</a>
-            </div>
+
         </div>
     </div>
 

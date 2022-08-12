@@ -2,12 +2,19 @@
 // セッションスタート
 session_start();
 
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['user_id'];
-    $name = $_SESSION['user_name'];
+// if (isset($_SESSION['id'])) {
+//     $id = $_SESSION['user_id'];
+//     $name = $_SESSION['user_name'];
+// } else {
+//     // ログインしていない場合index.phpを経由して、ログインページへ戻す
+//     header('Location: ../Home-index/index.php');
+//     exit();
+// }
+
+if (isset($_SESSION['form'])) {
+    $form = $_SESSION['form'];
 } else {
-    // ログインしていない場合index.phpを経由して、ログインページへ戻す
-    header('Location: ../Home-index/index.php');
+    header('Location: contact.php');
     exit();
 }
 
@@ -15,8 +22,7 @@ if (isset($_SESSION['id'])) {
 // 関数読み込み
 require('../db.php');
 
-//データを受け取る
-$form = $_SESSION['form'];
+
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -142,9 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
-            <div class="btn_arrow">
-                <a href="../Logout-index/logout2.php">ログアウト</a>
-            </div>
+
         </div>
     </div>
 

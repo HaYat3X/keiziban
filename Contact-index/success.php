@@ -2,12 +2,34 @@
 // セッションスタート
 session_start();
 
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['user_id'];
-    $name = $_SESSION['user_name'];
+// if (isset($_SESSION['id'])) {
+//     $id = $_SESSION['user_id'];
+//     $name = $_SESSION['user_name'];
+// } else {
+//     // ログインしていない場合index.phpを経由して、ログインページへ戻す
+//     header('Location: ../Home-index/index.php');
+//     exit();
+// }
+
+
+if (isset($_SESSION['form'])) {
+    $form = $_SESSION['form'];
+
+    $FormNickname = $form['nickname'];
+    $FormEmail = $form['email'];
+    $FormMessage = $form['message'];
+
+    mb_language('Japanese');
+    mb_internal_encoding('UTF-8');
+
+    $to = 'hayate.syukatu1@gmail.com';
+    $subject = $FormNickname . '様からのお問い合わせ';
+    $message = '-' . $FormMessage . '-';
+    $headers = $FormEmail;
+
+    mb_send_mail($to, $subject, $message, $headers);
 } else {
-    // ログインしていない場合index.phpを経由して、ログインページへ戻す
-    header('Location: ../Home-index/index.php');
+    header('Location: contact.php');
     exit();
 }
 
@@ -94,9 +116,7 @@ if (isset($_SESSION['id'])) {
                 </div>
             </div>
 
-            <div class="btn_arrow">
-                <a href="../Logout-index/logout2.php">ログアウト</a>
-            </div>
+
         </div>
     </div>
 
@@ -120,6 +140,6 @@ if (isset($_SESSION['id'])) {
 
 <?php
 // 10s redirect
-header('refresh:10;url=../Home-index/home.php');
+header('refresh:9;url=../Home-index/home.php');
 exit();
 ?>
