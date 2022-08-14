@@ -38,7 +38,7 @@ body {
 
 .header ul {
      display: flex;
-     margin-left: 550px;
+     margin-left: 520px;
  }
 
  .header li {
@@ -124,15 +124,7 @@ body {
     border-radius: 10px;
 }
 
-
-
-
-
-
-
-
-
-
+/* タブレットスクリーン */
 @media screen and (max-width: 960px) {
 
     .header {
@@ -168,25 +160,7 @@ body {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* スマホスクリーン */
 @media screen and (max-width: 500px) {
     .header {
         border-radius: 10px;

@@ -1,31 +1,26 @@
 <?php
+
+// セッションスタート
 session_start();
 
-// requireでfunctionを呼び込む
-require('../db.php');
-$db = dbconnection();
+// functionの呼び込む
+require('../function.php');
 
-//--------------------------------------------------------------------------------------------------------------------------
+// DB接続
+$db = db_connection();
 
-// ログインしている場合
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['user_id'];
     $name = $_SESSION['user_name'];
 } else {
-    // ログインしていない場合index.phpを経由して、ログインページへ戻す
     header('Location: ../Home-index/index.php');
     exit();
 }
-?>
-<!-- where m.id=p.member_id order by iine desc limit 3 -->
 
-
-<?php
 $stmt1 = $db->prepare("SELECT p.id, p.member_id, p.message, p.picture, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from posts p, members m where status LIKE  '%" . $_POST["search_name"] . "%' order by p.id desc");
 $stmt1->execute();
 $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $picture, $status, $course, $School_year, $member_id2);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -34,38 +29,52 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/search.css">
+
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../img/favicon.png">
+
+    <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
-    <title>キーワード検索</title>
+    <!-- タイトルの指定 -->
+    <title>検索結果 / Real intentioN</title>
 </head>
 
 <body>
-
     <div class="header">
         <div class="header-nav">
             <img src="../img/favicon.png" alt="" width="80" height="80">
+
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
-            <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
-            <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+            <li>
+                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+            </li>
 
+            <li>
+                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+            </li>
+
+            <li>
+                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+            </li>
+
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+            </li>
         </ul>
     </div>
-
-    <!--　ヘッダーエリア　-->
-
 
     <div class="home">
         <a href="../Home-index/home.php">ホームへ</a>
     </div>
-
 
     <div class="container">
         <div class="main-contents">

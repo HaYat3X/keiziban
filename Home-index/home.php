@@ -1,38 +1,27 @@
 <?php
+
 // sessionスタート
 session_start();
 
 // requireでfunctionを呼び込む
-require('../db.php');
+require('../function.php');
 
-//--------------------------------------------------------------------------------------------------------------------------
+// DB接続
+$db = db_connection();
 
 // ログインしている場合
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['user_id'];
     $name = $_SESSION['user_name'];
 } else {
-    // ログインしていない場合index.phpを経由して、ログインページへ戻す
+    // ログインしていない場合
     header('Location: ../Home-index/index.php');
     exit();
 }
 
-
-
-
-//---------------------------------------------------------------------------------------------------------------------------
-
-// functionの呼びだし、DBとの接続
-$db = dbconnection();
-
-
-
 // メッセージの投稿
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // ユーザーの入力値を変数に代入
     $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
-
     $image = $_FILES['image'];
 
     if (
@@ -58,55 +47,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['form']['image'] = '';
         }
 
-        // すべてにエラーがない場合確認画面に移動する
         // SQL発行
         $stmt = $db->prepare('INSERT INTO posts (message, member_id, picture) VALUES (?, ?, ?)');
-
-        // 変数をバインド
         $stmt->bind_param('sis', $message, $id, $filename);
-
-        // SQL実行
         $stmt->execute();
-
-
-        // データベースの重複登録を防ぐ　POSTの内容を消す
         header('Location: ../Home-index/home.php');
     }
 }
-?>
 
-<?php
-/* 最大ページ数を求める */
-// SQL発行
-$counts = $db->query('select count(*) as cnt from posts');
+// 最大ページ数を求める 
+$counts = $db->query('SELECT COUNT(*) AS cnt FROM posts');
 $count = $counts->fetch_assoc();
 $max_page = floor(($count['cnt'] + 1) / 5 + 1);
 
-//--------------------------------------------------------------------------------------------------------------------------
-
-// データの呼び出し
-$stmt = $db->prepare('select p.id, p.member_id, p.message, p.picture, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year from posts p, members m where m.id=p.member_id order by id desc limit ?, 5');
+// Dbからデータの呼び出す
+$stmt = $db->prepare('SELECT p.id, p.member_id, p.message, p.picture, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year FROM posts p, members m WHERE m.id=p.member_id ORDER BY id DESC LIMIT ?, 5');
 
 // 最大ページ数を求める
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
 $page = ($page ?: 1);
 $start = ($page - 1) * 5;
 $stmt->bind_param('i', $start);
-
-// SQL実行
 $stmt->execute();
 
 //　結果を変数におく
 $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $picture, $status, $course, $School_year);
-
-
-
-
-
-
-
 ?>
-<!-------------------------------------------------------------------------------------------------------------------------->
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -114,114 +81,80 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/Home-home.css">
 
-    <link rel="icon" href="../img/名称未設定-3.png">
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../img/favicon.png">
+
+    <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
-    <title>Real intention</title>
+    <!-- タイトルの指定 -->
+    <title>Real intention トップ / Real intentioN</title>
 </head>
 
 <body>
-
-    <!---------------------------------------------------------------------------------------------------------------------->
-
-
-
-
-
-
-    <!-- モバイル用のボトムメニュー -->
-    <!-- <nav class="bottom-sticky-nav">
-        <ul>
-            <li><a href="#"><i class="fa fa-home"></i><span>Home</span></a></li>
-            <li><a href="#"><i class="fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="#"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
-            <li><a href="#"><i class="fa fa-laptop"></i><span>Portfolio</span></a></li>
-            <li><a href="#"><i class="fa fa-envelope"></i><span>Mail</span></a></li>
-            <li><a href="#"><i class="fa fa-envelope"></i><span>Mail</span></a></li>
-        </ul>
-    </nav> -->
-
-
-
     <div class="header">
         <div class="header-nav">
             <img src="../img/favicon.png" alt="" width="80" height="80">
+
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
-            <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a></li>
-            <li><a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+            <li>
+                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+            </li>
 
+            <li>
+                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+            </li>
+
+            <li>
+                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+            </li>
+
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+            </li>
         </ul>
     </div>
 
-
-
-
-
-
-
-
     <div class="container">
-
-
         <div class="main-contents">
-
 
             <div class="search-box">
                 <label class="open" for="pop-up"><i class="fa-solid fa-pen-clip"></i>投稿する</label>
                 <input type="checkbox" id="pop-up">
+
                 <div class="overlay">
                     <div class="window">
+
                         <label class="close" for="pop-up"><i class="fa-solid fa-circle-xmark"></i></label>
+
                         <form action="" method="post" enctype="multipart/form-data">
-
-
                             <textarea name="message" placeholder=" 　　Real intentioNへようこそ" cols="60" rows="18" required></textarea>
 
                             <div class="user-box">
-
-                                <input type="file" name="image" size="30" value="" accept=".jpg, .jpeg, .png, .webp">
-
-
-
+                                <input type="file" name="image" size="30" accept=".jpg, .jpeg, .png, .webp">
                             </div>
-
-
 
                             <button><i class="fa-solid fa-pen"></i>投稿する</button>
                         </form>
-
                     </div>
                 </div>
-
-
             </div>
 
-            <!-------------------------------------------------------------------------------------------------------------->
-
-            <?php
-            while ($stmt->fetch()) :
-            ?>
-
-
-
-
-
+            <?php while ($stmt->fetch()) : ?>
                 <div class="post">
-
 
                     <div class="picture">
                         <!-- 写真の表示 -->
                         <?php if ($picture) : ?>
-
                             <a href="./myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
                                 <img src="../member_picture/<?php echo htmlspecialchars($picture); ?>" alt="" width="100" height="100">
                             </a>
@@ -234,20 +167,18 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                             </a>
                         <?php endif; ?>
                     </div>
+
                     <li>
-
-
                         <p>
                             <!-- ユーザー情報の表示 -->
                             <span class="user_name"><?php echo htmlspecialchars($name); ?></span>
-                            <span class="user_number"><?php echo ('@user' . $member_id); ?></span>
-
+                            <span class="user_number"><?php echo htmlspecialchars('@user' . $member_id); ?></span>
                         </p>
 
                         <p class="koube">
-                            <span class="a"><?php echo $status; ?></span>
-                            <span class="b"><?php echo $course; ?></span>
-                            <span class="c"><?php echo $School_year; ?></span>
+                            <span class="a"><?php echo htmlspecialchars($status); ?></span>
+                            <span class="b"><?php echo htmlspecialchars($course); ?></span>
+                            <span class="c"><?php echo htmlspecialchars($School_year); ?></span>
                         </p>
 
                         <!-- メッセージの表示 -->
@@ -259,8 +190,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                             $message = preg_replace($pattern, $replace, $message);
                             ?>
                             <?php echo ($message); ?>
-
-
+                            <br>
                         </div>
 
                         <p class="img">
@@ -269,13 +199,8 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                             <?php endif; ?>
                         </p>
 
-
-
                         <!-- 投稿時間の表示 -->
                         <div class="time">
-
-
-
                             <small class="post_time"><?php echo htmlspecialchars($created); ?></small>
                             <!-- 自分の投稿であれば削除できる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
@@ -287,23 +212,13 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                                 <a href="../Update-home-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #4C8DCB;"><i class="fa-solid fa-pen-to-square"></i></a>
                             <?php endif; ?>
 
-
                             <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
-
-
-
 
                             <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
                         </div>
                     </li>
-
                 </div>
-
             <?php endwhile; ?>
-
-
-
-            <!-------------------------------------------------------------------------------------------------------------->
 
             <div class="btn1">
                 <?php if ($page > 1) : ?>
@@ -314,20 +229,9 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                     <a href="?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>&gt;&gt;</a>
                 <?php endif; ?>
             </div>
-
-
         </div>
 
-        <!------------------------------------------------------------------------------------------------------------------>
-
         <div class="side-contents">
-
-
-
-
-
-
-
             <div class="search">
                 <form method="post" action="search.php" class="search">
                     <input type="text" size="25" placeholder="　　メッセージを検索" name="search_name" required>
@@ -342,16 +246,9 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                 </form>
             </div>
 
-
-
-
-
-
-            <!-- カレンダーの表示 -->
             <div class="calendar">
                 <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
             </div>
-
 
             <div class="site-content">
                 <div class="site">
@@ -371,10 +268,6 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
         </div>
     </div>
 
-
-
-    <!---------------------------------------------------------------------------------------------------------------------->
-
     <div class="footer">
         <div class="SNS">
             <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
@@ -383,5 +276,6 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
 
         <p>2022-08/01 Hayate-studio</p>
     </div>
+</body>
 
 </html>

@@ -1,35 +1,30 @@
 <?php
 
-
+// セッションスタート
 session_start();
+
+// functionの呼び込む
+require('../function.php');
+
+// DB接続
+$db = db_connection();
+
 if (isset($_SESSION['id'])) {
-    $user_id = $_SESSION['user_id'];
-    $user_name = $_SESSION['user_name'];
+    $id = $_SESSION['user_id'];
+    $name = $_SESSION['user_name'];
 } else {
-    // ログインしていない場合、ログインページへ戻す
-    header('Location: ../Login/login.php');
+    header('Location: ../Home-index/index.php');
     exit();
 }
 
-
-
-require('../db.php');
-$db = new mysqli('localhost', 'root', 'root', 'user_db');
-$stmt = $db->prepare('select * from members where id=?');
-if (!$stmt) {
-    die($db->error);
-}
+$stmt = $db->prepare('SELECT * FROM members WHERE id=?');
 $GET_ID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $stmt->bind_param('i', $GET_ID);
 $stmt->execute();
-
 $stmt->bind_result($id, $name, $email, $birth, $tel, $password, $picture, $status, $course, $School_year, $comment, $uuid, $created, $modifild);
 $result = $stmt->fetch();
-
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -42,54 +37,66 @@ $result = $stmt->fetch();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <title>編集画面</title>
 
+    <!-- タイトルの指定指定 -->
+    <title>プロフィールを編集する / Real intentioN</title>
 
+    <!-- ファビコンの読み込み -->
+    <link rel="icon" href="../img/favicon.png">
+
+    <!-- cssの読み込み -->
+    <link rel="stylesheet" href="../Css/update-profile.css">
+
+    <!-- font-awesomeのインポート -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 
 <body>
-
     <div class="header">
         <div class="header-nav">
             <img src="../img/favicon.png" alt="" width="80" height="80">
+
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
-            <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a></li>
-            <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+            <li>
+                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+            </li>
 
+            <li>
+                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+            </li>
+
+            <li>
+                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+            </li>
+
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+            </li>
         </ul>
     </div>
 
     <div class="container">
-
         <div class="main-contents">
             <?php if ($_SESSION['user_id'] === $id) : ?>
                 <div class="edit">
                     <form action="../Profile-index/profile_do.php" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="<?php echo $id; ?>">
 
-
-
                         <div class="user_box">
-
-
                             <label>アイコンを変更</label>
                             <br>
                             <input type="file" name="image" accept=".png, .jpg, .jpeg">
                         </div>
-
 
                         <div class="user_box">
                             <label>名前</label>
                             <br>
                             <input type="text" name="name" value="<?php echo $name; ?>">
                         </div>
-
-
 
                         <div class="status">
                             <label>学科</label>
@@ -131,9 +138,7 @@ $result = $stmt->fetch();
                             <input type="radio" name="status" value="日本語学科"> 日本語学科
                             <br>
                             <input type="radio" name="status" value="国際コミュニケーション学科"> 国際コミュニケーション学科
-
                         </div>
-
 
                         <div class="course">
                             <label>コース</label>
@@ -162,7 +167,6 @@ $result = $stmt->fetch();
 
                         </div>
 
-
                         <div class="Introduction">
                             <label>自己紹介</label>
                             <br>
@@ -175,27 +179,12 @@ $result = $stmt->fetch();
             <?php endif; ?>
         </div>
 
-
         <div class="side-contents">
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             <!-- カレンダーの表示 -->
             <div class="calendar">
                 <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
             </div>
-
 
             <div class="site-content">
                 <div class="site">
@@ -213,10 +202,7 @@ $result = $stmt->fetch();
                 <a href="../Logout-index/logout2.php">ログアウト</a>
             </div>
         </div>
-
     </div>
-
-
 
     <div class="footer">
         <div class="SNS">
@@ -226,8 +212,6 @@ $result = $stmt->fetch();
 
         <p>2022-08/01 Hayate-studio</p>
     </div>
-
-    <script src="../img.js"></script>
 </body>
 
 </html>

@@ -1,29 +1,35 @@
 <?php
+
+// セッションスタート
 session_start();
 
-// ログインしている場合
+// functionの読み込み
+require("../function.php");
+
+// DB接続
+$db = db_connection();
+
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['user_id'];
     $name = $_SESSION['user_name'];
 } else {
-    // ログインしていない場合index.phpを経由して、ログインページへ戻す
     header('Location: ../Home-index/index.php');
     exit();
 }
-require('../db.php');
-$db = new mysqli('localhost', 'root', 'root', 'user_db');
-$stmt = $db->prepare('select * from posts where id=?');
+
+$stmt = $db->prepare('SELECT * FROM posts WHERE id=?');
 if (!$stmt) {
     die($db->error);
 }
+
 $update_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $stmt->bind_param('i', $update_id);
 $stmt->execute();
 
 $stmt->bind_result($id, $message, $member_id, $img, $created, $modifile, $iine);
 $result = $stmt->fetch();
-
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -31,44 +37,61 @@ $result = $stmt->fetch();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/update-home.css">
+
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../img/favicon.png">
+
+    <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <title>編集画面</title>
+
+    <!-- タイトルの指定 -->
+    <title>編集する / Real intentioN</title>
 </head>
 
 <body>
-
-    <!--　ヘッダーエリア　-->
     <div class="header">
         <div class="header-nav">
-            <img src="..//img/favicon.png" alt="" width="80" height="80">
+            <img src="../img/favicon.png" alt="" width="80" height="80">
+
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../community_home/home.php"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-            <li><a href="../community_home/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="#"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
-            <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+            <li>
+                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+            </li>
 
+            <li>
+                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+            </li>
+
+            <li>
+                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+            </li>
+
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+            </li>
         </ul>
     </div>
 
     <div class="content">
         <div class="edit">
             <form action="../Update-home-index/update_do.php" method="post" enctype="multipart/form-data">
+
                 <div class="text">
                     <input type="hidden" name="id" value="<?php echo $update_id; ?>">
                     <textarea name="memo" placeholder=" 編集内容を記述してください"><?php echo htmlspecialchars($message); ?></textarea>
+
                     <div>
-                        <input type="file" name="image" size="30" value="">
+                        <input type="file" name="image" size="30" accept=".jpg, .jpeg, .png, .webp">
                     </div>
-
-
                 </div>
-
 
                 <div class="btn">
                     <button>更新する</button>
@@ -76,22 +99,12 @@ $result = $stmt->fetch();
             </form>
         </div>
 
-
-
         <div class="side-contents">
-
-
-
-
 
             <!-- カレンダーの表示 -->
             <div class="calendar">
                 <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
             </div>
-
-            <!-------------------------------------------------------------------------------------------------------------->
-
-
 
             <div class="site-content">
                 <div class="site">
@@ -109,10 +122,7 @@ $result = $stmt->fetch();
                 <a href="../Logout-index/logout2.php">ログアウト</a>
             </div>
         </div>
-
-
     </div>
-
 
     <div class="footer">
         <div class="SNS">

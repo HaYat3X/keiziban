@@ -1,9 +1,13 @@
 <?php
+
 // sessionスタート
 session_start();
 
-// requireでfunctionを呼び込む
-require('../db.php');
+// functionを呼び込む
+require('../function.php');
+
+// DB接続
+$db = db_connection();
 
 // ログインしている場合
 if (isset($_SESSION['id'])) {
@@ -15,10 +19,6 @@ if (isset($_SESSION['id'])) {
     exit();
 }
 
-// functionの呼びだし
-$db = dbconnection();
-
-
 $reply_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 // 削除対策
@@ -27,5 +27,4 @@ $stmt->bind_param('ii', $reply_id, $id);
 $stmt->execute();
 
 header('Location: ../Home-index/home.php');
-
 exit();

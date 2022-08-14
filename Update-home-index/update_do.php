@@ -1,14 +1,27 @@
 <?php
-$db = new mysqli('localhost', 'root', 'root', 'user_db');
 
+// セッションスタート
+session_start();
+
+// functionの読み込み
+require("../function.php");
+
+// DB接続
+$db = db_connection();
+
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['user_id'];
+    $name = $_SESSION['user_name'];
+} else {
+    header('Location: ../Home-index/index.php');
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ユーザーの入力値を変数に代入
     $update_id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
     $message = filter_input(INPUT_POST, 'memo', FILTER_SANITIZE_STRING);
-
-
     $image = $_FILES['image'];
 
     if (

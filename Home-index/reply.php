@@ -1,25 +1,26 @@
 <?php
 
+// セッションスタート
 session_start();
+
+// functionの読み込み
+require('../function.php');
+
+// DB接続
+$db = db_connection();
+
 if (isset($_SESSION['id'])) {
     $user_id = $_SESSION['user_id'];
     $user_name = $_SESSION['user_name'];
 } else {
-    // ログインしていない場合、ログインページへ戻す
     header('Location: ../Login/login.php');
     exit();
 }
-require('../db.php');
 
-
-$db = new mysqli('localhost', 'root', 'root', 'user_db');
 $ID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
-
-
     $image = $_FILES['image'];
 
     if (
@@ -50,28 +51,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die($db->error);
         }
 
-
-
-
         $stmt->bind_param('siss', $message, $user_id, $ID, $filename);
         $success = $stmt->execute();
 
-
-        // データベースの重複登録を防ぐ　POSTの内容を消す
-        header('Location: reply.php?id=' . $ID);
+        header('Location: ../Home-index/reply.php?id=' . $ID);
+        exit();
     }
 }
 
-
-$stmt2 = $db->prepare('select p.id, p.message, p.member_id, p.post_id, p.picture, p.created, m.name, m.picture, m.status, m.course, m.School_year from reply p, members m where m.id=p.member_id order by id desc');
-
-
+$stmt2 = $db->prepare('SELECT p.id, p.message, p.member_id, p.post_id, p.picture, p.created, m.name, m.picture, m.status, m.course, m.School_year FROM reply p, members m WHERE m.id=p.member_id ORDER BY id DESC');
 $stmt2->execute();
 
 //　結果を変数におく
 $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created, $name, $picture, $status, $course, $School_year);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -81,27 +73,43 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/reply.css">
+
+    <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <title>Document</title>
+
+    <!-- タイトルの指定 -->
+    <title>返信する / Real intentioN</title>
 </head>
 
 <body>
-
     <div class="header">
         <div class="header-nav">
             <img src="../img/favicon.png" alt="" width="80" height="80">
+
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Home-index/home.php"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-            <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
-            <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+            <li>
+                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+            </li>
 
+            <li>
+                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+            </li>
+
+            <li>
+                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+            </li>
+
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+            </li>
         </ul>
     </div>
 
@@ -109,40 +117,31 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
         <div class="main-content">
             <label class="open" for="pop-up"><i class="fa-solid fa-pen-clip"></i>返信する</label>
             <input type="checkbox" id="pop-up">
+
             <div class="overlay">
                 <div class="window">
                     <label class="close" for="pop-up"><i class="fa-solid fa-circle-xmark"></i></label>
                     <form action="" method="post" enctype="multipart/form-data">
-
                         <textarea name="message" placeholder=" 　　Real intentioNへようこそ" required></textarea>
+
                         <div class="user-box">
-
                             <input type="file" name="image" size="30" value="">
-
-
-
                         </div>
 
                         <button><i class="fa-solid fa-pen"></i>返信する</button>
                     </form>
-
                 </div>
             </div>
 
+            <?php while ($stmt2->fetch()) : ?>
 
-
-
-            <?php
-            while ($stmt2->fetch()) :
-            ?>
                 <!-- 投稿IDと返信IDが一致したものだけを表示 -->
                 <?php if ($post_id === $ID) : ?>
-
                     <div class="post">
+
                         <!-- 写真の表示 -->
                         <div class="icon">
                             <?php if ($picture) : ?>
-
                                 <a href="./myprofile.php?id=<?php echo htmlspecialchars($r_member_id); ?>">
                                     <img src="../member_picture/<?php echo htmlspecialchars($picture); ?>" alt="" width="80" height="80">
                                 </a>
@@ -155,13 +154,12 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
                                 </a>
                             <?php endif; ?>
                         </div>
-                        <li>
 
+                        <li>
                             <p>
                                 <!-- ユーザー情報の表示 -->
                                 <span class="user_name"><?php echo htmlspecialchars($name); ?></span>
                                 <span class="user_number"><?php echo ('@user' . $r_member_id); ?></span>
-
                             </p>
 
                             <p class="koube">
@@ -169,8 +167,6 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
                                 <span class="b"><?php echo $course; ?></span>
                                 <span class="c"><?php echo $School_year; ?></span>
                             </p>
-
-
 
                             <div class="newline">
                                 <?php
@@ -188,44 +184,24 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
                                 <?php endif; ?>
                             </p>
 
-
                             <div class="time">
-
                                 <small><?php echo htmlspecialchars($r_created); ?></small>
-
-
-
                                 <?php if ($_SESSION['user_id'] === $r_member_id) : ?>
                                     <a href="../Delete-home-reply-index/delete.php?id=<?php echo htmlspecialchars($r_id); ?>" class="a" style="color: red;"><i class="fa-solid fa-trash"></i></a>
                                 <?php endif; ?>
-
-
-
                             </div>
-
                         </li>
                     </div>
                 <?php endif; ?>
-
-
-
-
-
             <?php endwhile; ?>
-
         </div>
 
         <div class="side-contents">
-
-
-
-
 
             <!-- カレンダーの表示 -->
             <div class="calendar">
                 <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
             </div>
-
 
             <div class="site-content">
                 <div class="site">
@@ -245,9 +221,6 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
         </div>
     </div>
 
-    </div>
-
-
     <div class="footer">
         <div class="SNS">
             <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
@@ -256,7 +229,6 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
 
         <p>2022-08/01 Hayate-studio</p>
     </div>
-
 </body>
 
 </html>

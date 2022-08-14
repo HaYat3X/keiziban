@@ -4,14 +4,12 @@
 session_start();
 
 // function呼び出し
-require('../db.php');
+require('../function.php');
 
-
-// 書き直しのために指定した値(Tofix)を呼び出す
 if (isset($_GET['action']) && $_GET['action'] === 'Tofix' && isset($_SESSION['form'])) {
     $form = $_SESSION['form'];
-    // 何も書かれていない場合は初期画面へ
 } else {
+
     // エラー回避のために配列を初期化しておく
     $form = [
         'nickname' => '',
@@ -24,46 +22,38 @@ if (isset($_GET['action']) && $_GET['action'] === 'Tofix' && isset($_SESSION['fo
 
 $error = [];
 
-//---------------------------------------------------------------------------------------------------------------------------
-
 // フォームの入力内容をチェックする
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // nameの入力内容をチェックする
     $form['nickname'] = filter_input(INPUT_POST, 'nickname', FILTER_SANITIZE_STRING);
-    // nameが空白(blank)であればという条件を追加する
     if ($form['nickname'] === '') {
         $error['nickname'] = 'blank';
     }
 
     // 生年月日の入力内容をチェックする
     $form['birth'] = filter_input(INPUT_POST, 'birth', FILTER_SANITIZE_STRING);
-    // birthが空白(blank)であればという条件を追加する
     if ($form['birth'] === '') {
         $error['birth'] = 'blank';
     }
 
     // emailの入力内容をチェックする
     $form['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    // emailが空白(blank)であればという条件を追加する
     if ($form['email'] === '') {
         $error['email'] = 'blank';
-
-        // emailが重複している場合という条件を追加する
     } else {
-        // データベースとの接続
-        $db = dbconnection();
+
+        // DB接続
+        $db = db_connection();
+
+        // Emailが重複している場合エラーを表示する
         $stmt = $db->prepare('select count(*) from members where email=?');
         $stmt->bind_param('s', $form['email']);
         $success = $stmt->execute();
-
-        // countの結果を変数(Result_is)に代入
         $stmt->bind_result($Result_is);
 
         // 0か1で重複を判断する
         $stmt->fetch();
-
-        // 数字が0以上ならば重複だから　$Result_isが0以上の時エラーを表示するという条件を追加する
         if ($Result_is > 0) {
             $error['email'] = 'duplicate';
         }
@@ -71,24 +61,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // telの入力内容をチェックする
     $form['tel'] = filter_input(INPUT_POST, 'tel', FILTER_SANITIZE_STRING);
-    // telが空白(blank)であればという条件を追加する
     if ($form['tel'] === '') {
         $error['tel'] = 'blank';
+    } else {
+
+        // DB接続
+        $db = db_connection();
 
         // 携帯電話番号が重複している場合エラーを表示する
-    } else {
-        $db = dbconnection();
         $stmt = $db->prepare('select count(*) from members where tel=?');
         $stmt->bind_param('s', $form['tel']);
         $success = $stmt->execute();
-
-        // countの結果を変数(Result_is)に代入
         $stmt->bind_result($Result_is);
 
         // 0か1で重複を判断する
         $stmt->fetch();
-
-        // 数字が0以上ならば重複だから　$Result_isが0以上の時エラーを表示するという条件を追加する
         if ($Result_is > 0) {
             $error['tel'] = 'duplicate';
         }
@@ -96,10 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // passwordの入力内容をチェックする
     $form['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-    // passwordが空白(blank)であればという条件を追加する
     if ($form['password'] === '') {
         $error['password'] = 'blank';
-        // passwordが6文字以下(length)であればという条件を追加する
+
+        // passwordが6文字以下の場合　エラーメッセージを表示
     } else if (strlen($form['password']) < 6) {
         $error['password'] = 'length';
     }
@@ -109,7 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($image['name'] !== '' && $image['error'] === 0) {
         $type = mime_content_type($image['tmp_name']);
-        // 写真の形式がjpegまたはpngでない場合という条件を追加する
         if ($type !== 'image/jpeg' && $type !== 'image/png') {
             $error['image'] = 'type';
         }
@@ -129,14 +115,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['form']['image'] = '';
         }
 
-        // すべてにエラーがない場合確認画面に移動する
         header('Location: check.php');
         exit();
     }
 }
 ?>
-
-<!-------------------------------------------------------------------------------------------------------------------------->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -145,20 +128,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/welcome.css">
-    <title>アカウント作成 / Real intentioN</title>
-    <link rel="icon" href="../img/名称未設定-3.png">
+
+    <!-- タイトルの指定 -->
+    <title>アカウントを作成する / Real intentioN</title>
+
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../img/favicon.png">
+
     <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 
 <body>
-
     <div class="header">
         <img src="../img/favicon.png" alt="">
         <h1>Real intentioN</h1>
-    </div>
 
+        <ul>
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i>contact</a>
+            </li>
+        </ul>
+    </div>
 
     <div class="content">
         <div class="msg">
@@ -167,13 +161,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Real intentioN
             </h1>
 
-
         </div>
 
         <div class="Register">
-
-
-
             <form action="" method="post" enctype="multipart/form-data">
 
                 <ul class="progressbar">
@@ -187,21 +177,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="user-box">
-
-
-
                     <input required type="date" name="birth" placeholder="　生年月日　例：2004-02/21" value="<?php echo htmlentities($form['birth']); ?>">
-
-
                 </div>
 
                 <div class="user-box">
-
-
-
                     <input required type="email" name="email" placeholder="　メールアドレス　例：info@co.jp" maxlength="30" value="<?php echo htmlspecialchars($form['email']); ?>">
-
-
 
                     <!-- メールアドレスが重複している場合エラーを表示する -->
                     <?php if (isset($error['email']) && $error['email'] === 'duplicate') : ?>
@@ -209,14 +189,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endif; ?>
                 </div>
 
-
-
                 <div class="user-box">
-
-
-
                     <input required type="tel" name="tel" placeholder="　携帯電話番号　例：012345678910" pattern="\d{11}" value="<?php echo htmlspecialchars($form['tel']); ?>">
-
 
                     <!-- 携帯電話番号が重複している場合エラーを表示する -->
                     <?php if (isset($error['tel']) && $error['tel'] === 'duplicate') : ?>
@@ -225,12 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="user-box">
-
-
-
                     <input required type="password" name="password" placeholder="　パスワード　例：••••••" maxlength="200" value="">
-
-
 
                     <!-- パスワードが6文字以下の場合エラーを表示する -->
                     <?php if (isset($error['password']) && $error['password'] === 'length') : ?>
@@ -238,12 +207,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endif; ?>
                 </div>
 
-
                 <div class="user-box">
-
-
-
-                    <input type="file" name="image" size="30" value="">
+                    <input type="file" name="image" size="30" accept=".jpg, .jpeg, .png, .webp">
 
                     <!-- 指定された画像が(JPG)形式でなければエラーを表示する -->
                     <?php if (isset($error['image']) && $error['image'] === 'type') : ?>
@@ -251,21 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endif; ?>
                 </div>
 
-
-
-
-
-                <!------------------------------------------------------------------------------------------------------>
-
-                <!-- 送信ボタン -->
-                <button>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    入力内容を確認する
-                </button>
-
+                <button>入力内容を確認する</button>
             </form>
         </div>
     </div>
@@ -278,113 +229,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <p>2022-08/01 Hayate-studio</p>
     </div>
-
-    <main>
-        <div class="card">
-            <div class="content">
-
-                <!---------------------------------------------------------------------------------------------------------->
-
-                <!-- ステップバーの制御-->
-                <div class="progressbar">
-
-                </div>
-
-                <!---------------------------------------------------------------------------------------------------------->
-
-                <!-- タイトル文字 -->
-                <h2>アカウントを作成</h2>
-                <form action="" method="post" enctype="multipart/form-data">
-
-
-                    <div class="user-box">
-                        <input required type="text" name="nickname" maxlength="33" placeholder="　ユーザー名　例：User1" value="<?php echo htmlspecialchars($form['nickname']); ?>">
-                    </div>
-
-                    <div class="user-box">
-
-
-
-                        <input required type="date" name="birth" placeholder="　生年月日　例：2004-02/21" value="<?php echo htmlentities($form['birth']); ?>">
-
-
-                    </div>
-
-                    <div class="user-box">
-
-
-
-                        <input required type="email" name="email" placeholder="　メールアドレス　例：info@co.jp" maxlength="30" value="<?php echo htmlspecialchars($form['email']); ?>">
-
-
-
-                        <!-- メールアドレスが重複している場合エラーを表示する -->
-                        <?php if (isset($error['email']) && $error['email'] === 'duplicate') : ?>
-                            <h5 class="error">*指定のメールアドレスは既に登録されています。ログインしてください。</h5>
-                        <?php endif; ?>
-                    </div>
-
-
-
-                    <div class="user-box">
-
-
-
-                        <input required type="tel" name="tel" placeholder="　携帯電話番号　例：012345678910" pattern="\d{11}" value="<?php echo htmlspecialchars($form['tel']); ?>">
-
-
-                        <!-- 携帯電話番号が重複している場合エラーを表示する -->
-                        <?php if (isset($error['tel']) && $error['tel'] === 'duplicate') : ?>
-                            <h5 class="error">*指定の携帯電話番号は既に登録されています。ログインしてください。</h5>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="user-box">
-
-
-
-                        <input required type="password" name="password" placeholder="　パスワード　例：••••••" maxlength="200" value="">
-
-
-
-                        <!-- パスワードが6文字以下の場合エラーを表示する -->
-                        <?php if (isset($error['password']) && $error['password'] === 'length') : ?>
-                            <h5 class="error">*パスワードは6文字以上で入力してください!</h5>
-                        <?php endif; ?>
-                    </div>
-
-
-                    <div class="user-box">
-
-
-
-                        <input type="file" name="image" size="30" value="">
-
-                        <!-- 指定された画像が(JPG)形式でなければエラーを表示する -->
-                        <?php if (isset($error['image']) && $error['image'] === 'type') : ?>
-                            <h5 class="error">*画像はJPG形式またはPNG形式で指定してください!</h5>
-                        <?php endif; ?>
-                    </div>
-
-
-
-
-
-                    <!------------------------------------------------------------------------------------------------------>
-
-                    <!-- 送信ボタン -->
-                    <button>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        入力内容を確認する
-                    </button>
-
-                </form>
-            </div>
-        </div>
-    </main>
 </body>
 
 </html>

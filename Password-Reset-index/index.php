@@ -1,3 +1,3 @@
 <?php
-header('Location: ../password_reset/password.php');
+header('Location: ../Password-Reset-index/certification.php');
 exit();

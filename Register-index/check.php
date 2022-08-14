@@ -1,11 +1,10 @@
 <?php
-//---------------------------------------------------------------------------------------------------------------------------
 
 // セッションスタート
 session_start();
 
 // function呼び出し
-require('../db.php');
+require('../function.php');
 
 // データを受け取る
 if (isset($_SESSION['form'])) {
@@ -15,19 +14,13 @@ if (isset($_SESSION['form'])) {
     exit();
 }
 
-//---------------------------------------------------------------------------------------------------------------------------
-
-// データベースとの連携
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $db = dbconnection();
+
+    // DB接続
+    $db = db_connection();
 
     // インサート文でテーブルにデータを登録する
-    $stmt = $db->prepare('insert into members (name, email, birth, tel, password, picture, status, course, School_year, comment, uuid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-    // 値を代入できなかったときエラーを表示
-    if (!$stmt) {
-        die($db->error);
-    }
-
+    $stmt = $db->prepare('INSERT INTO members (name, email, birth, tel, password, picture, status, course, School_year, comment, uuid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
     // 所属学科の初期値を指定する
     $Department = '未設定';
@@ -44,19 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // セキュリティー対策のためのランダム文字列作成
     $str2 = substr(str_shuffle("ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz0123456789"), 0, 16);
 
-
     // パスワードの暗号化
     $password = password_hash($form['password'], PASSWORD_DEFAULT);
     $stmt->bind_param('sssssssssss', $form['nickname'], $form['email'], $form['birth'], $form['tel'], $password, $form['image'], $Department, $course, $School_year, $comment, $str2);
     $success = $stmt->execute();
 
-
-
     header('Location: thank.php');
 }
 ?>
-
-<!-------------------------------------------------------------------------------------------------------------------------->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -65,20 +53,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/check.css">
-    <title>登録内容確認 / Real intentioN</title>
-    <link rel="icon" href="../img/名称未設定-3.png">
+
+    <!-- タイトルの指定 -->
+    <title>登録内容を確認する / Real intentioN</title>
+
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../img/favicon.png">
+
     <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 
 <body>
-
     <div class="header">
         <img src="../img/favicon.png" alt="">
         <h1>Real intentioN</h1>
-    </div>
 
+        <ul>
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i>contact</a>
+            </li>
+        </ul>
+    </div>
 
     <div class="content">
         <div class="msg">
@@ -87,11 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Real intentioN
             </h1>
 
-
             <a href="welcome.php?action=Tofix">書き直す&gt;&gt;</a>
-
-
-
         </div>
 
         <div class="Check">
@@ -103,84 +98,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </ul>
 
                 <div class="user-box">
-
-
-
                     <p>
                         <?php echo htmlspecialchars($form['nickname']); ?>
                     </p>
                 </div>
 
                 <div class="user-box">
-
-
                     <p>
                         <?php echo htmlspecialchars($form['birth']); ?>
                     </p>
                 </div>
 
-
                 <div class="user-box">
-
-
                     <p>
                         <?php echo htmlspecialchars($form['email']); ?>
                     </p>
                 </div>
 
-
-
-
                 <div class="user-box">
-
-
                     <p>
                         <?php echo htmlspecialchars($form['tel']); ?>
                     </p>
                 </div>
 
-
                 <div class="user-box">
-
-
-
                     <p>
                         <?php echo htmlspecialchars($form['password']); ?>
                     </p>
                 </div>
 
-
                 <div class="user-box">
-
-
                     <p>
+                        <!-- ユーザー指定の画像 -->
                         <?php if ($form['image']) : ?>
                             <img src="../member_picture/<?php echo htmlspecialchars($form['image']); ?>" height="80" width="80">
                         <?php endif; ?>
 
+                        <!-- デフォルト画像 -->
                         <?php if (!$form['image']) : ?>
                             <img src="../img/default.png" height="80" width="80">
                         <?php endif; ?>
                     </p>
                 </div>
 
-
-                <!------------------------------------------------------------------------------------------------------>
-
-
-
-                <button>
-
-                    登録する
-                </button>
+                <button>登録する</button>
             </form>
-
         </div>
     </div>
-
-
-
-
 
     <div class="footer">
         <div class="SNS">
@@ -190,13 +154,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <p>2022-08/01 Hayate-studio</p>
     </div>
-
-
-
-
-
-
-
 </body>
 
 </html>

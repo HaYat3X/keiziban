@@ -1,28 +1,30 @@
 <?php
+
+// セッションスタート 
 session_start();
+
+// functionの読み込み
+require('../function.php');
+
+// DB接続
+$db = db_connection();
+
 if (isset($_SESSION['id'])) {
     $user_id = $_SESSION['user_id'];
     $user_name = $_SESSION['user_name'];
 } else {
-    // ログインしていない場合、ログインページへ戻す
     header('Location: ../Login/login.php');
     exit();
 }
 
-require('../db.php');
-$db = new mysqli('localhost', 'root', 'root', 'user_db');
-$stmt = $db->prepare('select * from members where id=?');
-if (!$stmt) {
-    die($db->error);
-}
+$stmt = $db->prepare('SELECT * FROM members WHERE id=?');
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $stmt->bind_param('i', $id);
 $stmt->execute();
-
 $stmt->bind_result($my_id, $name, $email, $birth, $tel, $password, $picture, $status, $course, $School_year, $comment, $uuid, $created, $modifild);
 $result = $stmt->fetch();
-
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -30,33 +32,51 @@ $result = $stmt->fetch();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/myprofile.css">
+
+    <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <title>プロフィール</title>
+
+    <!-- タイトルの指定 -->
+    <title>プロフィールを指定する / Real intentioN</title>
+
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../img/favicon.png">
 </head>
 
 <body>
-
     <div class="header">
         <div class="header-nav">
             <img src="../img/favicon.png" alt="" width="80" height="80">
+
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
-            <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a></li>
-            <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+            <li>
+                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+            </li>
 
+            <li>
+                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+            </li>
+
+            <li>
+                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+            </li>
+
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+            </li>
         </ul>
     </div>
 
     <div class="container">
         <div class="main-contents">
-
             <div class="profile">
                 <div class="img">
                     <?php if ($picture) : ?>
@@ -66,7 +86,6 @@ $result = $stmt->fetch();
                     <?php if (!$picture) : ?>
                         <img src="../img/default.png" alt="">
                     <?php endif; ?>
-
                 </div>
 
                 <div class="user_box">
@@ -79,11 +98,11 @@ $result = $stmt->fetch();
                     <p><?php echo $birth; ?></p>
                 </div>
 
-
                 <div class="user_box">
                     <label>所属学科</label>
                     <p><?php echo $status; ?></p>
                 </div>
+
                 <div class="user_box">
                     <label>所属コース</label>
                     <p><?php echo $course; ?></p>
@@ -100,12 +119,10 @@ $result = $stmt->fetch();
                         <p><?php echo $comment; ?></p>
                     </div>
 
-
                     <div class="user_box-last">
                         <label>サービス登録時間</label>
                         <p><?php echo $created ?></p>
                     </div>
-
 
                     <div class="user_box-a">
                         <?php if ($_SESSION['user_id'] === $my_id) : ?>
@@ -116,26 +133,12 @@ $result = $stmt->fetch();
             </div>
         </div>
 
-
         <div class="side-contents">
-
-
-
-
-
-
-
-
-
-
-
-
 
             <!-- カレンダーの表示 -->
             <div class="calendar">
                 <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
             </div>
-
 
             <div class="site-content">
                 <div class="site">
@@ -155,10 +158,6 @@ $result = $stmt->fetch();
         </div>
     </div>
 
-
-
-    <!---------------------------------------------------------------------------------------------------------------------->
-
     <div class="footer">
         <div class="SNS">
             <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
@@ -167,9 +166,6 @@ $result = $stmt->fetch();
 
         <p>2022-08/01 Hayate-studio</p>
     </div>
-
-
-
 </body>
 
 </html>

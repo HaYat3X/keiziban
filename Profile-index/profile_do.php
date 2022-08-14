@@ -1,10 +1,21 @@
 <?php
-$db = new mysqli('localhost', 'root', 'root', 'user_db');
 
+// セッションスタート
+session_start();
 
+// functionの呼び込む
+require('../function.php');
 
+// DB接続
+$db = db_connection();
 
-
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['user_id'];
+    $name = $_SESSION['user_name'];
+} else {
+    header('Location: ../Home-index/index.php');
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -15,9 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $course = filter_input(INPUT_POST, 'course', FILTER_SANITIZE_STRING);
     $School_year = filter_input(INPUT_POST, 'School_year', FILTER_SANITIZE_STRING);
     $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
-
     $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
-
     $image = $_FILES['image'];
 
     if (
@@ -44,14 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $stmt = $db->prepare('update members set name=?, status=?, course=?, School_year=?, comment=?, picture=? where id=?');
-
+    $stmt = $db->prepare('UPDATE members SET name=?, status=?, course=?, School_year=?, comment=?, picture=? WHERE id=?');
     $stmt->bind_param('ssssssi', $name, $status, $course, $School_year, $comment, $filename, $id);
     $success = $stmt->execute();
-    if (!$success) {
-        die($db->error);
-    }
 
-    // header('Location: ../Home-index/home.php');
     header('Location: ../Home-index/myprofile.php?id=' . $id);
+    exit();
 }

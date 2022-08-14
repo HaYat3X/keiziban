@@ -1,33 +1,35 @@
 <?php
 
-
+// セッションスタート
 session_start();
-
-
 
 // データを受け取る
 if (isset($_SESSION['form'])) {
 
+    // 値の受け取り
     $form = $_SESSION['form'];
-    // 登録完了メールの押しらせ
+
+    // 登録完了メールの送信
     $email = $form['email'];
     $name = $form['nickname'];
-
-
     mb_language('Japanese');
     mb_internal_encoding('UTF-8');
-
     $to = $email;
     $subject = "Real intentioN 登録完了のお知らせ";
-    $message = $name . "様 Real intentioN にご登録いただきありがとうございます。";
+    $message = $name . "様 Real intentioN にご登録いただきありがとうございます。" . "\r\n" .
+        "このアプリを利用することで就活情報の共有、閲覧が可能です。" . "\r\n" .
+        "-- 機能説明 --" . "\r\n" .
+        "1、雑談チャンネル　ユーザーは自由に投稿が可能です。　（画像投稿、返信、いいねが可能です。）" . "\r\n" .
+        "2、インターンレビューチャンネル　インターンに行った学生がレビューを投稿できます。　（返信、いいねが可能です。）" . "\r\n" .
+        "3、プロフィール機能　ユーザーは自由にプロフィールを指定できます。　（学科、学年等の指定が可能です。）" . "\r\n" .
+        "4、トピック機能　人気の投稿の閲覧が可能です。" . "\r\n" .
+        "お問い合わせ機能も実装しております。気軽にお問い合わせください。";
     $headers = "From: hayate.syukatu1@gmail.com";
-
     mb_send_mail($to, $subject, $message, $headers);
 } else {
     header('Location: welcome.php');
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -37,11 +39,19 @@ if (isset($_SESSION['form'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/thank.css">
+
+    <!-- Jsのインポート -->
     <script src="./countdown.js"></script>
-    <title>アカウント作成 / Real intentioN</title>
-    <link rel="icon" href="../img/名称未設定-3.png">
+
+    <!-- タイトルの指定 -->
+    <title>ご登録ありがとうございました。 / Real intentioN</title>
+
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../img/favicon.png">
+
     <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
@@ -52,15 +62,12 @@ if (isset($_SESSION['form'])) {
         <h1>Real intentioN</h1>
     </div>
 
-
     <div class="content">
         <div class="msg">
             <h1>
                 Success<br>
                 Real intentioN
             </h1>
-
-
         </div>
 
         <div class="Check">
@@ -91,13 +98,12 @@ if (isset($_SESSION['form'])) {
 
         <p>2022-08/01 Hayate-studio</p>
     </div>
-
 </body>
 
 </html>
 
 <?php
-// 10s redirect
+// 10秒後にログインページへリダイレクト
 header('refresh:10;url=../Login-index/login.php');
 exit();
 ?>

@@ -1,31 +1,26 @@
 <?php
+
+// セッションスタート
 session_start();
 
-// requireでfunctionを呼び込む
-require('../db.php');
-$db = dbconnection();
+// functionを呼び込む
+require('../function.php');
 
-//--------------------------------------------------------------------------------------------------------------------------
+// DB接続
+$db = db_connection();
 
-// ログインしている場合
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['user_id'];
     $name = $_SESSION['user_name'];
 } else {
-    // ログインしていない場合index.phpを経由して、ログインページへ戻す
     header('Location: ../Home-index/index.php');
     exit();
 }
-?>
-<!-- where m.id=p.member_id order by iine desc limit 3 -->
 
-
-<?php
-$stmt1 = $db->prepare("SELECT p.id, p.member_id, p.message, p.picture, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from posts p, members m where message LIKE  '%" . $_POST["search_name"] . "%' order by p.id desc");
+$stmt1 = $db->prepare("SELECT p.id, p.member_id, p.message, p.picture, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id FROM posts p, members m WHERE message LIKE  '%" . $_POST["search_name"] . "%' ORDER BY p.id DESC");
 $stmt1->execute();
 $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $picture, $status, $course, $School_year, $member_id2);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -34,55 +29,57 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/search.css">
+
+    <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
-    <title>キーワード検索</title>
+    <!-- タイトルの指定 -->
+    <title>検索結果 / Real intentioN</title>
 </head>
 
 <body>
-
     <div class="header">
         <div class="header-nav">
             <img src="../img/favicon.png" alt="" width="80" height="80">
+
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
-            <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
-            <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+            <li>
+                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+            </li>
 
+            <li>
+                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+            </li>
+
+            <li>
+                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+            </li>
+
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+            </li>
         </ul>
     </div>
-
-    <!--　ヘッダーエリア　-->
-
 
     <div class="home">
         <a href="../Home-index/home.php">ホームへ</a>
     </div>
 
-
     <div class="container">
         <div class="main-contents">
-            <?php
-            while ($stmt1->fetch()) :
-            ?>
-
+            <?php while ($stmt1->fetch()) : ?>
                 <?php if ($member_id === $member_id2) : ?>
 
-
-
-
                     <div class="post">
-
-
                         <div class="picture">
-                            <!-- 写真の表示 -->
                             <?php if ($picture) : ?>
 
                                 <a href="./myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
@@ -90,22 +87,18 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
                                 </a>
                             <?php endif; ?>
 
-                            <!-- ユーザーが写真を登録していない場合はデフォルトの画像を表示 -->
                             <?php if (!$picture) : ?>
                                 <a href="./myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
                                     <img src="../img/default.png" alt="" width="100" height="100">
                                 </a>
                             <?php endif; ?>
                         </div>
+
                         <li>
-
-
                             <p>
                                 <!-- ユーザー情報の表示 -->
                                 <span class="user_name"><?php echo htmlspecialchars($name); ?></span>
                                 <span class="user_number"><?php echo ('@user' . $member_id); ?></span>
-
-
                             </p>
 
                             <p class="koube">
@@ -131,14 +124,10 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
                                 </p>
                             </div>
 
-
-
                             <!-- 投稿時間の表示 -->
                             <div class="time">
-
-
-
                                 <small class="post_time"><?php echo htmlspecialchars($created); ?></small>
+
                                 <!-- 自分の投稿であれば削除できる -->
                                 <?php if ($_SESSION['user_id'] === $member_id) : ?>
                                     <a href="../Delete-home-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #696969;"><i class="fa-solid fa-trash"></i></a>
@@ -152,36 +141,15 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
 
                                 <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
 
-
-
-
                                 <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
                             </div>
                         </li>
-
                     </div>
                 <?php endif; ?>
             <?php endwhile; ?>
-
         </div>
 
-
-
-
-
-
         <div class="side-contents">
-
-
-
-
-
-
-
-
-
-
-
 
             <!-- カレンダーの表示 -->
             <div class="calendar">
@@ -207,10 +175,6 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
         </div>
     </div>
 
-
-
-    <!---------------------------------------------------------------------------------------------------------------------->
-
     <div class="footer">
         <div class="SNS">
             <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
@@ -219,7 +183,6 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
 
         <p>2022-08/01 Hayate-studio</p>
     </div>
-
 </body>
 
 </html>

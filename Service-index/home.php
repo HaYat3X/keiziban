@@ -1,28 +1,21 @@
 <?php
-// sessionスタート
+
+// セッションスタート
 session_start();
 
-// requireでfunctionを呼び込む
-require('../db.php');
+// function呼び出し
+require('../function.php');
 
-//--------------------------------------------------------------------------------------------------------------------------
+// DB接続
+$db = db_connection();
 
-// ログインしている場合
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['user_id'];
-    $name = $_SESSION['user_name'];
+// データを受け取る
+if (isset($_SESSION['form'])) {
+    $form = $_SESSION['form'];
 } else {
-    // ログインしていない場合、ログインページへ戻す
-    header('Location: ../Login/login.php');
+    header('Location: welcome.php');
     exit();
 }
-
-//---------------------------------------------------------------------------------------------------------------------------
-
-// functionの呼びだし
-$db = dbconnection();
-
-
 
 /* 最大ページ数を求める */
 $counts = $db->query('select count(*) as cnt from keizi');
