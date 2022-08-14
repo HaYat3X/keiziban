@@ -56,10 +56,37 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Expectat
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Css/hayate2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <title>総合ページ</title>
 </head>
 
 <body>
+    <div class="search-content">
+
+        <form method="post" action="./search-Box/company.php" class="search">
+            <input type="text" size="25" placeholder="　　企業名で検索" name="search_service1" required>
+            <button><i class="fa fa-search"></i></button>
+        </form>
+
+
+
+        <form action="./search-Box/field.php" method="post" class="search">
+            <input type="text" size="25" placeholder="　　分野で検索" name="search_service1" required>
+            <button><i class="fa fa-search"></i></button>
+        </form>
+
+
+
+
+        <form action="./search-Box/Department.php" method="post" class="search">
+            <input type="text" size="25" placeholder="　　学科で検索" name="search_service1" required>
+            <button><i class="fa fa-search"></i></button>
+        </form>
+
+
+        <a href="./logout.php">ログアウト</a>
+
+    </div>
 
     <div class="content">
         <?php

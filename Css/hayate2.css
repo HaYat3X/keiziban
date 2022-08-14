@@ -13,13 +13,34 @@ body {
     margin: auto;
 }
 
-/* .post{
-    background-color: white;
-    margin-top: 50px;
-    border-radius: 10px;
-    padding: 50px 30px;
-    list-style: none;
-} */
+.search-content{
+    display: flex;
+    padding: 30px 10px 0;
+}
+
+.search-content form{
+    margin: 0px 20px;
+}
+
+ .search input {
+     width: 220px;
+     height: 35px;
+     border: white;
+ }
+
+ .search button {
+     width: 35px;
+     height: 35px;
+     color: white;
+     background-color: #4C8DCB;
+     border: none;
+     border-radius: 5px;
+ }
+
+ .search button:hover {
+     background-color: #EF810F;
+     cursor: pointer;
+ }
 
 .post {
      display: flex;

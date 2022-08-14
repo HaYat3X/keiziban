@@ -192,7 +192,9 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                             $replace = '<a href="$1">$1</a>';
                             $link = preg_replace($pattern, $replace, $link);
                             ?>
-                            <label>応募したページのリンク：</label><span><?php echo $link; ?></span>
+                            <label>応募したページのリンク：</label>
+                            <br>
+                            <span><?php echo $link; ?></span>
                         </p>
 
 
@@ -249,8 +251,30 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
 
         <div class="side-contents">
             <div class="search">
-                <form method="post" action="search.php" class="search">
-                    <input type="text" size="25" placeholder="　　キーワードで検索" name="search_service" required>
+                <form method="post" action="./search-Box/company.php" class="search">
+                    <input type="text" size="25" placeholder="　　企業名で検索" name="search_service1" required>
+                    <button><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+
+            <div class="search">
+                <form action="./search-Box/field.php" method="post" class="search">
+                    <input type="text" size="25" placeholder="　　分野で検索" name="search_service1" required>
+                    <button><i class="fa fa-search"></i></button>
+                </form>
+
+            </div>
+
+            <div class="search">
+                <form action="./search-Box/day.php" method="post" class="search">
+                    <input type="text" size="25" placeholder="　　参加日数で検索" name="search_service1" required>
+                    <button><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+
+            <div class="search">
+                <form action="./search-Box/Department.php" method="post" class="search">
+                    <input type="text" size="25" placeholder="　　学科で検索" name="search_service1" required>
                     <button><i class="fa fa-search"></i></button>
                 </form>
             </div>
