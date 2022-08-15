@@ -238,7 +238,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                     <button><i class="fa fa-search"></i></button>
                 </form>
             </div>
-
+            
             <div class="search">
                 <form method="post" action="./Department.php" class="search">
                     <input type="text" size="25" placeholder="　　学科で検索" name="search_name" required>

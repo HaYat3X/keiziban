@@ -1,8 +1,7 @@
 <?php
+
 // セッションスタート
 session_start();
-
-
 
 // エラー回避のため配列を初期化
 $form = [
@@ -15,41 +14,22 @@ $form = [
 // エラー回避のため配列を初期化
 $error = [];
 
-//---------------------------------------------------------------------------------------------------------------------------
-
 // 送信テェック
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form['nickname'] = filter_input(INPUT_POST, 'nickname', FILTER_SANITIZE_STRING);
 
-    //もしnameが空白(blank)であればという条件を追加する
-    // if ($form['nickname'] === '') {
-    //     $error['nickname'] = 'blank';
-    // }
-
-
-
     $form['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
-    //もしnameが空白(blank)であればという条件を追加する
-    // if ($form['email'] === '') {
-    //     $error['email'] = 'blank';
-    // }
-
+   
     $form['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
-    //もしnameが空白(blank)であればという条件を追加する
-    // if ($form['message'] === '') {
-    //     $error['message'] = 'blank';
-    // }
-
+   
     if (empty($error)) {
         $_SESSION['form'] = $form;
 
-        //すべてにエラーがない場合確認画面に移動する
         header('Location: contactcheck.php');
         exit();
     }
 }
 ?>
-<!-------------------------------------------------------------------------------------------------------------------------->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -80,15 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </ul>
     </div>
 
-
     <div class="container">
         <div class="main-contents">
             <form action="" method="post">
 
-
-                <!------------------------------------------------------------------------------------------------------>
                 <div class="user-box">
-                    <!-- ニックネームの入力欄 -->
                     <label>お名前</label>
                     <br>
                     <input type="text" name="nickname" maxlength="200" placeholder="山田　太郎" value="<?php echo htmlspecialchars($form['nickname']); ?>" required>
@@ -97,17 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="user-box">
                     <label>メールアドレス</label>
                     <br>
-                    <!-- patternで形式を指定 -->
                     <input type="email" name="email" placeholder="info@co.jp" value="<?php echo htmlspecialchars($form['email']); ?>" required>
                 </div>
 
-                <!----------------------------------------------------------------------------------------------------->
-
-                <!------------------------------------------------------------------------------------------------------>
-
-
-
-                <!------------------------------------------------------------------------------------------------------>
                 <div class="user-box">
                     <label>お問い合わせ内容</label>
 
@@ -117,34 +85,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                 </div>
-                <!------------------------------------------------------------------------------------------------------>
-
-                <!-- 送信ボタン -->
+  
                 <button class="btn btn-radius-solid btn--shadow">確認</button>
             </form>
         </div>
 
-
         <div class="side-contents">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <!-- カレンダーの表示 -->
             <div class="calendar">
                 <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
             </div>
-
 
             <div class="site-content">
                 <div class="site">
@@ -157,13 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="https://www.wantedly.com/"><img src="../img/2328bac9-3f7c-4510-a392-8b112f5e22ad.jpeg" alt=""></a>
                 </div>
             </div>
-
-
         </div>
     </div>
-
-
-
 </body>
 
 </html>

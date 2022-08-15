@@ -1,53 +1,37 @@
 <?php
+
+//セッションスタート 
 session_start();
+
+// functio読み込み
+require('../function.php');
+
+// DB接続
+$db = db_connection();
+
 if (isset($_SESSION['id'])) {
-    $user_id = $_SESSION['user_id'];
-    $user_name = $_SESSION['user_name'];
+    $id = $_SESSION['user_id'];
+    $name = $_SESSION['user_name'];
 } else {
-    // ログインしていない場合、ログインページへ戻す
-    header('Location: ../Login/login.php');
+    header('Location: ../Home-index/index.php');
     exit();
 }
-require('../db.php');
 
-
-$db = new mysqli('localhost', 'root', 'root', 'user_db');
 $ID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
 
-
-
-
     $stmt = $db->prepare('INSERT INTO keizi_reply (message, member_id, post_id) VALUES (?, ?, ?)');
-    if (!$stmt) {
-        die($db->error);
-    }
-
-
-
-
     $stmt->bind_param('sis', $message, $user_id, $ID);
     $success = $stmt->execute();
 
-
-    // データベースの重複登録を防ぐ　POSTの内容を消す
     header('Location: reply.php?id=' . $ID);
 }
 
-
-
-$stmt2 = $db->prepare('select p.id, p.message, p.member_id, p.post_id, p.created, m.name, m.picture, m.status, m.course, m.School_year from keizi_reply p, members m where m.id=p.member_id order by id desc');
-
-
+$stmt2 = $db->prepare('SELECT p.id, p.message, p.member_id, p.post_id, p.created, m.name, m.picture, m.status, m.course, m.School_year FROM keizi_reply p, members m WHERE m.id=p.member_id ORDER BY id DESC');
 $stmt2->execute();
-
-//　結果を変数におく
 $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $r_created, $name, $picture, $status, $course, $School_year);
-
-
 ?>
 
 <!DOCTYPE html>

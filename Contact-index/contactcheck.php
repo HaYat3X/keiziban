@@ -1,15 +1,7 @@
 <?php
+
 // セッションスタート
 session_start();
-
-// if (isset($_SESSION['id'])) {
-//     $id = $_SESSION['user_id'];
-//     $name = $_SESSION['user_name'];
-// } else {
-//     // ログインしていない場合index.phpを経由して、ログインページへ戻す
-//     header('Location: ../Home-index/index.php');
-//     exit();
-// }
 
 if (isset($_SESSION['form'])) {
     $form = $_SESSION['form'];
@@ -18,17 +10,12 @@ if (isset($_SESSION['form'])) {
     exit();
 }
 
-
-// 関数読み込み
-require('../db.php');
-
-
-
-//---------------------------------------------------------------------------------------------------------------------------
+// functionを呼び込む
+require('../function.php');
 
 //データベースとの連携
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $db = dbconnection();
+    $db = db_connection();
 
     //インサート文でテーブルにデータを登録する
     $stmt = $db->prepare('insert into contact (name, email, message) VALUES (?, ?, ?)');
@@ -45,12 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die($db->error);
     }
 
-
     header('Location: success.php');
 }
 ?>
-
-<!-------------------------------------------------------------------------------------------------------------------------->
 
 <!DOCTYPE html>
 <html lang="ja">

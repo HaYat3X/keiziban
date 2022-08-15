@@ -10,10 +10,11 @@ require('../function.php');
 $db = db_connection();
 
 // データを受け取る
-if (isset($_SESSION['form'])) {
-    $form = $_SESSION['form'];
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['user_id'];
+    $name = $_SESSION['user_name'];
 } else {
-    header('Location: welcome.php');
+    header('Location: ../Home-index/index.php');
     exit();
 }
 

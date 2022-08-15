@@ -47,9 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $stmt = $db->prepare('INSERT INTO reply (message, member_id, post_id, picture) VALUES (?, ?, ?, ?)');
-        if (!$stmt) {
-            die($db->error);
-        }
+
 
         $stmt->bind_param('siss', $message, $user_id, $ID, $filename);
         $success = $stmt->execute();

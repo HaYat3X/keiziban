@@ -1,36 +1,25 @@
 <?php
+
+//セッションスタート 
 session_start();
 
-// requireでfunctionを呼び込む
-require('../../db.php');
-$db = dbconnection();
+// functio読み込み
+require('../../function.php');
 
-//--------------------------------------------------------------------------------------------------------------------------
+// DB接続
+$db = db_connection();
 
-// ログインしている場合
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['user_id'];
     $name = $_SESSION['user_name'];
 } else {
-    // ログインしていない場合index.phpを経由して、ログインページへ戻す
     header('Location: ../Home-index/index.php');
     exit();
 }
-?>
-<?php
-// $stmt = $db->prepare("select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from keizi p, members m where message LIKE  '%" . $_POST["search_service1"] . "%' order by p.id desc");
-
-// $stmt = $db->prepare("select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from keizi p, members m where field LIKE  '%" . $_POST["search_service1"] . "%' order by p.id desc");
-
-// $stmt = $db->prepare("select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from keizi p, members m where course1 LIKE  '%" . $_POST["search_service"] . "%' order by p.id desc");
 
 $stmt = $db->prepare("select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from keizi p, members m where days LIKE  '%" . $_POST["search_service1"] . "%' order by p.id desc");
-
 $stmt->execute();
-
 $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $iine, $name, $picture, $status, $course, $School_year, $member_id2);
-
-
 ?>
 
 <!DOCTYPE html>

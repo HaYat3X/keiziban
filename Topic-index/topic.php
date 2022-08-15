@@ -142,6 +142,11 @@ if (isset($_SESSION['id'])) {
                 </div>
             <?php endwhile; ?>
 
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             <h2>インターンチャンネルのトピック</h2>
 
             <?php
