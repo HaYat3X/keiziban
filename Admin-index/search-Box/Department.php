@@ -41,7 +41,7 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
 
 <body>
     <div class="home">
-        <a href="../Home-index/home.php">ホームへ</a>
+        <a href="../../Admin-index/home.php">ホームへ</a>
     </div>
 
     <div class="main-contents">

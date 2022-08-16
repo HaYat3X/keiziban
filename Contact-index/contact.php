@@ -48,58 +48,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-
 </head>
 
 <body>
     <div class="header">
         <div class="header-nav">
             <img src="../img/favicon.png" alt="" width="80" height="80">
+
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
-            <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a></li>
-            <li><a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+            <li>
+                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+            </li>
 
+            <li>
+                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+            </li>
+
+            <li>
+                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+            </li>
+
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+            </li>
         </ul>
     </div>
 
     <div class="container">
         <div class="main-contents">
             <form action="" method="post">
-
                 <div class="user-box">
                     <label>お名前</label>
                     <br>
-                    <input type="text" name="nickname" maxlength="200" placeholder="山田　太郎" value="<?php echo htmlspecialchars($form['nickname']); ?>" required>
+                    <input type="text" name="nickname" maxlength="200" placeholder="　山田　太郎" value="<?php echo htmlspecialchars($form['nickname']); ?>" required>
                 </div>
 
                 <div class="user-box">
                     <label>メールアドレス</label>
                     <br>
-                    <input type="email" name="email" placeholder="info@co.jp" value="<?php echo htmlspecialchars($form['email']); ?>" required>
+                    <input type="email" name="email" placeholder="　info@co.jp" value="<?php echo htmlspecialchars($form['email']); ?>" required>
                 </div>
 
                 <div class="user-box">
                     <label>お問い合わせ内容</label>
-
                     <br>
-
                     <textarea name="message" required></textarea>
-
-
                 </div>
 
-                <button class="btn btn-radius-solid btn--shadow">確認</button>
+                <button type="submit">確認</button>
             </form>
         </div>
 
-        <div class="side-contents">
+        <div class=" side-contents">
             <div class="calendar">
                 <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
             </div>
@@ -116,6 +121,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="footer">
+        <div class="SNS">
+            <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
+            <a href="https://twitter.com/hayate_KIC"><i class="fa-brands fa-twitter"></i>hayate_KIC</a>
+        </div>
+
+        <p>2022-08/01 Hayate-studio</p>
     </div>
 </body>
 
