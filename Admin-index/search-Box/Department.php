@@ -1,36 +1,24 @@
 <?php
+
+// セッションスタート
 session_start();
 
-// requireでfunctionを呼び込む
-require('../../db.php');
-$db = dbconnection();
+// functionを呼び込む
+require('../../function.php');
 
-//--------------------------------------------------------------------------------------------------------------------------
+// DB接続
+$db = db_connection();
 
-// ログインしている場合
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['user_id'];
-    $name = $_SESSION['user_name'];
+if (isset($_SESSION['hayate'])) {
 } else {
-    // ログインしていない場合index.phpを経由して、ログインページへ戻す
     header('Location: ../Home-index/index.php');
     exit();
 }
-?>
-<?php
-$stmt = $db->prepare("select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from keizi p, members m where status LIKE  '%" . $_POST["search_service1"] . "%' order by p.id desc");
 
-// $stmt = $db->prepare("select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from keizi p, members m where field LIKE  '%" . $_POST["search_service"] . "%' order by p.id desc");
-
-// $stmt = $db->prepare("select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from keizi p, members m where course1 LIKE  '%" . $_POST["search_service"] . "%' order by p.id desc");
-
-// $stmt = $db->prepare("select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from keizi p, members m where days LIKE  '%" . $_POST["search_service"] . "%' order by p.id desc");
+$stmt = $db->prepare("SELECT p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id FROM keizi p, members m WHERE status LIKE  '%" . $_POST["search_service1"] . "%' ORDER BY p.id DESC");
 
 $stmt->execute();
-
 $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $iine, $name, $picture, $status, $course, $School_year, $member_id2);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -40,48 +28,36 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../Css/hayate2.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
-    <title>キーワード検索</title>
+    <!-- cssのインポート -->
+    <link rel="stylesheet" href="../../Css/hayate2.css">
+
+    <!-- タイトルの指定 -->
+    <title>管理者専用ページ / Real intentioN</title>
+
+    <!-- ファビコンの読み込み -->
+    <link rel="icon" href="../../img/favicon.png">
 </head>
 
 <body>
-
-    <!--　ヘッダーエリア　-->
-
-
     <div class="home">
         <a href="../Home-index/home.php">ホームへ</a>
     </div>
 
-
     <div class="main-contents">
-        <?php
-        while ($stmt->fetch()) :
-        ?>
-
+        <?php while ($stmt->fetch()) : ?>
             <?php if ($member_id === $member_id2) : ?>
                 <div class="post">
-
-
-
-
                     <li>
-
-
-
                         <p class="koube">
                             <span class="a"><?php echo $status; ?></span>
                             <span class="b"><?php echo $course; ?></span>
                             <span class="c"><?php echo $School_year; ?></span>
                         </p>
 
-
                         <!-- メッセージの表示 -->
                         <p class="start">
                             <label>企業名：</label><span><?php echo htmlspecialchars($message); ?></span>
-
                         </p>
 
                         <p class="newline">
@@ -116,8 +92,6 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                             <label>総合的な満足度：</label><span><?php echo htmlspecialchars($Comprehensive); ?></span>
                         </p>
 
-
-
                         <p class="newline">
                             <label>良かった所、印象に残った所：</label>
                             <br>
@@ -136,8 +110,6 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                             <span><?php echo htmlspecialchars($trouble); ?></span>
                         </p>
 
-
-
                         <p class="end">
                             <?php
                             $link;
@@ -148,28 +120,14 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                             <label>応募したページのリンク：</label><span><?php echo $link; ?></span>
                         </p>
 
-
-
                         <div class="time">
-
-
-
                             <small><?php echo htmlspecialchars($created); ?></small>
-                            <!-- 自分の投稿であれば削除できる -->
-
-
-
-
                         </div>
-
-
-
-
                     </li>
-
                 </div>
             <?php endif; ?>
         <?php endwhile; ?>
     </div>
-
 </body>
+
+</html>

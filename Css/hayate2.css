@@ -121,8 +121,38 @@ body {
     white-space: pre-line;
  }
 
+.btn1 {
+     margin-left: 600px;
+     margin-bottom: 50px;
+ }
 
+ .btn1 a {
+     font-size: 20px;
+     background-color: #4C8DCB;
+     color: white;
+     padding: 10px 20px;
+     border-radius: 5px;
+     text-decoration: none;
+ }
 
+ .btn1 a:hover {
+     background-color: #EF810F;
+ }
 
+ .home {
+    margin-top: 30px;
+ }
 
+.home a{
+    font-size: 20px;
+    padding: 10px 20px;
+    color: white;
+    background-color: #4C8DCB;
+    text-decoration: none;
+    margin: 30px 30px;
+    border-radius: 10px;
+}
  
+.home a:hover{
+    background-color: #EF810F;
+}

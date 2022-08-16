@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
 
     $stmt = $db->prepare('INSERT INTO keizi_reply (message, member_id, post_id) VALUES (?, ?, ?)');
-    $stmt->bind_param('sis', $message, $user_id, $ID);
+    $stmt->bind_param('sis', $message, $id, $ID);
     $success = $stmt->execute();
 
     header('Location: reply.php?id=' . $ID);

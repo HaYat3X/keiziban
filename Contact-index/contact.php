@@ -11,17 +11,15 @@ $form = [
     'form' => '',
 ];
 
-// エラー回避のため配列を初期化
 $error = [];
 
-// 送信テェック
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $form['nickname'] = filter_input(INPUT_POST, 'nickname', FILTER_SANITIZE_STRING);
 
+    // inputタグの情報を変数に格納
+    $form['nickname'] = filter_input(INPUT_POST, 'nickname', FILTER_SANITIZE_STRING);
     $form['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
-   
     $form['message'] = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
-   
+
     if (empty($error)) {
         $_SESSION['form'] = $form;
 
@@ -38,8 +36,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/contact.css">
-    <title>お問い合わせ</title>
+
+    <!-- タイトルの指定 -->
+    <title>お問い合わせ / Real intentioN</title>
+
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../img/favicon.png">
+
+    <!-- font-awesomeのインポート -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
 </head>
 
 <body>
@@ -85,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                 </div>
-  
+
                 <button class="btn btn-radius-solid btn--shadow">確認</button>
             </form>
         </div>

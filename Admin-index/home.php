@@ -1,26 +1,27 @@
 <?php
 
+// セッションスタート
 session_start();
-// ログインしている場合
+
 if (isset($_SESSION['hayate'])) {
 } else {
-    // ログインしていない場合index.phpを経由して、ログインページへ戻す
     header('Location: ../Admin-index/index.php');
     exit();
 }
 
-require('../db.php');
-$db = dbconnection();
+// function読み込み
+require('../function.php');
+
+// DB接続
+$db = db_connection();
 
 /* 最大ページ数を求める */
-$counts = $db->query('select count(*) as cnt from keizi');
+$counts = $db->query('SELECT COUNT(*) AS cnt FROM keizi');
 $count = $counts->fetch_assoc();
 $max_page = floor(($count['cnt'] + 1) / 5 + 1);
 
-//--------------------------------------------------------------------------------------------------------------------------
-
 // データの呼び出し
-$stmt = $db->prepare('select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year from keizi p, members m where m.id=p.member_id order by id desc limit ?, 5');
+$stmt = $db->prepare('SELECT p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year FROM keizi p, members m WHERE m.id=p.member_id ORDER BY id DESC LIMIT ?, 5');
 
 // 最大ページ数を求める
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
@@ -31,22 +32,7 @@ $success = $stmt->execute();
 
 //　結果を変数におく
 $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $iine, $name, $picture, $status, $course, $School_year);
-
-
-
-
-
 ?>
-
-
-
-
-
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -55,48 +41,45 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Expectat
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/hayate2.css">
+
+    <!-- タイトルの指定 -->
+    <title>管理者専用ページ / Real intentioN</title>
+
+    <!-- ファビコンの読み込み -->
+    <link rel="icon" href="../img/favicon.png">
+
+    <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <title>総合ページ</title>
 </head>
 
 <body>
-    <div class="search-content">
 
+    <!-- 検索Box -->
+    <div class="search-content">
         <form method="post" action="./search-Box/company.php" class="search">
             <input type="text" size="25" placeholder="　　企業名で検索" name="search_service1" required>
             <button><i class="fa fa-search"></i></button>
         </form>
-
-
 
         <form action="./search-Box/field.php" method="post" class="search">
             <input type="text" size="25" placeholder="　　分野で検索" name="search_service1" required>
             <button><i class="fa fa-search"></i></button>
         </form>
 
-
-
-
         <form action="./search-Box/Department.php" method="post" class="search">
             <input type="text" size="25" placeholder="　　学科で検索" name="search_service1" required>
             <button><i class="fa fa-search"></i></button>
         </form>
 
-
         <a href="./logout.php">ログアウト</a>
-
     </div>
 
     <div class="content">
-        <?php
-        while ($stmt->fetch()) :
-        ?>
+        <?php while ($stmt->fetch()) : ?>
             <div class="post">
-
-
-
-
                 <li>
                     <p class="koube">
                         <span class="a"><?php echo $status; ?></span>
@@ -104,11 +87,9 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Expectat
                         <span class="c"><?php echo $School_year; ?></span>
                     </p>
 
-
                     <!-- メッセージの表示 -->
                     <p class="start">
                         <label>企業名：</label><span><?php echo htmlspecialchars($message); ?></span>
-
                     </p>
 
                     <p class="newline">
@@ -143,8 +124,6 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Expectat
                         <label>総合的な満足度：</label><span><?php echo htmlspecialchars($Comprehensive); ?></span>
                     </p>
 
-
-
                     <p class="newline">
                         <label>良かった所、印象に残った所：</label>
                         <br>
@@ -163,9 +142,6 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Expectat
                         <span><?php echo htmlspecialchars($trouble); ?></span>
                     </p>
 
-
-
-
                     <p class="end">
                         <?php
                         $link;
@@ -175,35 +151,20 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Expectat
                         ?>
                         <label>応募したページのリンク：</label><span><?php echo $link; ?></span>
                     </p>
-
-
-
-
-
-
-
                 </li>
-
             </div>
         <?php endwhile; ?>
 
-
-
-        <!-------------------------------------------------------------------------------------------------------------->
-
         <div class="btn1">
             <?php if ($page > 1) : ?>
-                <button><a href="?page=<?php echo $page - 1; ?>">&lt;&lt;<?php echo $page - 1; ?></a></button>
+                <a href="?page=<?php echo $page - 1; ?>">&lt;&lt;<?php echo $page - 1; ?></a>
             <?php endif; ?>
 
             <?php if ($page < $max_page) : ?>
-                <button><a href="?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>&gt;&gt;</a></button>
+                <a href="?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>&gt;&gt;</a>
             <?php endif; ?>
         </div>
     </div>
-
-
-
 </body>
 
 </html>
