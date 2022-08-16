@@ -1,23 +1,21 @@
 <?php
+
 // sessionスタート
 session_start();
 
-// requireでfunctionを呼び込む
-require('../db.php');
+// functionを読み込み
+require('../function.php');
 
-// ログインしている場合
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['user_id'];
     $name = $_SESSION['name'];
 } else {
-    // ログインしていない場合、ログインページへ戻す
     header('Location: ../Login/login.php');
     exit();
 }
 
-// functionの呼びだし
-$db = dbconnection();
-
+// DB接続
+$db = db_connection();
 
 $Service_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 

@@ -9,12 +9,10 @@ require('../function.php');
 // DB接続
 $db = db_connection();
 
-// ログインしている場合
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['user_id'];
     $name = $_SESSION['name'];
 } else {
-    // ログインしていない場合、ログインページへ戻す
     header('Location: ../Login/login.php');
     exit();
 }
