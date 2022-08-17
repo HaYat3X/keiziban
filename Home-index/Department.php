@@ -17,7 +17,7 @@ if (isset($_SESSION['id'])) {
     exit();
 }
 
-$stmt1 = $db->prepare("SELECT p.id, p.member_id, p.message, p.picture, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from posts p, members m where status LIKE  '%" . $_POST["search_name"] . "%' order by p.id desc");
+$stmt1 = $db->prepare("SELECT p.id, p.member_id, p.message, p.picture, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id FROM posts p, members m WHERE status LIKE '%" . $_POST["search_name"] . "%' ORDER BY p.id DESC");
 $stmt1->execute();
 $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $picture, $status, $course, $School_year, $member_id2);
 ?>
@@ -78,19 +78,11 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
 
     <div class="container">
         <div class="main-contents">
-            <?php
-            while ($stmt1->fetch()) :
-            ?>
-
+            <?php while ($stmt1->fetch()) : ?>
                 <?php if ($member_id === $member_id2) : ?>
-
-
-
-
                     <div class="post">
-
-
                         <div class="picture">
+
                             <!-- 写真の表示 -->
                             <?php if ($picture) : ?>
 
@@ -106,15 +98,12 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
                                 </a>
                             <?php endif; ?>
                         </div>
+
                         <li>
-
-
                             <p>
                                 <!-- ユーザー情報の表示 -->
                                 <span class="user_name"><?php echo htmlspecialchars($name); ?></span>
                                 <span class="user_number"><?php echo ('@user' . $member_id); ?></span>
-
-
                             </p>
 
                             <p class="koube">
@@ -140,14 +129,10 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
                                 </p>
                             </div>
 
-
-
                             <!-- 投稿時間の表示 -->
                             <div class="time">
-
-
-
                                 <small class="post_time"><?php echo htmlspecialchars($created); ?></small>
+
                                 <!-- 自分の投稿であれば削除できる -->
                                 <?php if ($_SESSION['user_id'] === $member_id) : ?>
                                     <a href="../Delete-home-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #696969;"><i class="fa-solid fa-trash"></i></a>
@@ -158,45 +143,22 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
                                     <a href="../Update-home-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #4C8DCB;"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <?php endif; ?>
 
-
                                 <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
-
-
-
 
                                 <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
                             </div>
                         </li>
-
                     </div>
                 <?php endif; ?>
             <?php endwhile; ?>
-
         </div>
 
-
-
-
-
-
         <div class="side-contents">
-
-
-
-
-
-
-
-
-
-
-
 
             <!-- カレンダーの表示 -->
             <div class="calendar">
                 <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
             </div>
-
 
             <div class="site-content">
                 <div class="site">
@@ -216,10 +178,6 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
         </div>
     </div>
 
-
-
-    <!---------------------------------------------------------------------------------------------------------------------->
-
     <div class="footer">
         <div class="SNS">
             <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
@@ -228,7 +186,6 @@ $stmt1->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pi
 
         <p>2022-08/01 Hayate-studio</p>
     </div>
-
 </body>
 
 </html>

@@ -18,9 +18,9 @@ if (isset($_SESSION['id'])) {
 }
 
 $ID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-$count = +2;
 
-$stmt2 = $db->prepare("UPDATE posts SET iine = iine + 1 where id=?");
+$count = +2;
+$stmt2 = $db->prepare("UPDATE posts SET iine = iine + 1 WHERE id=?");
 $stmt2->bind_param('i', $ID);
 $stmt2->execute();
 

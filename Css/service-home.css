@@ -449,3 +449,33 @@ body {
      border-radius: 10px;
      padding: 20px 0;
  }
+
+ .footer {
+    background-color: white;
+    width: 1400px;
+    margin: 50px auto 0;
+    height: 100px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.footer .SNS {
+    padding-top: 15px;
+}
+
+.footer a {
+    font-size: 25px;
+    padding: 0 40px;
+    color: #4C8DCB;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #EF810F;
+}
+
+.footer p {
+    padding-top: 15px;
+    background-color: white;
+    border-radius: 10px;
+}

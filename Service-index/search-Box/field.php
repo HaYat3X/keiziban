@@ -3,7 +3,7 @@
 //セッションスタート 
 session_start();
 
-// functio読み込み
+// function読み込み
 require('../../function.php');
 
 // DB接続
@@ -17,7 +17,8 @@ if (isset($_SESSION['id'])) {
     exit();
 }
 
-$stmt = $db->prepare("select p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id from keizi p, members m where field LIKE  '%" . $_POST["search_service1"] . "%' order by p.id desc");
+$stmt = $db->prepare("SELECT p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id FROM keizi p, members m WHERE field LIKE  '%" . $_POST["search_service1"] . "%' ORDER BY p.id DESC");
+
 $stmt->execute();
 $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $iine, $name, $picture, $status, $course, $School_year, $member_id2);
 ?>
@@ -29,51 +30,61 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../../Css/search.css">
+
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../../img/favicon.png">
+
+    <!-- font-awesomeのインポート -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
-    <title>キーワード検索</title>
+    <!-- タイトルの指定 -->
+    <title>検索結果 / Real intentioN</title>
 </head>
 
 <body>
-
     <div class="header">
         <div class="header-nav">
-            <img src="../img/favicon.png" alt="" width="80" height="80">
+            <img src="../../img/favicon.png" alt="" width="80" height="80">
+
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
-            <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
-            <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+            <li>
+                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+            </li>
 
+            <li>
+                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+            </li>
+
+            <li>
+                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+            </li>
+
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+            </li>
         </ul>
     </div>
-
-    <!--　ヘッダーエリア　-->
-
 
     <div class="home">
         <a href="../Home-index/home.php">ホームへ</a>
     </div>
 
     <div class="container">
-        <!-- <div class="container"> -->
         <div class="main-contents">
-            <?php
-            while ($stmt->fetch()) :
-            ?>
-
+            <?php while ($stmt->fetch()) : ?>
                 <?php if ($member_id === $member_id2) : ?>
                     <div class="post">
 
                         <!-- 写真の表示 -->
                         <?php if ($picture) : ?>
-
                             <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
                                 <img src="../member_picture/<?php echo htmlspecialchars($picture); ?>" alt="" width="100" height="100">
                             </a>
@@ -86,9 +97,7 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                             </a>
                         <?php endif; ?>
 
-
                         <li>
-
                             <p>
                                 <!-- ユーザー情報の表示 -->
                                 <span class="user_name"><?php echo htmlspecialchars($name); ?></span>
@@ -101,11 +110,9 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                                 <span class="c"><?php echo $School_year; ?></span>
                             </p>
 
-
                             <!-- メッセージの表示 -->
                             <p class="start">
                                 <label>企業名：</label><span><?php echo htmlspecialchars($message); ?></span>
-
                             </p>
 
                             <p class="newline">
@@ -140,16 +147,11 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                                 <label>総合的な満足度：</label><span><?php echo htmlspecialchars($Comprehensive); ?></span>
                             </p>
 
-
-
                             <p class="newline">
                                 <label>良かった所、印象に残った所：</label>
                                 <br>
                                 <span><?php echo htmlspecialchars($good); ?></span>
                             </p>
-
-
-
 
                             <p class="end">
                                 <?php
@@ -161,12 +163,7 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                                 <label>応募したページのリンク：</label><span><?php echo $link; ?></span>
                             </p>
 
-
-
                             <div class="time">
-
-
-
                                 <small><?php echo htmlspecialchars($created); ?></small>
                                 <!-- 自分の投稿であれば削除できる -->
                                 <?php if ($_SESSION['user_id'] === $member_id) : ?>
@@ -178,19 +175,11 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                                     <a href="../Update-Service-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #4C8DCB;;"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <?php endif; ?>
 
-
                                 <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
 
                                 <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
-
-
                             </div>
-
-
-
-
                         </li>
-
                     </div>
                 <?php endif; ?>
             <?php endwhile; ?>
@@ -198,15 +187,10 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
 
         <div class="side-contents">
 
-
-
-
-
             <!-- カレンダーの表示 -->
             <div class="calendar">
                 <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
             </div>
-
 
             <div class="site-content">
                 <div class="site">
@@ -225,3 +209,15 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
             </div>
         </div>
     </div>
+
+    <div class="footer">
+        <div class="SNS">
+            <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
+            <a href="https://twitter.com/hayate_KIC"><i class="fa-brands fa-twitter"></i>hayate_KIC</a>
+        </div>
+
+        <p>2022-08/01 Hayate-studio</p>
+    </div>
+</body>
+
+</html>

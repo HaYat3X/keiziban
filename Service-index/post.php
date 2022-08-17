@@ -3,7 +3,7 @@
 //セッションスタート 
 session_start();
 
-// functio読み込み
+// function読み込み
 require('../function.php');
 
 // DB接続
@@ -38,12 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     link, member_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
     $stmt->bind_param('sssssssssssssi', $message, $field, $course, $day, $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $id);
-    $success = $stmt->execute();
-    if (!$success) {
-        die($db->error);
-    }
+    $stmt->execute();
 
     header('Location: home.php');
+    exit();
 }
 ?>
 
@@ -54,32 +52,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
+    <!-- cssのインポート -->
     <link rel="stylesheet" href="../Css/post.css">
-    <title>Document</title>
+
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../img/favicon.png">
+
+    <!-- font-awesomeのインポート -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
+    <!-- タイトルの指定 -->
+    <title>インターンレビューを投稿する / Real intentioN</title>
 </head>
 
 <body>
     <div class="header">
         <div class="header-nav">
             <img src="../img/favicon.png" alt="" width="80" height="80">
+
             <a href="../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
-            <li><a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a></li>
-            <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-            <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a></li>
-            <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+            <li>
+                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+            </li>
 
+            <li>
+                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+            </li>
+
+            <li>
+                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+            </li>
+
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+            </li>
         </ul>
     </div>
 
     <div class="content">
         <form action="" method="post">
-
             <div class="user-box">
                 <label>参加した企業名</label><span class="required">*</span>
                 <input type="text" name="message" required>
@@ -96,15 +113,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input class="tag" type="radio" name="field" value="ソフトウェア、通信"> ソフトウェア、通信
                 <input type="radio" name="field" value="広告、出版、マスコミ"> 広告、出版、マスコミ
                 <input type="radio" name="field" value="官公庁、公社、団体"> 官公庁、公社、団体
-
             </div>
 
             <div class="user-box">
                 <label>参加したカリキュラム、コース</label><span class="required">*</span>
                 <input type="text" name="course" required>
             </div>
-
-
 
             <div class="user-check">
                 <label>参加した日数</label><span class="required">*</span>
@@ -146,7 +160,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="radio" name="Understanding" value="どちらかといえば満足している"> 4
                 <input type="radio" name="Understanding" value="満足している"> 5
             </div>
-
 
             <div class="user-check">
                 <label>Q3 社員、講師のサポートはどうでしたか？</label><span class="required">*</span>
@@ -194,16 +207,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <textarea name="trouble" placeholder="空白でも投稿できます"></textarea>
             </div>
 
-
-
             <div class="user-text">
                 <label>Q4 応募したページのリンクを貼り付けてください</label><span class="required">*</span>
                 <textarea required name="link"></textarea>
             </div>
 
-
             <button><i class="fa-solid fa-pen"></i>投稿する</button>
         </form>
+    </div>
+
+    <div class="footer">
+        <div class="SNS">
+            <a href="https://github.com/Hayate12345"><i class="fa-brands fa-github"></i>Hayate12345</a>
+            <a href="https://twitter.com/hayate_KIC"><i class="fa-brands fa-twitter"></i>hayate_KIC</a>
+        </div>
+
+        <p>2022-08/01 Hayate-studio</p>
     </div>
 </body>
 

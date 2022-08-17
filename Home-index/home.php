@@ -9,26 +9,24 @@ require('../function.php');
 // DB接続
 $db = db_connection();
 
-// ログインしている場合
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['user_id'];
     $name = $_SESSION['user_name'];
 } else {
-    // ログインしていない場合
     header('Location: ../Home-index/index.php');
     exit();
 }
 
 // メッセージの投稿
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // 変数に値を格納する
     $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
     $image = $_FILES['image'];
 
-    if (
-        $image['name'] !== '' && $image['error'] === 0
-    ) {
+    if ($image['name'] !== '' && $image['error'] === 0) {
         $type = mime_content_type($image['tmp_name']);
-        // 写真の形式がjpegまたはpngでない場合という条件を追加する
+
         if ($type !== 'image/jpeg' && $type !== 'image/png' && $type !== 'image/jpg' && $type !== 'image/webp') {
             $error['image'] = 'type';
         }
@@ -51,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $db->prepare('INSERT INTO posts (message, member_id, picture) VALUES (?, ?, ?)');
         $stmt->bind_param('sis', $message, $id, $filename);
         $stmt->execute();
+
         header('Location: ../Home-index/home.php');
     }
 }
@@ -127,15 +126,14 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
     <div class="container">
         <div class="main-contents">
 
+            <!-- メッセージの投稿 -->
             <div class="search-box">
                 <label class="open" for="pop-up"><i class="fa-solid fa-pen-clip"></i>投稿する</label>
                 <input type="checkbox" id="pop-up">
 
                 <div class="overlay">
                     <div class="window">
-
                         <label class="close" for="pop-up"><i class="fa-solid fa-circle-xmark"></i></label>
-
                         <form action="" method="post" enctype="multipart/form-data">
                             <textarea name="message" placeholder=" 　　Real intentioNへようこそ" cols="60" rows="18" required></textarea>
 
@@ -151,8 +149,8 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
 
             <?php while ($stmt->fetch()) : ?>
                 <div class="post">
-
                     <div class="picture">
+
                         <!-- 写真の表示 -->
                         <?php if ($picture) : ?>
                             <a href="./myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
@@ -167,7 +165,6 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                             </a>
                         <?php endif; ?>
                     </div>
-
                     <li>
                         <p>
                             <!-- ユーザー情報の表示 -->
@@ -202,6 +199,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                         <!-- 投稿時間の表示 -->
                         <div class="time">
                             <small class="post_time"><?php echo htmlspecialchars($created); ?></small>
+
                             <!-- 自分の投稿であれば削除できる -->
                             <?php if ($_SESSION['user_id'] === $member_id) : ?>
                                 <a href="../Delete-home-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #696969;"><i class="fa-solid fa-trash"></i></a>
@@ -238,7 +236,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
                     <button><i class="fa fa-search"></i></button>
                 </form>
             </div>
-            
+
             <div class="search">
                 <form method="post" action="./Department.php" class="search">
                     <input type="text" size="25" placeholder="　　学科で検索" name="search_name" required>

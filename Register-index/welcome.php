@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db = db_connection();
 
         // Emailが重複している場合エラーを表示する
-        $stmt = $db->prepare('select count(*) from members where email=?');
+        $stmt = $db->prepare('SELECT COUNT(*) FROM members WHERE email=?');
         $stmt->bind_param('s', $form['email']);
         $success = $stmt->execute();
         $stmt->bind_result($Result_is);
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db = db_connection();
 
         // 携帯電話番号が重複している場合エラーを表示する
-        $stmt = $db->prepare('select count(*) from members where tel=?');
+        $stmt = $db->prepare('SELECT COUNT(*) FROM members WHERE tel=?');
         $stmt->bind_param('s', $form['tel']);
         $success = $stmt->execute();
         $stmt->bind_result($Result_is);

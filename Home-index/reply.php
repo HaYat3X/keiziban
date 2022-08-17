@@ -123,7 +123,7 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
                         <textarea name="message" placeholder=" 　　Real intentioNへようこそ" required></textarea>
 
                         <div class="user-box">
-                            <input type="file" name="image" size="30" value="">
+                            <input type="file" name="image" size="30" accept=".jpg, .jpeg, .png, .webp">
                         </div>
 
                         <button><i class="fa-solid fa-pen"></i>返信する</button>

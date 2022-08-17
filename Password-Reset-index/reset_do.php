@@ -21,7 +21,7 @@ $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
 // パスワードの暗号化
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
-$stmt = $db->prepare('update members set password=? where email=?');
+$stmt = $db->prepare('UPDATE members SET password=? WHERE email=?');
 $stmt->bind_param('si', $password_hash, $email);
 $success = $stmt->execute();
 

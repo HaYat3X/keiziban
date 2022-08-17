@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 暗号化されたパスワードとユーザーが入力したパスワードを比較
     if (password_verify($password, $hash)) {
 
-        // 一致した場合はセッションを発酵する
+        // 一致した場合はセッションを発行する
         session_start();
         $ses_id = session_id() . $uuid;
 
@@ -72,6 +72,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="header">
         <img src="../img/favicon.png" alt="">
         <h1>Real intentioN</h1>
+
+        <ul>
+            <li>
+                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i>contact</a>
+            </li>
+        </ul>
     </div>
 
     <div class="content">
