@@ -113,7 +113,6 @@ if (isset($_SESSION['id'])) {
                             $replace = '<a href="$1">$1</a>';
                             $message = preg_replace($pattern, $replace, $message);
                             ?>
-
                             <?php echo ($message); ?>
 
                             <p class="img">
@@ -157,7 +156,6 @@ if (isset($_SESSION['id'])) {
 
             <?php while ($stmt2->fetch()) : ?>
                 <div class="post2">
-
                     <?php if ($picture) : ?>
                         <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
                             <img src="../member_picture/<?php echo htmlspecialchars($picture); ?>" alt="" width="100" height="100">
