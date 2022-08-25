@@ -37,29 +37,28 @@ body {
 }
 
 .header ul {
-     display: flex;
-     margin-left: 520px;
- }
+    display: flex;
+    margin-left: 520px;
+}
 
- .header li {
-     list-style: none;
-     padding-top: 45px;
-     padding-bottom: 20px;
-     padding-left: 70px;
-     font-size: 20px;
-     font-weight: 600;
- }
+.header li {
+    list-style: none;
+    padding-top: 45px;
+    padding-bottom: 20px;
+    padding-left: 70px;
+    font-size: 20px;
+    font-weight: 600;
+}
 
   .header a {
      color: #4C8DCB;
      text-decoration: none;
  }
 
- .header a:hover {
-     color: #EF810F;
-     text-decoration: underline;
-
- }
+.header a:hover {
+    color: #EF810F;
+    text-decoration: underline;
+}
 
 .content {
     width: 1400px;
@@ -132,7 +131,6 @@ body {
     background-color: #EF810F;
     cursor: pointer;
 }
-
 
 .content .msg {
     margin: 145px 125px;

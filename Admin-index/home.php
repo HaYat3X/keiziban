@@ -74,10 +74,12 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Expectat
             <button><i class="fa fa-search"></i></button>
         </form>
 
-        <a href="./logout.php">ログアウト</a>
+        <div id="logout">
+            <a href="./logout.php">ログアウト</a>
+        </div>
     </div>
 
-    <div class="content">
+    <div class="content" id="content">
         <?php while ($stmt->fetch()) : ?>
             <div class="post">
                 <li>

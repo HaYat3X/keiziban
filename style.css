@@ -37,18 +37,18 @@ body {
 }
 
 .header ul {
-     display: flex;
-     margin-left: 520px;
- }
+    display: flex;
+    margin-left: 520px;
+}
 
- .header li {
-     list-style: none;
-     padding-top: 45px;
-     padding-bottom: 20px;
-     padding-left: 70px;
-     font-size: 20px;
-     font-weight: 600;
- }
+.header li {
+    list-style: none;
+    padding-top: 45px;
+    padding-bottom: 20px;
+    padding-left: 70px;
+    font-size: 20px;
+    font-weight: 600;
+}
 
  .header a {
      color: #4C8DCB;
@@ -56,9 +56,8 @@ body {
  }
 
  .header a:hover {
-     color: #EF810F;
-     text-decoration: underline;
-
+    color: #EF810F;
+    text-decoration: underline;
  }
 
 .content {

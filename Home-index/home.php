@@ -212,7 +212,7 @@ $stmt->bind_result($id, $member_id, $message, $img, $created, $iine, $name, $pic
 
                             <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
 
-                            <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
+                            <a class="iine_button" href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a"><i class=" fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
                         </div>
                     </li>
                 </div>
