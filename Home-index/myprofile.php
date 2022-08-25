@@ -13,7 +13,7 @@ if (isset($_SESSION['id'])) {
     $user_id = $_SESSION['user_id'];
     $user_name = $_SESSION['user_name'];
 } else {
-    header('Location: ../Login/login.php');
+    header('Location: ../Login-index/login.php');
     exit();
 }
 

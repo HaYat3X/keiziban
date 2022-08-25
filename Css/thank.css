@@ -14,13 +14,6 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-
-
-
-
-
-
-
 .header {
     border-radius: 10px;
     background-color: white;
@@ -78,7 +71,6 @@ body {
     color: #4C8DCB;
     margin-top: 40px;
 }
-
 
 .content .msg {
     margin: 180px 90px 0;
@@ -141,6 +133,7 @@ body {
     border-radius: 50%;
     background-color: #F5F5F5;
 }
+
 .progressbar li:after {
     position: absolute;
     z-index: -1;
@@ -151,17 +144,21 @@ body {
     content: '';
     background-color: #F5F5F5;
 }
+
 .progressbar li:first-child:after {
     content: none;
 }
+
 .progressbar li.active,
 .progressbar li.complete{
     color: #0070BD;
 }
+
 .progressbar li.active:before,
 .progressbar li.complete:before {
     background-color: #0070BD;
 }
+
 .progressbar li.active:after,
 .progressbar li.complete:after {
     background-color: #0070BD;

@@ -1,3 +1,3 @@
 <?php
-header('Location: welcome.php');
+header('Location: ../Register-index/welcome.php');
 exit();

@@ -103,7 +103,6 @@ if (isset($_SESSION['form'])) {
 </html>
 
 <?php
-
 // 10秒後にログインページへリダイレクト
 header('refresh:10;url=../Login-index/login.php');
 exit();

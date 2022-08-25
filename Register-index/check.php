@@ -10,7 +10,7 @@ require('../function.php');
 if (isset($_SESSION['form'])) {
     $form = $_SESSION['form'];
 } else {
-    header('Location: welcome.php');
+    header('Location: ../Register-index/welcome.php');
     exit();
 }
 
