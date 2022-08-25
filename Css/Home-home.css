@@ -222,6 +222,7 @@ body {
      height: 350px;
      border-radius: 20px;
      margin-bottom: 20px;
+     object-fit: cover;
 }
 
 .iine_button{

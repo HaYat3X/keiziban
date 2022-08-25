@@ -194,10 +194,10 @@ body {
      color: black;
  }
 
- .user_number{
-    font-size: 25px;
+  .user_number{
+    font-size: 30px;
     font-weight: 100;
-    color: darkgray;
+    color: rgb(105, 105, 105);
  }
 
 

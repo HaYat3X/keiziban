@@ -158,6 +158,9 @@ body {
  }
 
  
+ .container {
+     display: flex;
+ }
 
  .main-contents {
      width: 1300px;
@@ -245,8 +248,17 @@ body {
     white-space: pre-line;
  }
 
-
-
+ .user_name {
+     font-size: 30px;
+     font-weight: 900;
+     color: black;
+ }
+ 
+.user_number{
+    font-size: 30px;
+    font-weight: 100;
+    color: rgb(105, 105, 105);
+ }
 
 
  .time a {

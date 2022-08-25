@@ -24,7 +24,7 @@ $count = $counts->fetch_assoc();
 $max_page = floor(($count['cnt'] + 1) / 5 + 1);
 
 // データの呼び出し
-$stmt = $db->prepare('SELECT p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year FROM keizi p, members m WHERE m.id=p.member_id ORDER BY id DESC LIMIT ?, 5');
+$stmt = $db->prepare('SELECT p.id, p.member_id, p.message, p.online, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year FROM keizi p, members m WHERE m.id=p.member_id ORDER BY id DESC LIMIT ?, 5');
 
 // 最大ページ数を求める
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
@@ -34,7 +34,7 @@ $stmt->bind_param('i', $start);
 $success = $stmt->execute();
 
 //　結果を変数におく
-$stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $iine, $name, $picture, $status, $course, $School_year);
+$stmt->bind_result($id, $member_id, $message, $online, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $iine, $name, $picture, $status, $course, $School_year);
 ?>
 
 <!DOCTYPE html>
@@ -131,6 +131,10 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                         </p>
 
                         <p class="newline">
+                            <label>参加形式：</label><span><?php echo htmlspecialchars($online); ?></span>
+                        </p>
+
+                        <p class="newline">
                             <label>参加した分野：</label><span><?php echo htmlspecialchars($field); ?></span>
                         </p>
 
@@ -202,11 +206,11 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
 
             <div class="btn1">
                 <?php if ($page > 1) : ?>
-                    <button><a href="?page=<?php echo $page - 1; ?>">&lt;&lt;<?php echo $page - 1; ?></a></button>
+                    <a href="?page=<?php echo $page - 1; ?>">&lt;&lt;<?php echo $page - 1; ?></a>
                 <?php endif; ?>
 
                 <?php if ($page < $max_page) : ?>
-                    <button><a href="?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>&gt;&gt;</a></button>
+                    <a href="?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>&gt;&gt;</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -240,25 +244,20 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                 </form>
             </div>
 
-            <!-- カレンダーの表示 -->
-            <div class="calendar">
-                <iframe src="https://calendar.google.com/calendar/embed?src=ja.japanese%23holiday%40group.v.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" frameborder="0" scrolling="no"></iframe>
-            </div>
-
             <div class="site-content">
                 <div class="site">
-                    <a href="#"><img src="../img/ダウンロード.png" alt=""></a>
-                    <a href="#"><img src="../img/log_main.png" alt=""></a>
+                    <a href="https://job.career-tasu.jp/2024/top/"><img src="../img/ダウンロード.png" alt=""></a>
+                    <a href="https://job.mynavi.jp/24/pc/toppage/displayTopPage/index"><img src="../img/ogp.jpeg" alt=""></a>
                 </div>
 
                 <div class="site">
-                    <a href="#"><img src="../img/ダウンロード.png" alt=""></a>
-                    <a href="#"><img src="../img/log_main.png" alt=""></a>
+                    <a href="https://job.rikunabi.com/2024/?isc=r21rcnz02954"><img src="../img/ダウンロードのコピー.png" alt=""></a>
+                    <a href="https://www.wantedly.com/"><img src="../img/2328bac9-3f7c-4510-a392-8b112f5e22ad.jpeg" alt=""></a>
                 </div>
             </div>
 
             <div class="btn_arrow">
-                <a href="../Login/logout1.php">ログアウト</a>
+                <a href="../Logout-index/logout2.php">ログアウト</a>
             </div>
         </div>
     </div>

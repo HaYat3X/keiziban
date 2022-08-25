@@ -1,15 +1,29 @@
 <?php
-require('../db.php');
-$db = new mysqli('localhost', 'root', 'root', 'user_db');
-$stmt = $db->prepare('select * from keizi where id=?');
-if (!$stmt) {
-    die($db->error);
+
+session_start();
+
+// requireでfunctionを呼び込む
+require('../function.php');
+
+// ログインしている場合
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['user_id'];
+    $name = $_SESSION['user_name'];
+} else {
+    // ログインしていない場合、ログインページへ戻す
+    header('Location: ../Login-index/login.php');
+    exit();
 }
+
+
+$db = db_connection();
+$stmt = $db->prepare('select * from keizi where id=?');
+
 $update_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $stmt->bind_param('i', $update_id);
 $stmt->execute();
 
-$stmt->bind_result($id, $message, $field, $course, $days, $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $member_id, $created, $modifile, $iine);
+$stmt->bind_result($id, $message, $online, $field, $course, $days, $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $member_id, $created, $modifile, $iine);
 $result = $stmt->fetch();
 ?>
 
@@ -30,18 +44,29 @@ $result = $stmt->fetch();
     <body>
         <div class="header">
             <div class="header-nav">
-                <img src="../img/名称未設定-3.png" alt="" width="80" height="80">
+                <img src="../img/favicon.png" alt="" width="80" height="80">
+
                 <a href="../Home-index/home.php">
                     <h1>Real intentioN</h1>
                 </a>
             </div>
 
             <ul>
-                <li><a href="../Home-index/home.php"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-                <li><a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a></li>
-                <li><a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Service</span></a></li>
-                <li><a href="#"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a></li>
+                <li>
+                    <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+                </li>
 
+                <li>
+                    <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+                </li>
+
+                <li>
+                    <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+                </li>
+
+                <li>
+                    <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+                </li>
             </ul>
         </div>
 
@@ -53,6 +78,11 @@ $result = $stmt->fetch();
                 <div class="user-box">
                     <label>参加した企業名</label><span class="required">*</span>
                     <input type="text" name="message" required value="<?php echo $message; ?>">
+                </div>
+
+                <div class="user-check">
+                    <input type="radio" name="online" required value="対面形式"> 対面形式
+                    <input type="radio" name="online" required value="オンライン形式"> オンライン形式
                 </div>
 
                 <div class="user-check">

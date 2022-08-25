@@ -13,14 +13,14 @@ if (isset($_SESSION['id'])) {
     $id = $_SESSION['user_id'];
     $name = $_SESSION['user_name'];
 } else {
-    header('Location: ../Home-index/index.php');
+    header('Location: ../../Home-index/index.php');
     exit();
 }
 
-$stmt = $db->prepare("SELECT p.id, p.member_id, p.message, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id FROM keizi p, members m WHERE days LIKE  '%" . $_POST["search_service1"] . "%' ORDER BY p.id DESC");
+$stmt = $db->prepare("SELECT p.id, p.member_id, p.message, p.online, p.field, p.course, p.days, p.Expectation, p.Understanding, p.Communication, p.atmosphere, p.good, p.bad, p.trouble, p.Comprehensive, p.link, p.created, p.iine, m.name, m.picture, m.status, m.course, m.School_year, m.id FROM keizi p, members m WHERE days LIKE  '%" . $_POST["search_service1"] . "%' ORDER BY p.id DESC");
 
 $stmt->execute();
-$stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $iine, $name, $picture, $status, $course, $School_year, $member_id2);
+$stmt->bind_result($id, $member_id, $message, $online, $field, $course1, $days,  $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $created, $iine, $name, $picture, $status, $course, $School_year, $member_id2);
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +32,7 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- cssのインポート -->
-    <link rel="stylesheet" href="../../Css/search.css">
+    <link rel="stylesheet" href="../../Css/service-search.css">
 
     <!-- ファビコンのインポート -->
     <link rel="icon" href="../../img/favicon.png">
@@ -49,32 +49,32 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
         <div class="header-nav">
             <img src="../../img/favicon.png" alt="" width="80" height="80">
 
-            <a href="../Home-index/home.php">
+            <a href="../../Home-index/home.php">
                 <h1>Real intentioN</h1>
             </a>
         </div>
 
         <ul>
             <li>
-                <a href="../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
+                <a href="../../Topic-index/topic.php"><i class="fa-solid fa-star"></i><span>topic</span></a>
             </li>
 
             <li>
-                <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
+                <a href="../../Home-index/myprofile.php?id=<?php echo htmlspecialchars($id); ?>"><i class=" fa fa-user"></i><span>Profile</span></a>
             </li>
 
             <li>
-                <a href="../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
+                <a href="../../Service-index/home.php"><i class="fa fa-briefcase"></i><span>Intern</span></a>
             </li>
 
             <li>
-                <a href="../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
+                <a href="../../Contact-index/contact.php"><i class="fa-solid fa-file-signature"></i><span>Contact</span></a>
             </li>
         </ul>
     </div>
 
     <div class="home">
-        <a href="../Home-index/home.php">ホームへ</a>
+        <a href="../../Service-index/home.php">戻る</a>
     </div>
 
     <div class="container">
@@ -85,15 +85,15 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
 
                         <!-- 写真の表示 -->
                         <?php if ($picture) : ?>
-                            <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
-                                <img src="../member_picture/<?php echo htmlspecialchars($picture); ?>" alt="" width="100" height="100">
+                            <a href="../../Home-index/myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
+                                <img src="../../member_picture/<?php echo htmlspecialchars($picture); ?>" alt="" width="100" height="100">
                             </a>
                         <?php endif; ?>
 
                         <!-- ユーザーが写真を登録していない場合はデフォルトの画像を表示 -->
                         <?php if (!$picture) : ?>
-                            <a href="../Home-index/myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
-                                <img src="../img/default.png" alt="" width="100" height="100">
+                            <a href="../../Home-index/myprofile.php?id=<?php echo htmlspecialchars($member_id); ?>">
+                                <img src="../../img/default.png" alt="" width="100" height="100">
                             </a>
                         <?php endif; ?>
 
@@ -113,6 +113,10 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                             <!-- メッセージの表示 -->
                             <p class="start">
                                 <label>企業名：</label><span><?php echo htmlspecialchars($message); ?></span>
+                            </p>
+
+                            <p class="newline">
+                                <label>参加形式：</label><span><?php echo htmlspecialchars($online); ?></span>
                             </p>
 
                             <p class="newline">
@@ -167,17 +171,17 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
                                 <small><?php echo htmlspecialchars($created); ?></small>
                                 <!-- 自分の投稿であれば削除できる -->
                                 <?php if ($_SESSION['user_id'] === $member_id) : ?>
-                                    <a href="../Delete-Service-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color:  #696969;"><i class="fa-solid fa-trash"></i></a>
+                                    <a href="../../Delete-Service-index/delete.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color:  #696969;"><i class="fa-solid fa-trash"></i></a>
                                 <?php endif; ?>
 
                                 <!-- 自分の投稿であれば編集ができる -->
                                 <?php if ($_SESSION['user_id'] === $member_id) : ?>
-                                    <a href="../Update-Service-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #4C8DCB;;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="../../Update-Service-index/update.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #4C8DCB;;"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <?php endif; ?>
 
-                                <a href="reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
+                                <a href="../reply.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #EF810F;"><i class="fa-solid fa-reply"></i></a>
 
-                                <a href="like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
+                                <a href="../like.php?id=<?php echo htmlspecialchars($id); ?>" class="a" style="color: #ff69b4;"><i class="fa-solid fa-thumbs-up"></i></a><span class="iine"><?php echo $iine ?></span>
                             </div>
                         </li>
                     </div>
@@ -193,18 +197,18 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days,  $Expecta
 
             <div class="site-content">
                 <div class="site">
-                    <a href="#"><img src="../img/ダウンロード.png" alt=""></a>
-                    <a href="#"><img src="../img/log_main.png" alt=""></a>
+                    <a href="https://job.career-tasu.jp/2024/top/"><img src="../../img/ダウンロード.png" alt=""></a>
+                    <a href="https://job.mynavi.jp/24/pc/toppage/displayTopPage/index"><img src="../../img/ogp.jpeg" alt=""></a>
                 </div>
 
                 <div class="site">
-                    <a href="#"><img src="../img/ダウンロード.png" alt=""></a>
-                    <a href="#"><img src="../img/log_main.png" alt=""></a>
+                    <a href="https://job.rikunabi.com/2024/?isc=r21rcnz02954"><img src="../../img/ダウンロードのコピー.png" alt=""></a>
+                    <a href="https://www.wantedly.com/"><img src="../../img/2328bac9-3f7c-4510-a392-8b112f5e22ad.jpeg" alt=""></a>
                 </div>
             </div>
 
             <div class="btn_arrow">
-                <a href="../Login/logout1.php">ログアウト</a>
+                <a href="../../Login/logout1.php">ログアウト</a>
             </div>
         </div>
     </div>

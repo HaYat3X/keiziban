@@ -267,6 +267,13 @@ body {
      color: black;
  }
 
+ .user_number{
+    font-size: 30px;
+    font-weight: 100;
+    color: rgb(105, 105, 105);
+ }
+
+
 
 
  .koube {
@@ -336,19 +343,19 @@ body {
      margin-left: 430px;
  }
 
- .btn1 a {
+.btn1 a {
      font-size: 20px;
      background-color: #4C8DCB;
      color: white;
      padding: 10px 20px;
-     border-radius: 20px;
+     border-radius: 5px;
      text-decoration: none;
  }
 
  .btn1 a:hover {
-     font-size: 25px;
      background-color: #EF810F;
  }
+
 
 
 
@@ -439,16 +446,9 @@ body {
 
  .btn_arrow a:hover {
      background-color: #EF810F;
-     padding: 20px 25px;
  }
 
- footer {
-     text-align: center;
-     background-color: white;
-     margin-top: 50px;
-     border-radius: 10px;
-     padding: 20px 0;
- }
+
 
  .footer {
     background-color: white;

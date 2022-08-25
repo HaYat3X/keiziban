@@ -9,7 +9,7 @@ if (isset($_SESSION['id'])) {
     $id = $_SESSION['user_id'];
     $name = $_SESSION['name'];
 } else {
-    header('Location: ../Login/login.php');
+    header('Location: ../Login-index/login.php');
     exit();
 }
 

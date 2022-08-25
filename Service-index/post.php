@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // inputの値を変数に格納
     $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+    $online = filter_input(INPUT_POST, 'online', FILTER_SANITIZE_STRING);
     $field = filter_input(INPUT_POST, 'field', FILTER_SANITIZE_STRING);
     $course = filter_input(INPUT_POST, 'course', FILTER_SANITIZE_STRING);
     $day = filter_input(INPUT_POST, 'day', FILTER_SANITIZE_STRING);
@@ -34,10 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $trouble = filter_input(INPUT_POST, 'trouble', FILTER_SANITIZE_STRING);
     $link = filter_input(INPUT_POST, 'link', FILTER_SANITIZE_STRING);
 
-    $stmt = $db->prepare('INSERT INTO keizi (message, field, course, days, Expectation, Understanding, Communication, atmosphere, good, bad, trouble, Comprehensive, 
-    link, member_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt = $db->prepare('INSERT INTO keizi (message, online, field, course, days, Expectation, Understanding, Communication, atmosphere, good, bad, trouble, Comprehensive, 
+    link, member_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
-    $stmt->bind_param('sssssssssssssi', $message, $field, $course, $day, $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $id);
+    $stmt->bind_param('ssssssssssssssi', $message, $online, $field, $course, $day, $Expectation, $Understanding, $Communication, $Atmosphere, $good, $bad, $trouble, $Comprehensive, $link, $id);
     $stmt->execute();
 
     header('Location: home.php');
@@ -100,6 +101,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="user-box">
                 <label>参加した企業名</label><span class="required">*</span>
                 <input type="text" name="message" required>
+            </div>
+
+            <div class="user-check">
+                <label>参加形式</label><span class="required">*</span>
+                <input type="radio" name="online" required value="対面形式"> 対面形式
+                <input type="radio" name="online" value="オンライン形式"> オンライン形式
             </div>
 
             <div class="user-check">
