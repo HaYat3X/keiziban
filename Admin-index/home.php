@@ -74,7 +74,7 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Expectat
             <button><i class="fa fa-search"></i></button>
         </form>
 
-        <div id="logout">
+        <div id="logout" class="logout">
             <a href="./logout.php">ログアウト</a>
         </div>
     </div>

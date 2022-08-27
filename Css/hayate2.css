@@ -156,3 +156,19 @@ body {
 .home a:hover{
     background-color: #EF810F;
 }
+
+.logout{
+    margin: 5px 20px;
+}
+
+.logout a{
+    color: white;
+    text-decoration: none;
+    background-color: #4C8DCB;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.logout a:hover{
+    background-color: #EF810F;
+}
