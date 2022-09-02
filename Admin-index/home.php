@@ -56,28 +56,28 @@ $stmt->bind_result($id, $member_id, $message, $field, $course1, $days, $Expectat
 </head>
 
 <body>
+    <header>
+        <div class="search-content">
+            <form method="post" action="./search-Box/company.php" class="search">
+                <input type="text" size="25" placeholder="　　企業名で検索" name="search_service1" required>
+                <button><i class="fa fa-search"></i></button>
+            </form>
 
-    <!-- 検索Box -->
-    <div class="search-content">
-        <form method="post" action="./search-Box/company.php" class="search">
-            <input type="text" size="25" placeholder="　　企業名で検索" name="search_service1" required>
-            <button><i class="fa fa-search"></i></button>
-        </form>
+            <form action="./search-Box/field.php" method="post" class="search">
+                <input type="text" size="25" placeholder="　　分野で検索" name="search_service1" required>
+                <button><i class="fa fa-search"></i></button>
+            </form>
 
-        <form action="./search-Box/field.php" method="post" class="search">
-            <input type="text" size="25" placeholder="　　分野で検索" name="search_service1" required>
-            <button><i class="fa fa-search"></i></button>
-        </form>
+            <form action="./search-Box/Department.php" method="post" class="search">
+                <input type="text" size="25" placeholder="　　学科で検索" name="search_service1" required>
+                <button><i class="fa fa-search"></i></button>
+            </form>
 
-        <form action="./search-Box/Department.php" method="post" class="search">
-            <input type="text" size="25" placeholder="　　学科で検索" name="search_service1" required>
-            <button><i class="fa fa-search"></i></button>
-        </form>
-
-        <div id="logout" class="logout">
-            <a href="./logout.php">ログアウト</a>
+            <div id="logout" class="logout">
+                <a href="./logout.php">ログアウト</a>
+            </div>
         </div>
-    </div>
+    </header>
 
     <div class="content" id="content">
         <?php while ($stmt->fetch()) : ?>

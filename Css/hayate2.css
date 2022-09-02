@@ -172,3 +172,8 @@ body {
 .logout a:hover{
     background-color: #EF810F;
 }
+
+header{
+    width: 1400px;
+    margin: auto;
+}

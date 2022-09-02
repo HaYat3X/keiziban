@@ -80,6 +80,9 @@ $stmt2->bind_result($r_id, $r_message, $r_member_id, $post_id, $img, $r_created,
 
     <!-- タイトルの指定 -->
     <title>返信する / Real intentioN</title>
+
+    <!-- ファビコンのインポート -->
+    <link rel="icon" href="../img/favicon.png">
 </head>
 
 <body>

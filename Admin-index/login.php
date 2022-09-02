@@ -67,13 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="user-box">
                     <label>Email</label>
                     <br>
-                    <input type="email" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($email); ?>" required>
+                    <input type="email" name="email" size="35" id="email" maxlength="255" value="<?php echo htmlspecialchars($email); ?>" required>
                 </div>
 
                 <div class="user-box">
                     <label>Password</label>
                     <br>
-                    <input type="password" name="password" size="35" maxlength="255" value="<?php echo htmlspecialchars($password); ?>" required>
+                    <input type="password" name="password" size="35" id="password" maxlength="255" value="<?php echo htmlspecialchars($password); ?>" required>
 
                     <!-- ログイン不成立のバリデーション -->
                     <?php if (isset($error['login']) && $error['login'] === 'failed') : ?>
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endif; ?>
                 </div>
 
-                <button>ログイン</button>
+                <button id="login_btn">ログイン</button>
             </form>
         </div>
     </div>
